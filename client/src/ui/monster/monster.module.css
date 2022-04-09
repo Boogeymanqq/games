@@ -1,7 +1,9 @@
 .monster {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: space-around;
   align-items: center;
+  gap: 0 40px;
 }
 
 .title {
@@ -21,15 +23,17 @@
 .frame {
   background: url("../../../public/img/monster/img/frame 3.png") no-repeat
     center / cover;
-  width: 400px;
-  height: 600px;
+  /* width: 400px;
+  height: 600px; */
+  /* flex-basis: 30%; */
+  /* flex-grow: 1; */
   border: 1px double #f31616;
   border-radius: 5px;
 }
 
 .parts {
-  width: 800px;
-  height: 600px;
+  /* width: 800px;
+  height: 600px; */
   border: 1px double #f31616;
   border-radius: 5px;
 }

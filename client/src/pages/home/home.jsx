@@ -32,13 +32,27 @@ export const Home = () => {
             </CardBody>
           </Card>
           <Card className={s.card}>
+            <CardImg className={s.img} src="" />
+            <CardBody>
+              <CardTitle tag="p">Cards</CardTitle>
+              <CardText tag="p">Make your own Cards</CardText>
+              <Link to="/cards">
+                <Button outline color="warning">
+                  Let's Play
+                </Button>
+              </Link>
+            </CardBody>
+          </Card>
+          <Card className={s.card}>
             <CardImg className={s.img} src="/img/room/maxresdefault.jpg" />
             <CardBody>
               <CardTitle tag="p">Room</CardTitle>
               <CardText tag="p">Make your own Room</CardText>
-              <Button outline color="warning">
-                Let's Play
-              </Button>
+              <Link to="/room">
+                <Button outline color="warning">
+                  Let's Play
+                </Button>
+              </Link>
             </CardBody>
           </Card>
         </CardGroup>
