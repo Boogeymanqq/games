@@ -10,6 +10,13 @@ export const navItems = [
   { title: "Зарегистрироваться", href: "/signin" },
 ];
 
+export const navGames = [
+  { title: "Home", href: "/home" },
+  { title: "Монстер", href: "/monster" },
+  { title: "Карточки", href: "/cards" },
+  { title: "Комнаты", href: "/room" },
+];
+
 export const signinForm = [
   {
     id: "lastName",
@@ -322,19 +329,37 @@ export const rooms = [
   },
   {
     id: uuidv4(),
-    url: "/img/room/bookcase/bookcase-3.gif",
-    defaultPos: { x: 0, y: 0 },
-    completed: false,
-  },
-  {
-    id: uuidv4(),
     url: "/img/room/bookcase/bookcase-flat-2.gif",
     defaultPos: { x: 0, y: 0 },
     completed: false,
   },
   {
     id: uuidv4(),
-    url: "/img/room/bookcase/bookcase-flat.gif",
+    url: "/img/room/bookcase/bookcase-3.gif",
+    defaultPos: { x: 0, y: 0 },
+    completed: false,
+  },
+  {
+    id: uuidv4(),
+    url: "/img/room/chair/chair-2.gif",
+    defaultPos: { x: 0, y: 0 },
+    completed: false,
+  },
+  {
+    id: uuidv4(),
+    url: "/img/room/chair/chair-3.gif",
+    defaultPos: { x: 0, y: 0 },
+    completed: false,
+  },
+  {
+    id: uuidv4(),
+    url: "/img/room/chair/chair-flat2.gif",
+    defaultPos: { x: 0, y: 0 },
+    completed: false,
+  },
+  {
+    id: uuidv4(),
+    url: "/img/room/chair/chair-flat3.gif",
     defaultPos: { x: 0, y: 0 },
     completed: false,
   },

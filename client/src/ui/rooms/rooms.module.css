@@ -12,8 +12,8 @@
 .room15 {
   background: url("../../../public/img/room/room15.jpeg") no-repeat center /
     cover;
-  display: grid;
-  grid-template: minmax(auto, 600px) / minmax(auto, 900px);
+  /* display: grid; */
+  /* grid-template: minmax(auto, 600px) / minmax(auto, 900px); */
   /* min-width: 900px;
   height: 600px; */
   /* flex-basis: 1000px; */
@@ -29,7 +29,11 @@
   width: 800px;
   height: 600px; */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(auto, 200px));
+  grid-template: repeat(auto-fit, minmax(auto, 200px)) / repeat(
+      auto-fit,
+      minmax(auto, 200px)
+    );
+  text-align: center;
   border: 1px double #f31616;
   border-radius: 5px;
 }
