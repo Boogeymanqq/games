@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useHttp } from "../../hooks/http.hook";
@@ -8,9 +8,11 @@ import s from "./signin.module.css";
 
 export const Signin = ({ caption }) => {
   const { loading, request } = useHttp();
-  const [alert, setAlert] = React.useState(false);
-  const [message, setMessage] = React.useState("");
-  const [type, setType] = React.useState("secondary");
+  const [alert, setAlert] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("secondary");
+  const [isLoading, setIsLoading] = useState(false);
+  const [valueMail, setValueMail] = useState();
 
   const {
     register,
@@ -26,9 +28,10 @@ export const Signin = ({ caption }) => {
         setAlert(true);
         setMessage(res.message);
         setType(res.type);
-
+        setIsLoading(false);
         console.log(res);
       } catch (error) {
+        setIsLoading(false);
         setAlert(true);
         setMessage(error.message);
         setType(error.type);
@@ -148,11 +151,14 @@ export const Signin = ({ caption }) => {
               type="email"
               className="form-control"
               id="email"
+              onChange={(e) => setValueMail(e.target.value)}
             />
           </div>
           <div>
-            {errors?.email && (
+            {errors?.email ? (
               <p className={s.focus}>{errors?.email?.message || "Error!"}</p>
+            ) : (
+              localStorage.setItem("login", valueMail)
             )}
           </div>
 
@@ -219,6 +225,7 @@ export const Signin = ({ caption }) => {
         </div>
         <div className={s.signin__btns}>
           <Button
+            onClick={() => setIsLoading(true)}
             className={s.signin__submit}
             color="warning"
             type="submit"
@@ -233,6 +240,15 @@ export const Signin = ({ caption }) => {
           </Link>
         </div>
       </form>
+      {isLoading && (
+        <img
+          style={{ display: "block", margin: "0 auto" }}
+          width="100"
+          height="100"
+          src={require("../signin/Loading.gif")}
+          alt="loading..."
+        />
+      )}
       {alert && <Alert type={type} title={message} />}
     </div>
   );

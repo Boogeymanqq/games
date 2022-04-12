@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import Draggable from "react-draggable";
 import { Link } from "react-router-dom";
-import { Button } from "reactstrap";
 import { monster } from "../../data";
 import s from "./monster.module.css";
+import { navGames } from "../../data";
+import style from "../navigation/navigation.module.css";
+import { Navbar, Nav, NavItem } from "reactstrap";
+
+const monsterLink = "Монстер";
+const newNavGame = navGames.filter((elem) => elem.title !== monsterLink);
 
 export const Monster = () => {
   const nodeRef = React.useRef(null);
@@ -48,11 +53,24 @@ export const Monster = () => {
 
   return (
     <>
-      <Link to="/home">
-        <Button outline color="warning">
-          Home
-        </Button>
-      </Link>
+      <div className={style.navigation}>
+        <Navbar
+          className={style.navigation__navbar}
+          expand="md"
+          container="md"
+          color="light"
+        >
+          <Nav className={style.list}>
+            {newNavGame.map((elem, index) => (
+              <NavItem className={style.navigation__navitem} key={index}>
+                <Link to={elem.href}>
+                  <div className={style.navigation__navlink}>{elem.title}</div>
+                </Link>
+              </NavItem>
+            ))}
+          </Nav>
+        </Navbar>
+      </div>
       <div className="container">
         <h2 className={s.title}>Make a Monster</h2>
         <input

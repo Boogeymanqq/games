@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Draggable from "react-draggable";
 import { Link } from "react-router-dom";
 import { rooms } from "../../data";
-import { Button } from "reactstrap";
 import s from "./rooms.module.css";
+import { navGames } from "../../data";
+import style from "../navigation/navigation.module.css";
+import { Navbar, Nav, NavItem } from "reactstrap";
+
+const roomLink = "Комнаты";
+const newNavGame = navGames.filter((elem) => elem.title !== roomLink);
 
 export const Room = () => {
   const [cardRooms, setCardRooms] = useState(rooms);
-  const [size, setSize] = React.useState(100);
+  const [size, setSize] = useState(100);
+  const [verticalSize, setVerticalSize] = useState(100);
   const [drag, setDrag] = useState(false);
 
   // const [position, setPosition] = useState({ x: 100, y: 100 });
 
-  const nodeRef = React.useRef(null);
+  const nodeRef = useRef(null);
 
   function startDrag(e, id) {
     e.preventDefault();
@@ -67,58 +73,74 @@ export const Room = () => {
 
   return (
     <>
-      <Link to="/home">
-        <Button outline color="warning">
-          Home
-        </Button>
-      </Link>
+      <div className={style.navigation}>
+        <Navbar
+          className={style.navigation__navbar}
+          expand="md"
+          container="md"
+          color="light"
+        >
+          <Nav className={style.list}>
+            {newNavGame.map((elem, index) => (
+              <NavItem className={style.navigation__navitem} key={index}>
+                <Link to={elem.href}>
+                  <div className={style.navigation__navlink}>{elem.title}</div>
+                </Link>
+              </NavItem>
+            ))}
+          </Nav>
+        </Navbar>
+      </div>
       <h2>Make a Room</h2>
       <input
         type="range"
         value={size}
         onInput={(e) => setSize(e.target.value)}
       />
+      <br />
+      <input
+        type="range"
+        value={verticalSize}
+        onInput={(e) => setVerticalSize(e.target.value)}
+      />
       <div className={s.room}>
         <div
-          draggable={true}
           className={s.room15}
-          style={{ width: `${9 * size}px`, height: `${6 * size}px` }}
+          style={{ width: `${9 * size}px`, height: `${6 * verticalSize}px` }}
         ></div>
         <div
           className={s.parts}
-          style={{ width: `${9 * size}px`, height: `${6 * size}px` }}
+          style={{ width: `${9 * size}px`, height: `${6 * verticalSize}px` }}
         >
           {cardRooms.map((item, index) => (
-            <div key={index}>
-              <Draggable
-                nodeRef={nodeRef}
-                // handle="#imhandle"
-                // bounds="body"
-                axis="both"
-                onStart={(e) => startDrag(e, item.id)}
-                onStop={(e) => stopDrag(e, item.completed)}
-                // defaultPosition={{ x: 0, y: 0 }}
-                position={item.completed === true ? item.defaultPos : null}
-              >
-                <div>
-                  <img
-                    style={{
-                      width: `${1.5 * size}px`,
-                      height: `${1.5 * size}px`,
-                    }}
-                    ref={nodeRef}
-                    // id="imhandle"
-                    draggable={true}
-                    src={item.url}
-                    alt=""
-                    className={s.room__body}
-                  />
-                  <button className={s.btn} onClick={() => toggle(item.id)}>
-                    &times;
-                  </button>
-                </div>
-              </Draggable>
-            </div>
+            <Draggable
+              key={index}
+              nodeRef={nodeRef}
+              // handle="#imhandle"
+              bounds=""
+              axis="both"
+              onStart={(e) => startDrag(e, item.id)}
+              onStop={(e) => stopDrag(e, item.completed)}
+              // defaultPosition={{ x: 0, y: 0 }}
+              position={item.completed === true && item.defaultPos}
+            >
+              <div ref={nodeRef}>
+                <img
+                  // onMouseMove={(e) => startDrag(e, item.id)}
+                  style={{
+                    width: `${1.5 * size}px`,
+                    height: `${1.5 * size}px`,
+                  }}
+                  // id="imhandle"
+                  src={item.url}
+                  alt=""
+                  className={s.room__body}
+                />
+                <button className={s.btn} onClick={() => toggle(item.id)}>
+                  &times;
+                </button>
+              </div>
+            </Draggable>
           ))}
         </div>
         <div>
