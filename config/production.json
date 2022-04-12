@@ -1,0 +1,5 @@
+{
+  "port": 5000,
+  "jwtSecret": "mern node react",
+  "mongoUri": "mongodb+srv://ArtyomBobarikin:artyom12345@cluster0.9xfvj.mongodb.net/app?retryWrites=true&w=majority"
+}
