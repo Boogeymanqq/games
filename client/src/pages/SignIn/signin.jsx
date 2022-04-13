@@ -29,12 +29,14 @@ export const Signin = ({ caption }) => {
         setMessage(res.message);
         setType(res.type);
         setIsLoading(false);
+        localStorage.setItem("login", () => setValueMail(data.email));
         console.log(res);
       } catch (error) {
         setIsLoading(false);
         setAlert(true);
         setMessage(error.message);
         setType(error.type);
+        localStorage.setItem("login", () => setValueMail(data.email));
         console.log(error);
       }
     };
@@ -151,14 +153,12 @@ export const Signin = ({ caption }) => {
               type="email"
               className="form-control"
               id="email"
-              onChange={(e) => setValueMail(e.target.value)}
+              // onChange={(e) => setValueMail(e.target.value)}
             />
           </div>
           <div>
-            {errors?.email ? (
+            {errors?.email && (
               <p className={s.focus}>{errors?.email?.message || "Error!"}</p>
-            ) : (
-              localStorage.setItem("login", valueMail)
             )}
           </div>
 
