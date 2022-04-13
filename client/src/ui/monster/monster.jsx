@@ -12,7 +12,8 @@ const newNavGame = navGames.filter((elem) => elem.title !== monsterLink);
 
 export const Monster = () => {
   const nodeRef = React.useRef(null);
-  const [size, setSize] = React.useState(100);
+  const [size, setSize] = useState(100);
+  const [objSize, setObjSize] = useState(100);
   const [cardMonster, setCardMonster] = useState(monster);
 
   function startDrag(e, id) {
@@ -22,7 +23,7 @@ export const Monster = () => {
         Object.values(elem).map((item) =>
           item.map((item) => {
             if (item.id === id) {
-              item.completed = false;
+              item.completed = !item.completed;
             }
             return item;
           })
@@ -42,7 +43,7 @@ export const Monster = () => {
         Object.values(elem).map((item) =>
           item.map((item) => {
             if (item.id === id) {
-              item.completed = !item.completed;
+              item.completed = true;
             }
             return item;
           })
@@ -73,12 +74,26 @@ export const Monster = () => {
       </div>
       <div className="container">
         <h2 className={s.title}>Make a Monster</h2>
-        <input
-          type="range"
-          value={size}
-          onInput={(e) => setSize(e.target.value)}
-        />
-        <p>{size}</p>
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <label>
+            {size}
+            <br />
+            <input
+              type="range"
+              value={size}
+              onInput={(e) => setSize(e.target.value)}
+            />
+          </label>
+          <label>
+            {objSize}
+            <br />
+            <input
+              type="range"
+              value={objSize}
+              onInput={(e) => setObjSize(e.target.value)}
+            />
+          </label>
+        </div>
         <div className={s.monster}>
           <div
             className={s.frame}
@@ -86,7 +101,7 @@ export const Monster = () => {
           ></div>
           <div
             className={s.parts}
-            style={{ width: `${8 * size}px`, height: `${6 * size}px` }}
+            style={{ width: `${8 * objSize}px`, height: `${6 * objSize}px` }}
           >
             {cardMonster.map((elem) =>
               Object.values(elem).map((item) =>
@@ -105,8 +120,8 @@ export const Monster = () => {
                         src={el.url}
                         alt=""
                         style={{
-                          width: `${0.6 * size}px`,
-                          height: `${0.8 * size}px`,
+                          width: `${0.6 * objSize}px`,
+                          height: `${0.8 * objSize}px`,
                         }}
                       />
                       <button className={s.btn} onClick={() => toggle(el.id)}>
