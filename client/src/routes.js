@@ -11,6 +11,7 @@ import { Signin } from "./pages/signin/signin";
 import { Monster } from "./ui/monster/monster";
 import { Cards } from "./ui/cards/cards";
 import { Room } from "./ui/rooms/rooms";
+// import { CheckRoom } from "./ui/rooms/checkRoom";
 
 export const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
@@ -29,6 +30,7 @@ export const useRoutes = (isAuthenticated) => {
         />
         <Route path="/monster" element={<Monster />} />
         <Route path="/cards" element={<Cards />} />
+        {/* <Route path="/checkroom" element={<CheckRoom />} /> */}
         <Route path="/room" element={<Room />} />
       </Routes>
     );
