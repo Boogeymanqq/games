@@ -56,4 +56,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 50px auto;
+}
+
+.show {
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid red;
+  width: 1200px;
+  align-items: center;
+  justify-content: center;
+}
+
+.show__btn {
+  display: block;
+  margin: 30px auto;
 }
