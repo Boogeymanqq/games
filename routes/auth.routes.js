@@ -46,7 +46,7 @@ router.post(
     } catch (error) {
       res.status(500).json({
         message: "Что-то полшо не так, попробуйте снова",
-        type: "danger",
+        type: "error",
       });
     }
   }
@@ -67,7 +67,7 @@ router.post(
         return res.status(400).json({
           errors: errors.array(),
           message: "Некорректные данные при входе в систему",
-          type: "danger",
+          type: "error",
         });
       }
 
@@ -78,7 +78,7 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ message: "Пользователь не найден", type: "danger" });
+          .json({ message: "Пользователь не найден", type: "error" });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -86,7 +86,7 @@ router.post(
       if (!isMatch) {
         return res.status(400).json({
           message: "Неверный пароль, попробуйте снова",
-          type: "danger",
+          type: "error",
         });
       }
 
@@ -103,7 +103,7 @@ router.post(
     } catch (error) {
       res.status(500).json({
         message: "Что-то полшо не так, попробуйте снова",
-        type: "danger",
+        type: "error",
       });
     }
   }
