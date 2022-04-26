@@ -1,35 +1,71 @@
 import React from "react";
-import s from "./navigation.module.css";
-import { Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import { Link } from "react-router-dom";
-import { navItems } from "../../data.js";
+import s from "./navigation.module.css";
+import { mainPage } from "../../data.js";
+import { makeStyles } from "@mui/styles";
+import {
+  AppBar,
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Toolbar,
+  Typography,
+  Tabs,
+  Tab,
+} from "@mui/material";
+// import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+
+// const useStyles = makeStyles({
+//   root: {
+//     background: "#E1F5FE",
+//     padding: 1,
+//   },
+// });
 
 export const Navigation = () => {
-  return (
-    <div className={s.navigation}>
-      <Navbar
-        className={s.navigation__navbar}
-        expand="md"
-        container="md"
-        color="light"
-      >
-        <NavbarBrand className={s.navigation__navbrand} href="/">
-          <span style={{ color: "#3399FF" }}>pi</span>
-          <span style={{ color: "#F08080" }}>ki</span>
-          <span style={{ color: "#33CC33" }}>mo</span>
-          <span style={{ color: "#FF9900" }}>ni</span>
-        </NavbarBrand>
+  const [value, setValue] = React.useState(0);
 
-        <Nav className={s.list}>
-          {navItems.map((elem, index) => (
-            <NavItem className={s.navigation__navitem} key={index}>
-              <Link to={elem.href}>
-                <div className={s.navigation__navlink}>{elem.title}</div>
-              </Link>
-            </NavItem>
-          ))}
-        </Nav>
-      </Navbar>
-    </div>
+  const handleChange = (event) => {
+    setValue(event.target);
+  };
+  console.log(value);
+
+  return (
+    <AppBar sx={{ bgcolor: "#e8eaf6", p: 0.5 }} position="static">
+      <Container maxWidth="xxl">
+        <Toolbar className={s.navigation__navbar}>
+          <Link to="/">
+            <Typography
+              className={s.navigation__navbrand}
+              variant="h4"
+              component="div"
+            >
+              <span style={{ color: "#3399FF" }}>pi</span>
+              <span style={{ color: "#F08080" }}>ki</span>
+              <span style={{ color: "#33CC33" }}>mo</span>
+              <span style={{ color: "#FF9900" }}>ni</span>
+            </Typography>
+          </Link>
+          <Tabs
+            maxWidth="lg"
+            value={value}
+            aria-label="secondary tabs example"
+            onChange={handleChange}
+            textColor="secondary"
+            indicatorColor="secondary"
+          >
+            {mainPage.map((elem, index) => (
+              <Tab
+                label={elem.title}
+                key={index}
+                to={elem.href}
+                component={Link}
+              />
+            ))}
+          </Tabs>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
