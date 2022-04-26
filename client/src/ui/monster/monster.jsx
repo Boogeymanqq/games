@@ -23,7 +23,7 @@ export const Monster = () => {
         Object.values(elem).map((item) =>
           item.map((item) => {
             if (item.id === id) {
-              item.completed = !item.completed;
+              item.completed = false;
             }
             return item;
           })
@@ -108,7 +108,7 @@ export const Monster = () => {
                 item.map((el) => (
                   <Draggable
                     axis="both"
-                    bounds="body"
+                    // bounds="body"
                     key={el.id}
                     nodeRef={nodeRef}
                     onStart={(e) => startDrag(e, el.id)}
