@@ -1,13 +1,9 @@
-import "./alert.css";
+import { Alert, Container } from "@mui/material";
 
-import React from "react";
-
-export function Alert({ title, type = "secondary" }) {
+export function AlertInfo({ title, type = "error" }) {
   return (
-    <div className="container">
-      <div className={`alert alert-${type}`} role="alert">
-        {title}
-      </div>
-    </div>
+    <Container maxWidth="sm">
+      <Alert severity={type}>{title}</Alert>
+    </Container>
   );
 }

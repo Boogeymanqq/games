@@ -1,255 +1,214 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Button,
+  Box,
+  TextField,
+  Typography,
+  Avatar,
+  CircularProgress,
+} from "@mui/material";
+import { Field, Form, Formik } from "formik";
+import { object, string } from "yup";
 import { useHttp } from "../../hooks/http.hook";
-import { Alert } from "../../ui/alert/alert";
-import { Button } from "reactstrap";
+import { AlertInfo } from "../../ui/alert/alert";
+import { green } from "@mui/material/colors";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 import s from "./signin.module.css";
+
+const initialValues = {
+  lastname: "",
+  name: "",
+  patronymic: "",
+  email: "",
+  phone: "",
+  password: "",
+};
 
 export const Signin = ({ caption }) => {
   const { loading, request } = useHttp();
   const [alert, setAlert] = useState(false);
   const [message, setMessage] = useState("");
-  const [type, setType] = useState("secondary");
+  const [type, setType] = useState("success");
   const [isLoading, setIsLoading] = useState(false);
-  const [valueMail, setValueMail] = useState();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    reset,
-  } = useForm({ mode: "all" });
-
-  const onSubmit = (data) => {
-    const registerHandler = async () => {
-      try {
-        const res = await request("api/auth/register", "POST", data);
-        setAlert(true);
-        setMessage(res.message);
-        setType(res.type);
-        setIsLoading(false);
-        localStorage.setItem("login", () => setValueMail(data.email));
-        console.log(res);
-      } catch (error) {
-        setIsLoading(false);
-        setAlert(true);
-        setMessage(error.message);
-        setType(error.type);
-        localStorage.setItem("login", () => setValueMail(data.email));
-        console.log(error);
-      }
-    };
-    registerHandler();
-    console.log(JSON.stringify(data));
-    reset();
-  };
+  const navigate = useNavigate();
 
   return (
-    <div className="container">
-      <div className={s.signin__caption}>
-        <img
-          src="/img/SignIn_form/1110960_essential_in_minus_round_set_icon.svg"
-          alt="signin icon"
-          width="50"
-          height="50"
-        />
-        <span className={s.caption}>{caption}</span>
-      </div>
-      <form
-        className={s.signin__form}
-        onSubmit={handleSubmit(onSubmit)}
-        onChange={(e) => (e.target.value = e.target.value.trim())}
+    <div className={s.materialForm}>
+      <Box component="div" sx={{ display: "flex", gap: "20px" }}>
+        <Avatar sx={{ bgcolor: green[500] }}>
+          <AssignmentIcon />
+        </Avatar>
+        <Typography
+          sx={{ textTransform: "uppercase" }}
+          variant="h4"
+          component="h4"
+        >
+          {caption}
+        </Typography>
+      </Box>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={object({
+          lastname: string()
+            .trim()
+            .min(3, "Минимум 3 символа")
+            .max(50, "Максимум 50 символов")
+            .required("Пожалуйста, введите фамилию"),
+          name: string()
+            .trim()
+            .min(3, "Минимум 3 символа")
+            .max(20, "Максимум 20 символов")
+            .required("Пожалуйста, введите фамилию"),
+          patronymic: string()
+            .trim()
+            .min(3, "Минимум 3 символа")
+            .max(50, "Максимум 50 символов")
+            .required("Пожалуйста, введите фамилию"),
+          email: string()
+            .required("Пожалуйста, введите адрес электронной почты")
+            .email("Недопустимый формат email")
+            .trim()
+            .matches(
+              /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/,
+              "Недопустимый формат email"
+            ),
+          phone: string()
+            .trim()
+            .required("Пожалуйста, введите номер телефона")
+            .matches(/^\+?7(\d{10})$/, "Недопустимый формат телефона"),
+          password: string()
+            .trim()
+            .required("Пожалуйста, введите пароль")
+            .min(6, "Минимум 6 символов")
+            .max(20, "Максимум 20 символов")
+            .matches(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+              `Недопустимый формат. Пароль должен иметь минимум одну заглавную букву, одну строчную букву, одну цифру и один специальный символ`
+            ),
+        })}
+        onSubmit={async (values, formikHelpers) => {
+          try {
+            const res = await request("api/auth/register", "POST", values);
+            setAlert(true);
+            setMessage(res.message);
+            setType(res.type);
+            setIsLoading(false);
+            console.log(res);
+            setTimeout(() => navigate("/login"), 1000);
+          } catch (error) {
+            setIsLoading(false);
+            setAlert(true);
+            setMessage(error.message);
+            setType(error.type);
+            console.log(error);
+          }
+          console.log(values);
+          formikHelpers.resetForm();
+        }}
       >
-        <div className={s.signin__wraper}>
-          <div className="mb-3">
-            <label className={s.signin__label} htmlFor="lastName">
-              Фамилия<sup style={{ color: "red" }}>*</sup>
-            </label>
-            <input
-              name="lastName"
-              {...register("lastName", {
-                required: "Это поле обязательно",
-                minLength: {
-                  value: 3,
-                  message: "Минимум 3 символа",
-                },
-                maxLength: {
-                  value: 50,
-                  message: "Максимум 50 символов",
-                },
-              })}
-              type="text"
-              className="form-control"
-              id="lastName"
+        {({ errors, isValid, touched, dirty }) => (
+          <Form>
+            <Field
+              name="lastname"
+              type="lastname"
+              as={TextField}
+              variant="outlined"
+              color="primary"
+              label="Фамилия"
+              fullWidth
+              error={Boolean(errors.lastname) && Boolean(touched.lastname)}
+              helperText={Boolean(touched.lastname) && errors.lastname}
             />
-          </div>
-          <div>
-            {errors?.lastName && (
-              <p className={s.focus}>{errors?.lastName?.message || "Error!"}</p>
-            )}
-          </div>
-
-          <div className="mb-3">
-            <label className={s.signin__label} htmlFor="firstName">
-              Имя<sup style={{ color: "red" }}>*</sup>
-            </label>
-            <input
-              name="firstName"
-              {...register("firstName", {
-                required: "Это поле обязательно",
-                minLength: {
-                  value: 3,
-                  message: "Минимум 3 символа",
-                },
-                maxLength: {
-                  value: 20,
-                  message: "Максимум 20 символов",
-                },
-              })}
-              type="text"
-              className="form-control"
-              id="firstName"
+            <Box height={10} />
+            <Field
+              name="name"
+              type="name"
+              as={TextField}
+              variant="outlined"
+              color="primary"
+              label="Имя"
+              fullWidth
+              error={Boolean(errors.name) && Boolean(touched.name)}
+              helperText={Boolean(touched.name) && errors.name}
             />
-          </div>
-          <div>
-            {errors?.firstName && (
-              <p className={s.focus}>
-                {errors?.firstName?.message || "Error!"}
-              </p>
-            )}
-          </div>
-
-          <div className="mb-3">
-            <label className={s.signin__label} htmlFor="patronymic">
-              Отчество
-            </label>
-            <input
+            <Box height={10} />
+            <Field
               name="patronymic"
-              type="text"
-              className="form-control"
-              id="patronymic"
+              type="patronymic"
+              as={TextField}
+              variant="outlined"
+              color="primary"
+              label="Отчество"
+              fullWidth
+              error={Boolean(errors.patronymic) && Boolean(touched.patronymic)}
+              helperText={Boolean(touched.patronymic) && errors.patronymic}
             />
-          </div>
-
-          <div className="mb-3">
-            <label className={s.signin__label} htmlFor="email">
-              Электронная почта<sup style={{ color: "red" }}>*</sup>
-            </label>
-            <input
+            <Box height={10} />
+            <Field
               name="email"
-              {...register("email", {
-                required: "Это поле обязательно",
-                maxLength: {
-                  value: 50,
-                  message: "Максимум 50 символов",
-                },
-                pattern: {
-                  value:
-                    /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/,
-                  message: "Недопустимый формат email",
-                },
-              })}
               type="email"
-              className="form-control"
-              id="email"
-              // onChange={(e) => setValueMail(e.target.value)}
+              as={TextField}
+              variant="outlined"
+              color="primary"
+              label="Электронная почта"
+              fullWidth
+              error={Boolean(errors.email) && Boolean(touched.email)}
+              helperText={Boolean(touched.email) && errors.email}
             />
-          </div>
-          <div>
-            {errors?.email && (
-              <p className={s.focus}>{errors?.email?.message || "Error!"}</p>
-            )}
-          </div>
-
-          <div className="mb-3">
-            <label className={s.signin__label} htmlFor="tel">
-              Номер телефона<sup style={{ color: "red" }}>*</sup>
-            </label>
-            <input
-              name="tel"
-              {...register("tel", {
-                required: "Это поле обязательно",
-                pattern: {
-                  value: /^\+?7(\d{10})$/,
-                  message: "Недопустимый формат телефона",
-                },
-              })}
-              type="tel"
+            <Box height={10} />
+            <Field
+              name="phone"
+              type="phone"
+              as={TextField}
+              variant="outlined"
+              color="primary"
+              label="Номер телефона"
               placeholder="+7XXXXXXXXXX"
-              className="form-control"
-              id="tel"
+              fullWidth
+              error={Boolean(errors.phone) && Boolean(touched.phone)}
+              helperText={Boolean(touched.phone) && errors.phone}
             />
-          </div>
-          <div>
-            {errors?.tel && (
-              <p className={s.focus}>{errors?.tel?.message || "Error!"}</p>
-            )}
-          </div>
-
-          <div className="mb-3">
-            <label className={s.signin__label} htmlFor="password">
-              Введите пароль для последующего входа:
-              <sup style={{ color: "red" }}>*</sup>
-            </label>
-            <input
-              type="password"
+            <Box height={10} />
+            <Field
               name="password"
-              {...register("password", {
-                required: "Это поле обязательно",
-                minLength: {
-                  value: 6,
-                  message: "Минимум 6 символов",
-                },
-                maxLength: {
-                  value: 20,
-                  message: "Максимум 20 символов",
-                },
-                pattern: {
-                  value:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-                  message:
-                    "Недопустимый формат. Пароль должен иметь минимум одну заглавную букву, одну строчную букву, одну цифру и один специальный символ",
-                },
-              })}
-              id="password"
-              className="form-control"
-              autoComplete="off"
+              type="password"
+              as={TextField}
+              variant="outlined"
+              color="primary"
+              label="Password"
+              fullWidth
+              error={Boolean(errors.password) && Boolean(touched.password)}
+              helperText={Boolean(touched.password) && errors.password}
             />
-          </div>
-          <div>
-            {errors?.password && (
-              <p className={s.focus}>{errors?.password?.message || "Error!"}</p>
-            )}
-          </div>
-        </div>
-        <div className={s.signin__btns}>
-          <Button
-            onClick={() => setIsLoading(true)}
-            className={s.signin__submit}
-            color="warning"
-            type="submit"
-            disabled={!isValid}
-          >
-            Продолжить
-          </Button>
-          <Link to="/">
-            <Button className={s.main__btn} color="outline-primary">
-              На Главную
-            </Button>
-          </Link>
-        </div>
-      </form>
+            <Box height={30} />
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Button
+                onClick={() => setIsLoading(true)}
+                type="submit"
+                variant="contained"
+                color="success"
+                size="large"
+                disabled={!dirty || !isValid}
+              >
+                Продолжить
+              </Button>
+              <Link to="/">
+                <Button variant="contained" color="primary" size="large">
+                  На Главную
+                </Button>
+              </Link>
+            </Box>
+          </Form>
+        )}
+      </Formik>
       {isLoading && (
-        <img
-          style={{ display: "block", margin: "0 auto" }}
-          width="100"
-          height="100"
-          src={require("../signin/Loading.gif")}
-          alt="loading..."
-        />
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress />
+        </Box>
       )}
-      {alert && <Alert type={type} title={message} />}
+      {alert && <AlertInfo type={type} title={message} />}
     </div>
   );
 };

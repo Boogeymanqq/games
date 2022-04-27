@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import s from "./navigation.module.css";
-import { mainPage } from "../../data.js";
+import { teacherPage } from "../../data.js";
 import { makeStyles } from "@mui/styles";
 import {
   AppBar,
@@ -23,7 +23,7 @@ import {
 //   },
 // });
 
-export const Navigation = () => {
+export const Teacher = () => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event) => {
@@ -55,7 +55,7 @@ export const Navigation = () => {
             textColor="secondary"
             indicatorColor="secondary"
           >
-            {mainPage.map((elem, index) => (
+            {teacherPage.map((elem, index) => (
               <Tab
                 label={elem.title}
                 key={index}

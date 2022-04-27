@@ -1,116 +1,137 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+// import { useHistory } from "react-router";
+import {
+  Button,
+  Box,
+  TextField,
+  Typography,
+  Avatar,
+  CircularProgress,
+} from "@mui/material";
+import { Field, Form, Formik } from "formik";
+import { object, string } from "yup";
 import { useHttp } from "../../hooks/http.hook";
-import { Alert } from "../../ui/alert/alert";
+import { AlertInfo } from "../../ui/alert/alert";
+import { green } from "@mui/material/colors";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 import s from "./login.module.css";
+
+const initialValues = {
+  email: "",
+  password: "",
+};
 
 export const Login = ({ caption }) => {
   const { loading, request } = useHttp();
-  const [alert, setAlert] = React.useState(false);
-  const [message, setMessage] = React.useState("");
-  const [type, setType] = React.useState("secondary");
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    reset,
-  } = useForm({ mode: "all" });
+  const [alert, setAlert] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("success");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = (data) => {
-    const loginHandler = async () => {
-      try {
-        const res = await request("api/auth/login", "POST", data);
-        if (res.userId) {
-          setAlert(true);
-          setMessage(res.message);
-          setType(res.type);
-        }
-        console.log(res);
-      } catch (error) {
-        setAlert(true);
-        setMessage(error.message);
-        setType(error.type);
-        console.log(error);
-      }
-    };
-    loginHandler();
-    console.log(JSON.stringify(data));
-
-    reset();
-  };
+  const navigate = useNavigate();
 
   return (
-    <div className={s.login}>
-      <div className="container">
-        <form
-          className={s.login__form}
-          onSubmit={handleSubmit(onSubmit)}
-          onChange={(e) => (e.target.value = e.target.value.trim())}
+    <div className={s.materialForm}>
+      <Box component="div" sx={{ display: "flex", gap: "20px" }}>
+        <Avatar sx={{ bgcolor: green[500] }}>
+          <AssignmentIcon />
+        </Avatar>
+        <Typography
+          sx={{ textTransform: "uppercase" }}
+          variant="h4"
+          component="h4"
         >
-          <p className={s.login__caption}>{caption}</p>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Ваш Email, указанный при регистрации<sup>*</sup>
-            </label>
-            <input
-              type="email"
+          {caption}
+        </Typography>
+      </Box>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={object({
+          email: string()
+            .required("Пожалуйста, введите адрес электронной почты")
+            .email("Недопустимый формат email")
+            .trim()
+            .matches(
+              /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/,
+              "Недопустимый формат email"
+            ),
+          password: string()
+            .trim()
+            .required("Пожалуйста, введите пароль")
+            .min(6, "Минимум 6 символов")
+            .max(20, "Максимум 20 символов"),
+        })}
+        onSubmit={async (values, formikHelpers) => {
+          try {
+            const res = await request("api/auth/login", "POST", values);
+            setAlert(true);
+            setMessage(res.message);
+            setType(res.type);
+            setIsLoading(false);
+            console.log(res);
+            formikHelpers.resetForm();
+            setTimeout(() => navigate("/teacher"), 1000);
+          } catch (error) {
+            setIsLoading(false);
+            setAlert(true);
+            setMessage(error.message);
+            setType(error.type);
+            console.log(error);
+          }
+          console.log(values);
+          formikHelpers.resetForm();
+        }}
+      >
+        {({ errors, isValid, touched, dirty }) => (
+          <Form>
+            <Field
               name="email"
-              {...register("email", {
-                required: "Это поле обязательно",
-                maxLength: { value: 50, message: "Максимум 50 символов" },
-                pattern: {
-                  value:
-                    /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/,
-                  message: "Недопустимый формат email",
-                },
-              })}
-              className="form-control"
-              id="email"
-              placeholder="Email"
+              type="email"
+              as={TextField}
+              variant="outlined"
+              color="primary"
+              label="Электронная почта"
+              fullWidth
+              error={Boolean(errors.email) && Boolean(touched.email)}
+              helperText={Boolean(touched.email) && errors.email}
             />
-          </div>
-          <div>
-            {errors?.email && (
-              <p className={s.focus}>{errors?.email?.message || "Error!"}</p>
-            )}
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Пароль<sup>*</sup>
-            </label>
-            <input
-              type="password"
+            <Box height={10} />
+            <Field
               name="password"
-              {...register("password", {
-                required: "Это поле обязательно",
-                minLength: {
-                  value: 6,
-                  message: "Минимум 6 символов",
-                },
-                maxLength: {
-                  value: 20,
-                  message: "Максимум 20 символов",
-                },
-              })}
-              className="form-control"
-              id="password"
-              placeholder="Пароль"
-              autoComplete="off"
+              type="password"
+              as={TextField}
+              variant="outlined"
+              color="primary"
+              label="Password"
+              fullWidth
+              error={Boolean(errors.password) && Boolean(touched.password)}
+              helperText={Boolean(touched.password) && errors.password}
             />
-          </div>
-          <div>
-            {errors?.password && (
-              <p className={s.focus}>{errors?.password?.message || "Error!"}</p>
-            )}
-          </div>
-          <button type="submit" className="btn btn-primary" disabled={!isValid}>
-            Войти
-          </button>
-        </form>
-        {alert && <Alert type={type} title={message} />}
-      </div>
+            <Box height={30} />
+            <Box>
+              <Button
+                onClick={() => setIsLoading(true)}
+                type="submit"
+                variant="contained"
+                color="success"
+                size="large"
+                fullWidth
+                disabled={!dirty || !isValid}
+              >
+                Войти
+              </Button>
+            </Box>
+          </Form>
+        )}
+      </Formik>
+      {isLoading && (
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress />
+        </Box>
+      )}
+      {alert && <AlertInfo type={type} title={message} />}
     </div>
   );
 };

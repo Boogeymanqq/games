@@ -17,7 +17,9 @@ export const Room = () => {
   const [drag, setDrag] = useState(false);
   const [isShow, setIsShow] = useState(true);
 
-  // const [position, setPosition] = useState({ x: 100, y: 100 });
+  const [xPosition, setXPosition] = useState(null);
+  const [yPosition, setYPosition] = useState(null);
+
   const nodeRef = useRef(null);
 
   function startDrag(e, id) {
@@ -25,29 +27,31 @@ export const Room = () => {
     setCardRooms(
       filtredRoom.map((item) => {
         if (item.id === id) {
+          // setXPosition(e.clientX);
+          // setYPosition(e.clientY);
+
           item.completed = false;
+          // item.defaultPos = { x: xPosition, y: yPosition };
+          console.log(item.completed);
         }
         return item;
       })
     );
   }
 
-  // function dragDrag(id) {
-  //   setCardRooms(
-  //     filtredRoom.map((item) => {
-  //       if (item.id === id) {
-  //         item.completed = false;
-  //       }
-  //       return item;
-  //     })
-  //   );
+  // function stopDrag(e) {
+  //   setXPosition(e.clientX);
+  //   setYPosition(e.clientY);
+  //   console.log(e.clientX, e.clientY);
   // }
 
-  // function clickClick(id) {
+  // function clickClick(e, id) {
   //   setCardRooms(
   //     filtredRoom.map((item) => {
   //       if (item.id === id) {
-  //         item.completed = false;
+  //         setXPosition(e.clientX);
+  //         setYPosition(e.clientX);
+  //         console.log(xPosition, yPosition);
   //       }
   //       return item;
   //     })
@@ -59,7 +63,7 @@ export const Room = () => {
     setCardRooms(
       filtredRoom.map((item) => {
         if (item.id === id) {
-          item.completed = !item.completed;
+          item.completed = true;
         }
         return item;
       })
@@ -116,7 +120,7 @@ export const Room = () => {
   }
 
   const filtredRoom = cardRooms.filter((elem) => elem.checked === true);
-  console.log(filtredRoom);
+  // console.log(filtredRoom);
 
   return (
     <>
@@ -226,15 +230,15 @@ export const Room = () => {
                   // handle="#imhandle"
                   bounds=""
                   axis="both"
-                  // onDrag={() => dragDrag(item.id)}
+                  // onDrag={(e) => dragDrag(e, item.id)}
                   onStart={(e) => startDrag(e, item.id)}
                   // onStop={(e) => stopDrag(e, item.id)}
                   // defaultPosition={{ x: 0, y: 0 }}
-                  position={item.completed && item.defaultPos}
+                  position={item.completed ? item.defaultPos : null}
                 >
                   <div ref={nodeRef}>
                     <img
-                      // onClick={() => clickClick(item.id)}
+                      // onClick={(e) => clickClick(e, item.id)}
                       style={{
                         width: `${1.5 * objSize}px`,
                         height: `${1.5 * objSize}px`,
@@ -244,7 +248,7 @@ export const Room = () => {
                       alt=""
                       className={s.room__body}
                     />
-                    {localStorage.getItem("login") === "wqer@wsdsa.com" && (
+                    {localStorage.getItem("login") && (
                       <button
                         className={s.btn}
                         onClick={(e) => toggle(e, item.id)}
