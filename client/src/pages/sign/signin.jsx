@@ -17,11 +17,12 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import s from "./signin.module.css";
 
 const initialValues = {
-  lastname: "",
-  name: "",
+  lastName: "",
+  firstName: "",
   patronymic: "",
   email: "",
   phone: "",
+  login: "",
   password: "",
 };
 
@@ -51,12 +52,12 @@ export const Signin = ({ caption }) => {
       <Formik
         initialValues={initialValues}
         validationSchema={object({
-          lastname: string()
+          lastName: string()
             .trim()
             .min(3, "Минимум 3 символа")
             .max(50, "Максимум 50 символов")
             .required("Пожалуйста, введите фамилию"),
-          name: string()
+          firstName: string()
             .trim()
             .min(3, "Минимум 3 символа")
             .max(20, "Максимум 20 символов")
@@ -90,7 +91,7 @@ export const Signin = ({ caption }) => {
         })}
         onSubmit={async (values, formikHelpers) => {
           try {
-            const res = await request("api/auth/register", "POST", values);
+            const res = await request("api/auth/register/teacher", "POST", values);
             setAlert(true);
             setMessage(res.message);
             setType(res.type);
@@ -111,27 +112,27 @@ export const Signin = ({ caption }) => {
         {({ errors, isValid, touched, dirty }) => (
           <Form>
             <Field
-              name="lastname"
-              type="lastname"
+              name="lastName"
+              type="lastName"
               as={TextField}
               variant="outlined"
               color="primary"
               label="Фамилия"
               fullWidth
-              error={Boolean(errors.lastname) && Boolean(touched.lastname)}
-              helperText={Boolean(touched.lastname) && errors.lastname}
+              error={Boolean(errors.lastName) && Boolean(touched.lastName)}
+              helperText={Boolean(touched.lastName) && errors.lastName}
             />
             <Box height={10} />
             <Field
-              name="name"
-              type="name"
+              name="firstName"
+              type="firstName"
               as={TextField}
               variant="outlined"
               color="primary"
               label="Имя"
               fullWidth
-              error={Boolean(errors.name) && Boolean(touched.name)}
-              helperText={Boolean(touched.name) && errors.name}
+              error={Boolean(errors.firstName) && Boolean(touched.firstName)}
+              helperText={Boolean(touched.firstName) && errors.firstName}
             />
             <Box height={10} />
             <Field
@@ -169,6 +170,18 @@ export const Signin = ({ caption }) => {
               fullWidth
               error={Boolean(errors.phone) && Boolean(touched.phone)}
               helperText={Boolean(touched.phone) && errors.phone}
+            />
+            <Box height={10} />
+            <Field
+              name="login"
+              type="login"
+              as={TextField}
+              variant="outlined"
+              color="primary"
+              label="Логин"
+              fullWidth
+              error={Boolean(errors.login) && Boolean(touched.login)}
+              helperText={Boolean(touched.login) && errors.login}
             />
             <Box height={10} />
             <Field

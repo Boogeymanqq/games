@@ -1,5 +1,7 @@
 const { Router } = require("express");
 const bcrypt = require("bcrypt");
+const config = require("config");
+const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 const Teacher = require("../models/Teacher");
 const Student = require("../models/Student");
@@ -125,10 +127,10 @@ router.post(
         });
       }
 
-      const { login, password } = req.body;
+      const { email, password } = req.body;
 
       const user =
-        (await Teacher.findOne({ login })) ||
+        (await Teacher.findOne({ email })) ||
         (await Student.findOne({ login }));
 
       if (!user) {
