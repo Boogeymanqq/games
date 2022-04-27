@@ -112,7 +112,7 @@ router.post(
 router.post(
   "/login",
   [
-    check("login", "Введите корректный email").exists(),
+    check("login", "Введите корректный логин").exists(),
     check("password", "Введите пароль").exists(),
   ],
   async (req, res) => {
@@ -127,10 +127,10 @@ router.post(
         });
       }
 
-      const { email, password } = req.body;
+      const { login, password } = req.body;
 
       const user =
-        (await Teacher.findOne({ email })) ||
+        (await Teacher.findOne({ login })) ||
         (await Student.findOne({ login }));
 
       if (!user) {
