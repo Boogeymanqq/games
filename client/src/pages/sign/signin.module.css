@@ -12,7 +12,7 @@
   flex-direction: column;
   background-color: #fff;
   padding: 32px;
-  min-width: 555px;
+  width: 555px;
   border-radius: 8px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
   margin: 32px;

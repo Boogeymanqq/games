@@ -56,7 +56,7 @@ export const Signin = ({ caption }) => {
             .trim()
             .min(3, "Минимум 3 символа")
             .max(50, "Максимум 50 символов")
-            .required("Пожалуйста, введите фамилию"),
+            .required("Пожалуйста, введите имя"),
           firstName: string()
             .trim()
             .min(3, "Минимум 3 символа")
@@ -66,7 +66,7 @@ export const Signin = ({ caption }) => {
             .trim()
             .min(3, "Минимум 3 символа")
             .max(50, "Максимум 50 символов")
-            .required("Пожалуйста, введите фамилию"),
+            .required("Пожалуйста, введите отчество"),
           email: string()
             .required("Пожалуйста, введите адрес электронной почты")
             .email("Недопустимый формат email")
@@ -79,6 +79,11 @@ export const Signin = ({ caption }) => {
             .trim()
             .required("Пожалуйста, введите номер телефона")
             .matches(/^\+?7(\d{10})$/, "Недопустимый формат телефона"),
+          login: string()
+            .trim()
+            .min(3, "Минимум 3 символа")
+            .max(20, "Максимум 20 символов")
+            .required("Пожалуйста, введите логин"),
           password: string()
             .trim()
             .required("Пожалуйста, введите пароль")
@@ -91,7 +96,11 @@ export const Signin = ({ caption }) => {
         })}
         onSubmit={async (values, formikHelpers) => {
           try {
-            const res = await request("api/auth/register/teacher", "POST", values);
+            const res = await request(
+              "api/auth/register/teacher",
+              "POST",
+              values
+            );
             setAlert(true);
             setMessage(res.message);
             setType(res.type);
@@ -101,6 +110,7 @@ export const Signin = ({ caption }) => {
           } catch (error) {
             setIsLoading(false);
             setAlert(true);
+            setTimeout(() => setAlert(false), 3000);
             setMessage(error.message);
             setType(error.type);
             console.log(error);
@@ -190,7 +200,7 @@ export const Signin = ({ caption }) => {
               as={TextField}
               variant="outlined"
               color="primary"
-              label="Password"
+              label="Пароль"
               fullWidth
               error={Boolean(errors.password) && Boolean(touched.password)}
               helperText={Boolean(touched.password) && errors.password}
