@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Redirect } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Main } from "./pages/main/main";
 import { Games } from "./pages/games/games";
 import { Login } from "./pages/login/login";
@@ -7,7 +7,7 @@ import { Platform } from "./pages/platform/platform";
 import { Board } from "./pages/board/board";
 import { Costs } from "./pages/costs/costs";
 import { Contacts } from "./pages/contacts/contacts";
-import { Signin } from "./pages/signin/signin";
+import { Signin } from "./pages/sign/signin";
 import { Monster } from "./ui/monster/monster";
 import { Cards } from "./ui/cards/cards";
 import { Room } from "./ui/rooms/rooms";
