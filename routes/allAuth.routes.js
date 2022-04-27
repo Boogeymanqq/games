@@ -6,9 +6,9 @@ const Student = require("../models/Student");
 const auth = require("../middleware/auth.middleware");
 const router = Router();
 
-// /api/allauth/register
+// /api/auth/register
 router.post(
-  "/teacher",
+  "/register/teacher",
   [
     check("email", "Некорректный email").isEmail(),
     check("password", "Минимальная длина пароля 6 символов").isLength({
@@ -25,40 +25,46 @@ router.post(
         });
       }
 
-      const { surname, name, patronumic, email, phone, password } = req.body;
+      const { lastName, firstName, patronymic, email, phone, login, password } =
+        req.body;
 
-      const candidate = await Teacher.findOne({ email });
+      const candidate = await Teacher.findOne({ email } || { login }); // ???
 
       if (candidate) {
         return res.status(400).json({
           message: "Такой учитель уже существует",
+          type: "error",
         });
       }
 
       const hashedPassword = await bcrypt.hash(password, 12);
       const teacher = new Teacher({
-        surname,
-        name,
-        patronumic,
+        lastName,
+        firstName,
+        patronymic,
         email,
         phone,
+        login,
         password: hashedPassword,
       });
 
       await teacher.save();
 
-      res.status(201).json({ message: "Учитель успешно зарегистрирован" });
+      res
+        .status(201)
+        .json({ message: "Учитель успешно зарегистрирован", type: "success" });
     } catch (error) {
       res.status(500).json({
-        message: "Что-то полго не так, попробуйте снова",
+        message: "Что-то пошло не так, попробуйте снова",
+        type: "error",
       });
     }
   }
 );
 
-// /api/allauth/register
+// /api/auth/register
 router.post(
-  "/student",
+  "register/student",
   [
     check("password", "Минимальная длина пароля 6 символов").isLength({
       min: 6,
@@ -75,22 +81,26 @@ router.post(
         });
       }
 
-      const { surname, name, password } = req.body;
+      const { lastName, firstName, login, password } = req.body;
 
       const hashedPassword = await bcrypt.hash(password, 12);
       const student = new Student({
-        surname,
-        name,
+        lastName,
+        firstName,
+        login,
         password: hashedPassword,
         teacher: req.user.userId,
       });
 
       await student.save();
 
-      res.status(201).json({ message: "Ученик успешно зарегистрирован" });
+      res
+        .status(201)
+        .json({ message: "Ученик успешно зарегистрирован", type: "success" });
     } catch (error) {
       res.status(500).json({
-        message: "Что-то полго не так, попробуйте снова",
+        message: "Что-то пошло не так, попробуйте снова",
+        type: "error",
       });
     }
   }
@@ -111,20 +121,20 @@ router.post(
         return res.status(400).json({
           errors: errors.array(),
           message: "Некорректные данные при входе в систему",
-          type: "danger",
+          type: "error",
         });
       }
 
       const { login, password } = req.body;
 
-      //const user = await Teacher.findOne({ login });
+      const user =
+        (await Teacher.findOne({ login })) ||
+        (await Student.findOne({ login }));
 
       if (!user) {
         return res
           .status(400)
-          .json({ message: "Пользователь не найден", type: "danger" });
-      } else {
-        user = await Student.findOne({  })
+          .json({ message: "Пользователь не найден", type: "error" });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -132,7 +142,7 @@ router.post(
       if (!isMatch) {
         return res.status(400).json({
           message: "Неверный пароль, попробуйте снова",
-          type: "danger",
+          type: "error",
         });
       }
 
@@ -145,17 +155,18 @@ router.post(
         userId: user.id,
         message: "Добро пожаловать",
         type: "success",
+        role: user.students ? "teacher" : "student",
       });
     } catch (error) {
       res.status(500).json({
         message: "Что-то полшо не так, попробуйте снова",
-        type: "danger",
+        type: "error",
       });
     }
   }
 );
 
-// /api/allauth
+// /api/auth
 router.get("/students", auth, async (req, res) => {
   try {
     const students = await Student.find({ teacher: req.user.iserId });
