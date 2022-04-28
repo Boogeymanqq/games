@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-// import { useHistory } from "react-router";
 import {
   Button,
   Box,
@@ -19,7 +17,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import s from "./login.module.css";
 
 const initialValues = {
-  email: "",
+  login: "",
   password: "",
 };
 
@@ -49,14 +47,11 @@ export const Login = ({ caption }) => {
       <Formik
         initialValues={initialValues}
         validationSchema={object({
-          email: string()
-            .required("Пожалуйста, введите адрес электронной почты")
-            .email("Недопустимый формат email")
+          login: string()
             .trim()
-            .matches(
-              /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/,
-              "Недопустимый формат email"
-            ),
+            .min(3, "Минимум 3 символа")
+            .max(20, "Максимум 20 символов")
+            .required("Пожалуйста, введите логин"),
           password: string()
             .trim()
             .required("Пожалуйста, введите пароль")
@@ -87,15 +82,15 @@ export const Login = ({ caption }) => {
         {({ errors, isValid, touched, dirty }) => (
           <Form>
             <Field
-              name="email"
-              type="email"
+              name="login"
+              type="login"
               as={TextField}
               variant="outlined"
               color="primary"
-              label="Электронная почта"
+              label="Логин"
               fullWidth
-              error={Boolean(errors.email) && Boolean(touched.email)}
-              helperText={Boolean(touched.email) && errors.email}
+              error={Boolean(errors.login) && Boolean(touched.login)}
+              helperText={Boolean(touched.login) && errors.login}
             />
             <Box height={10} />
             <Field
@@ -104,7 +99,7 @@ export const Login = ({ caption }) => {
               as={TextField}
               variant="outlined"
               color="primary"
-              label="Password"
+              label="Пароль"
               fullWidth
               error={Boolean(errors.password) && Boolean(touched.password)}
               helperText={Boolean(touched.password) && errors.password}

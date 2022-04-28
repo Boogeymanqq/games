@@ -10,23 +10,21 @@ import {
 } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
-import { useHttp } from "../../hooks/http.hook";
-import { AlertInfo } from "../../ui/alert/alert";
+import { useHttp } from "../../../hooks/http.hook";
+import { AlertInfo } from "../../../ui/alert/alert";
 import { green } from "@mui/material/colors";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import s from "./signin.module.css";
+import s from "./student.module.css";
 
 const initialValues = {
   lastName: "",
   firstName: "",
-  patronymic: "",
-  email: "",
-  phone: "",
   login: "",
   password: "",
+  teacher: "",
 };
 
-export const Signin = ({ caption }) => {
+export const StudentForm = ({ caption }) => {
   const { loading, request } = useHttp();
   const [alert, setAlert] = useState(false);
   const [message, setMessage] = useState("");
@@ -56,29 +54,12 @@ export const Signin = ({ caption }) => {
             .trim()
             .min(3, "Минимум 3 символа")
             .max(50, "Максимум 50 символов")
-            .required("Пожалуйста, введите имя"),
+            .required("Пожалуйста, введите фамилию"),
           firstName: string()
             .trim()
             .min(3, "Минимум 3 символа")
             .max(20, "Максимум 20 символов")
             .required("Пожалуйста, введите фамилию"),
-          patronymic: string()
-            .trim()
-            .min(3, "Минимум 3 символа")
-            .max(50, "Максимум 50 символов")
-            .required("Пожалуйста, введите отчество"),
-          email: string()
-            .required("Пожалуйста, введите адрес электронной почты")
-            .email("Недопустимый формат email")
-            .trim()
-            .matches(
-              /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/,
-              "Недопустимый формат email"
-            ),
-          phone: string()
-            .trim()
-            .required("Пожалуйста, введите номер телефона")
-            .matches(/^\+?7(\d{10})$/, "Недопустимый формат телефона"),
           login: string()
             .trim()
             .min(3, "Минимум 3 символа")
@@ -93,11 +74,16 @@ export const Signin = ({ caption }) => {
               /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
               `Недопустимый формат. Пароль должен иметь минимум одну заглавную букву, одну строчную букву, одну цифру и один специальный символ`
             ),
+          teacher: string()
+            .trim()
+            .min(3, "Минимум 3 символа")
+            .max(50, "Максимум 50 символов")
+            .required("Пожалуйста, введите имя учителя"),
         })}
         onSubmit={async (values, formikHelpers) => {
           try {
             const res = await request(
-              "api/auth/register/teacher",
+              "api/auth/register/student",
               "POST",
               values
             );
@@ -106,7 +92,7 @@ export const Signin = ({ caption }) => {
             setType(res.type);
             setIsLoading(false);
             console.log(res);
-            setTimeout(() => navigate("/login"), 1000);
+            // setTimeout(() => navigate("/login"), 1000);
           } catch (error) {
             setIsLoading(false);
             setAlert(true);
@@ -146,43 +132,6 @@ export const Signin = ({ caption }) => {
             />
             <Box height={10} />
             <Field
-              name="patronymic"
-              type="patronymic"
-              as={TextField}
-              variant="outlined"
-              color="primary"
-              label="Отчество"
-              fullWidth
-              error={Boolean(errors.patronymic) && Boolean(touched.patronymic)}
-              helperText={Boolean(touched.patronymic) && errors.patronymic}
-            />
-            <Box height={10} />
-            <Field
-              name="email"
-              type="email"
-              as={TextField}
-              variant="outlined"
-              color="primary"
-              label="Электронная почта"
-              fullWidth
-              error={Boolean(errors.email) && Boolean(touched.email)}
-              helperText={Boolean(touched.email) && errors.email}
-            />
-            <Box height={10} />
-            <Field
-              name="phone"
-              type="phone"
-              as={TextField}
-              variant="outlined"
-              color="primary"
-              label="Номер телефона"
-              placeholder="+7XXXXXXXXXX"
-              fullWidth
-              error={Boolean(errors.phone) && Boolean(touched.phone)}
-              helperText={Boolean(touched.phone) && errors.phone}
-            />
-            <Box height={10} />
-            <Field
               name="login"
               type="login"
               as={TextField}
@@ -205,8 +154,20 @@ export const Signin = ({ caption }) => {
               error={Boolean(errors.password) && Boolean(touched.password)}
               helperText={Boolean(touched.password) && errors.password}
             />
+            <Box height={10} />
+            <Field
+              name="teacher"
+              type="teacher"
+              as={TextField}
+              variant="outlined"
+              color="primary"
+              label="Учитель"
+              fullWidth
+              error={Boolean(errors.teacher) && Boolean(touched.teacher)}
+              helperText={Boolean(touched.teacher) && errors.teacher}
+            />
             <Box height={30} />
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box>
               <Button
                 onClick={() => setIsLoading(true)}
                 type="submit"
@@ -214,14 +175,10 @@ export const Signin = ({ caption }) => {
                 color="success"
                 size="large"
                 disabled={!dirty || !isValid}
+                fullWidth
               >
                 Продолжить
               </Button>
-              <Link to="/">
-                <Button variant="contained" color="primary" size="large">
-                  На Главную
-                </Button>
-              </Link>
             </Box>
           </Form>
         )}

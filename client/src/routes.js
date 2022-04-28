@@ -11,7 +11,7 @@ import { Signin } from "./pages/sign/signin";
 import { Monster } from "./ui/monster/monster";
 import { Cards } from "./ui/cards/cards";
 import { Room } from "./ui/rooms/rooms";
-import { Teacher } from "./ui/teacher/teacher";
+import { Teacher } from "./pages/teacher/teacher";
 // import { CheckRoom } from "./ui/rooms/checkRoom";
 
 export const useRoutes = (isAuthenticated) => {
@@ -33,7 +33,10 @@ export const useRoutes = (isAuthenticated) => {
         <Route path="/cards" element={<Cards />} />
         {/* <Route path="/checkroom" element={<CheckRoom />} /> */}
         <Route path="/room" element={<Room />} />
-        <Route path="/teacher" element={<Teacher />} />
+        <Route
+          path="/teacher"
+          element={<Teacher caption="Регистрация ученика" />}
+        />
       </Routes>
     );
   }

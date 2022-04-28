@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .materialForm > form {
@@ -14,6 +14,15 @@
   padding: 32px;
   width: 555px;
   border-radius: 8px;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2); */
+  border: 5px solid transparent;
+  border-image: linear-gradient(
+    to left top,
+    #adf2f7 20%,
+    transparent 50%,
+    transparent 20%,
+    #adf2f7 90%
+  );
+  border-image-slice: 1;
   margin: 32px;
 }
