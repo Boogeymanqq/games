@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import Draggable from "react-draggable";
+import Draggable, { DraggableCore } from "react-draggable";
 import { Link } from "react-router-dom";
 import { rooms } from "../../data";
 import s from "./rooms.module.css";
@@ -14,6 +14,7 @@ export const Room = () => {
   const [cardRooms, setCardRooms] = useState(rooms);
   const [size, setSize] = useState(100);
   const [objSize, setObjSize] = useState(100);
+  const [objBoxSize, setObjBoxSize] = useState(100);
   const [drag, setDrag] = useState(false);
   const [isShow, setIsShow] = useState(true);
 
@@ -22,15 +23,16 @@ export const Room = () => {
 
   const nodeRef = useRef(null);
 
-  function startDrag(e, id) {
+  function startDrag(e, completed) {
     e.preventDefault();
     setCardRooms(
       filtredRoom.map((item) => {
-        if (item.id === id) {
+        if (item.completed === completed) {
           // setXPosition(e.clientX);
           // setYPosition(e.clientY);
 
           item.completed = false;
+          // item.defaultPos = null;
           // item.defaultPos = { x: xPosition, y: yPosition };
           console.log(item.completed);
         }
@@ -39,10 +41,21 @@ export const Room = () => {
     );
   }
 
-  // function stopDrag(e) {
-  //   setXPosition(e.clientX);
-  //   setYPosition(e.clientY);
-  //   console.log(e.clientX, e.clientY);
+  // function stopDrag(e, id) {
+  //   e.preventDefault();
+  //   setCardRooms(
+  //     filtredRoom.map((item) => {
+  //       if (item.id === id) {
+  //         // setXPosition(e.clientX);
+  //         // setYPosition(e.clientY);
+
+  //         item.completed = false;
+  //         // item.defaultPos = { x: xPosition, y: yPosition };
+  //         console.log(item.completed);
+  //       }
+  //       return item;
+  //     })
+  //   );
   // }
 
   // function clickClick(e, id) {
@@ -59,11 +72,11 @@ export const Room = () => {
   // }
 
   function toggle(e, id) {
-    e.preventDefault();
     setCardRooms(
       filtredRoom.map((item) => {
         if (item.id === id) {
           item.completed = true;
+          // item.defaultPos = null;
         }
         return item;
       })
@@ -210,6 +223,15 @@ export const Room = () => {
                 onInput={(e) => setObjSize(e.target.value)}
               />
             </label>
+            <label>
+              {objBoxSize}
+              <br />
+              <input
+                type="range"
+                value={objBoxSize}
+                onInput={(e) => setObjBoxSize(e.target.value)}
+              />
+            </label>
           </div>
           <div className={s.room}>
             <div
@@ -219,8 +241,8 @@ export const Room = () => {
             <div
               className={s.parts}
               style={{
-                width: `${9 * objSize}px`,
-                height: `${6 * objSize}px`,
+                width: `${9 * objBoxSize}px`,
+                height: `${6 * objBoxSize}px`,
               }}
             >
               {filtredRoom.map((item, index) => (
@@ -231,9 +253,10 @@ export const Room = () => {
                   bounds=""
                   axis="both"
                   // onDrag={(e) => dragDrag(e, item.id)}
-                  onStart={(e) => startDrag(e, item.id)}
+                  onStart={(e) => startDrag(e, item.completed)}
                   // onStop={(e) => stopDrag(e, item.id)}
-                  // defaultPosition={{ x: 0, y: 0 }}
+                  // defaultPosition={item.defaultPos}
+                  // positionOffset={}
                   position={item.completed ? item.defaultPos : null}
                 >
                   <div ref={nodeRef}>
