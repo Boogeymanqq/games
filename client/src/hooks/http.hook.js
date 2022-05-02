@@ -10,13 +10,16 @@ export const useHttp = () => {
       try {
         if (body) {
           body = JSON.stringify(body);
-          headers['Content-Type'] = 'application/json';
+          headers["Content-Type"] = "application/json";
         }
 
         const response = await fetch(url, {
           method,
           body,
-          headers,
+          headers: {
+            ...headers,
+            Authorization: `Bearer ${localStorage.token}`,
+          },
         });
         const data = await response.json();
 
@@ -32,11 +35,13 @@ export const useHttp = () => {
         setError(error.message);
         throw error;
       }
-    }, []);
+    },
+    []
+  );
 
-    const clearError = () => {
-      setError(null);
-    };
+  const clearError = () => {
+    setError(null);
+  };
 
   return { loading, request, error, clearError };
 };
