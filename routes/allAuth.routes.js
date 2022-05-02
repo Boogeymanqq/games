@@ -66,7 +66,7 @@ router.post(
 
 // /api/auth/register
 router.post(
-  "register/student",
+  "/register/student",
   [
     check("password", "Минимальная длина пароля 6 символов").isLength({
       min: 6,
