@@ -23,17 +23,15 @@ export const Room = () => {
 
   const nodeRef = useRef(null);
 
-  function startDrag(e, completed) {
+  function startDrag(e, id) {
     e.preventDefault();
     setCardRooms(
       filtredRoom.map((item) => {
-        if (item.completed === completed) {
-          // setXPosition(e.clientX);
-          // setYPosition(e.clientY);
-
+        if (item.id === id) {
+          // setXPosition(e.clientX / 2);
+          // setYPosition(e.clientY / 2);
+          // item.defaultPos = { x: 0, y: 0 };
           item.completed = false;
-          // item.defaultPos = null;
-          // item.defaultPos = { x: xPosition, y: yPosition };
           console.log(item.completed);
         }
         return item;
@@ -41,30 +39,17 @@ export const Room = () => {
     );
   }
 
+  function stopDrag(e, completed) {
+    e.preventDefault();
+  }
+
   // function stopDrag(e, id) {
   //   e.preventDefault();
   //   setCardRooms(
   //     filtredRoom.map((item) => {
   //       if (item.id === id) {
-  //         // setXPosition(e.clientX);
-  //         // setYPosition(e.clientY);
-
   //         item.completed = false;
-  //         // item.defaultPos = { x: xPosition, y: yPosition };
   //         console.log(item.completed);
-  //       }
-  //       return item;
-  //     })
-  //   );
-  // }
-
-  // function clickClick(e, id) {
-  //   setCardRooms(
-  //     filtredRoom.map((item) => {
-  //       if (item.id === id) {
-  //         setXPosition(e.clientX);
-  //         setYPosition(e.clientX);
-  //         console.log(xPosition, yPosition);
   //       }
   //       return item;
   //     })
@@ -106,8 +91,6 @@ export const Room = () => {
     setDrag(false);
   }
 
-  // console.log(localStorage.getItem("login") === "wqer@wsdsa.com");
-
   function onChange(id) {
     setCardRooms(
       cardRooms.map((elem) => {
@@ -133,15 +116,14 @@ export const Room = () => {
   }
 
   const filtredRoom = cardRooms.filter((elem) => elem.checked === true);
-  // console.log(filtredRoom);
 
   return (
     <>
       {isShow ? (
         <>
           <div className={s.show}>
-            {cardRooms.map((elem) => (
-              <div>
+            {cardRooms.map((elem, index) => (
+              <div key={index}>
                 <img
                   style={{ width: "150px", height: "150px" }}
                   src={elem.url}
@@ -250,14 +232,14 @@ export const Room = () => {
                   key={index}
                   nodeRef={nodeRef}
                   // handle="#imhandle"
-                  bounds=""
+                  // bounds=""
                   axis="both"
                   // onDrag={(e) => dragDrag(e, item.id)}
-                  onStart={(e) => startDrag(e, item.completed)}
-                  // onStop={(e) => stopDrag(e, item.id)}
+                  onStart={(e) => startDrag(e, item.id)}
+                  onStop={(e) => stopDrag(e, item.completed)}
                   // defaultPosition={item.defaultPos}
                   // positionOffset={}
-                  position={item.completed ? item.defaultPos : null}
+                  position={item.completed ? item.defaultPos : undefined}
                 >
                   <div ref={nodeRef}>
                     <img
