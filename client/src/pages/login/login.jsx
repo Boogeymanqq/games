@@ -68,7 +68,9 @@ export const Login = ({ caption }) => {
             localStorage.setItem("token", res.token);
             console.log(res);
             formikHelpers.resetForm();
-            setTimeout(() => navigate("/teacher"), 1000);
+            res.role === "teacher"
+              ? setTimeout(() => navigate("/teacher"), 1000)
+              : setTimeout(() => navigate("/student"), 1000);
           } catch (error) {
             setIsLoading(false);
             setAlert(true);

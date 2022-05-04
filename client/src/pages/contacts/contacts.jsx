@@ -4,7 +4,7 @@ import s from "./contacts.module.css";
 
 export const Contacts = () => {
   return (
-    <div classNmae={s.contacts}>
+    <div className={s.contacts}>
       <Navigation />
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import Draggable, { DraggableCore } from "react-draggable";
+import Draggable from "react-draggable";
 import { Link } from "react-router-dom";
 import { rooms } from "../../data";
 import s from "./rooms.module.css";
@@ -18,50 +18,29 @@ export const Room = () => {
   const [drag, setDrag] = useState(false);
   const [isShow, setIsShow] = useState(true);
 
-  const [xPosition, setXPosition] = useState(null);
-  const [yPosition, setYPosition] = useState(null);
-
   const nodeRef = useRef(null);
 
-  function startDrag(e, id) {
+  function startDrag(e) {
+    e.preventDefault();
+  }
+
+  function stopDrag(e, data, id) {
     e.preventDefault();
     setCardRooms(
       filtredRoom.map((item) => {
         if (item.id === id) {
-          // setXPosition(e.clientX / 2);
-          // setYPosition(e.clientY / 2);
-          // item.defaultPos = { x: 0, y: 0 };
-          item.completed = false;
-          console.log(item.completed);
+          item.position = { x: data.x, y: data.y };
         }
         return item;
       })
     );
   }
 
-  function stopDrag(e, completed) {
-    e.preventDefault();
-  }
-
-  // function stopDrag(e, id) {
-  //   e.preventDefault();
-  //   setCardRooms(
-  //     filtredRoom.map((item) => {
-  //       if (item.id === id) {
-  //         item.completed = false;
-  //         console.log(item.completed);
-  //       }
-  //       return item;
-  //     })
-  //   );
-  // }
-
-  function toggle(e, id) {
+  function toggle(id) {
     setCardRooms(
       filtredRoom.map((item) => {
         if (item.id === id) {
-          item.completed = true;
-          // item.defaultPos = null;
+          item.position = { x: 0, y: 0 };
         }
         return item;
       })
@@ -185,8 +164,16 @@ export const Room = () => {
               </Nav>
             </Navbar>
           </div>
-          <h2>Make a Room</h2>
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <h2 style={{ textAlign: "center" }}>Make a Room</h2>
+          <div
+            style={{
+              width: "1300px",
+              margin: "0 auto 60px",
+              display: "flex",
+              justifyContent: "space-around",
+              marginBottom: "60px",
+            }}
+          >
             <label>
               {size}
               <br />
@@ -218,49 +205,39 @@ export const Room = () => {
           <div className={s.room}>
             <div
               className={s.room15}
-              style={{ width: `${9 * size}px`, height: `${6 * size}px` }}
+              style={{ width: `${6 * size}px`, height: `${5 * size}px` }}
             ></div>
             <div
               className={s.parts}
               style={{
-                width: `${9 * objBoxSize}px`,
-                height: `${6 * objBoxSize}px`,
+                width: `${6 * objBoxSize}px`,
+                height: `${5 * objBoxSize}px`,
               }}
             >
               {filtredRoom.map((item, index) => (
                 <Draggable
                   key={index}
                   nodeRef={nodeRef}
-                  // handle="#imhandle"
                   // bounds=""
                   axis="both"
                   // onDrag={(e) => dragDrag(e, item.id)}
-                  onStart={(e) => startDrag(e, item.id)}
-                  onStop={(e) => stopDrag(e, item.completed)}
-                  // defaultPosition={item.defaultPos}
-                  // positionOffset={}
-                  position={item.completed ? item.defaultPos : undefined}
+                  onStart={(e) => startDrag(e)}
+                  onStop={(e, data) => stopDrag(e, data, item.id)}
+                  position={item.position}
                 >
                   <div ref={nodeRef}>
                     <img
-                      // onClick={(e) => clickClick(e, item.id)}
                       style={{
                         width: `${1.5 * objSize}px`,
                         height: `${1.5 * objSize}px`,
                       }}
-                      // id="imhandle"
                       src={item.url}
                       alt=""
                       className={s.room__body}
                     />
-                    {localStorage.getItem("login") && (
-                      <button
-                        className={s.btn}
-                        onClick={(e) => toggle(e, item.id)}
-                      >
-                        &times;
-                      </button>
-                    )}
+                    <button className={s.btn} onClick={() => toggle(item.id)}>
+                      &times;
+                    </button>
                   </div>
                 </Draggable>
               ))}
