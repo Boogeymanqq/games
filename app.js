@@ -7,17 +7,23 @@ const app = express();
 
 const PORT = config.get("port") || 5000;
 
-app.use(express.json({ extended: true }))
+app.use(express.json({ extended: true }));
 
-// app.use("/api/auth", require("./routes/auth.routes"));
+// app.use(require("./monster/monster"));
+// getFiles();
+
+app.use("/monster/img", express.static(path.join(__dirname, 'monster', 'img')));
+
 app.use("/api/auth", require("./routes/allAuth.routes"));
 
-if (process.env.NODE_ENV === 'production') {
-  app.use('/', express.static(path.join(__dirname, 'client', 'build')));
+app.use("/api/monster", require("./routes/monster.routes"));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-  })
+if (process.env.NODE_ENV === "production") {
+  app.use("/", express.static(path.join(__dirname, "client", "build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
 }
 
 async function start() {
@@ -26,6 +32,7 @@ async function start() {
     app.listen(PORT, () =>
       console.log(`Server has been started on port ${PORT}...`)
     );
+    // getFiles();
   } catch (error) {
     console.log("Server error", error.message);
     process.exit(1);
