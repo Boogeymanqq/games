@@ -14,56 +14,33 @@ export const Room = () => {
   const [cardRooms, setCardRooms] = useState(rooms);
   const [size, setSize] = useState(100);
   const [objSize, setObjSize] = useState(100);
+  const [objBoxSize, setObjBoxSize] = useState(100);
   const [drag, setDrag] = useState(false);
   const [isShow, setIsShow] = useState(true);
 
-  const [xPosition, setXPosition] = useState(null);
-  const [yPosition, setYPosition] = useState(null);
-
   const nodeRef = useRef(null);
 
-  function startDrag(e, id) {
+  function startDrag(e) {
+    e.preventDefault();
+  }
+
+  function stopDrag(e, data, id) {
     e.preventDefault();
     setCardRooms(
       filtredRoom.map((item) => {
         if (item.id === id) {
-          // setXPosition(e.clientX);
-          // setYPosition(e.clientY);
-
-          item.completed = false;
-          // item.defaultPos = { x: xPosition, y: yPosition };
-          console.log(item.completed);
+          item.position = { x: data.x, y: data.y };
         }
         return item;
       })
     );
   }
 
-  // function stopDrag(e) {
-  //   setXPosition(e.clientX);
-  //   setYPosition(e.clientY);
-  //   console.log(e.clientX, e.clientY);
-  // }
-
-  // function clickClick(e, id) {
-  //   setCardRooms(
-  //     filtredRoom.map((item) => {
-  //       if (item.id === id) {
-  //         setXPosition(e.clientX);
-  //         setYPosition(e.clientX);
-  //         console.log(xPosition, yPosition);
-  //       }
-  //       return item;
-  //     })
-  //   );
-  // }
-
-  function toggle(e, id) {
-    e.preventDefault();
+  function toggle(id) {
     setCardRooms(
       filtredRoom.map((item) => {
         if (item.id === id) {
-          item.completed = true;
+          item.position = { x: 0, y: 0 };
         }
         return item;
       })
@@ -93,8 +70,6 @@ export const Room = () => {
     setDrag(false);
   }
 
-  // console.log(localStorage.getItem("login") === "wqer@wsdsa.com");
-
   function onChange(id) {
     setCardRooms(
       cardRooms.map((elem) => {
@@ -120,15 +95,14 @@ export const Room = () => {
   }
 
   const filtredRoom = cardRooms.filter((elem) => elem.checked === true);
-  // console.log(filtredRoom);
 
   return (
     <>
       {isShow ? (
         <>
           <div className={s.show}>
-            {cardRooms.map((elem) => (
-              <div>
+            {cardRooms.map((elem, index) => (
+              <div key={index}>
                 <img
                   style={{ width: "150px", height: "150px" }}
                   src={elem.url}
@@ -190,8 +164,16 @@ export const Room = () => {
               </Nav>
             </Navbar>
           </div>
-          <h2>Make a Room</h2>
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <h2 style={{ textAlign: "center" }}>Make a Room</h2>
+          <div
+            style={{
+              width: "1300px",
+              margin: "0 auto 60px",
+              display: "flex",
+              justifyContent: "space-around",
+              marginBottom: "60px",
+            }}
+          >
             <label>
               {size}
               <br />
@@ -210,52 +192,52 @@ export const Room = () => {
                 onInput={(e) => setObjSize(e.target.value)}
               />
             </label>
+            <label>
+              {objBoxSize}
+              <br />
+              <input
+                type="range"
+                value={objBoxSize}
+                onInput={(e) => setObjBoxSize(e.target.value)}
+              />
+            </label>
           </div>
           <div className={s.room}>
             <div
               className={s.room15}
-              style={{ width: `${9 * size}px`, height: `${6 * size}px` }}
+              style={{ width: `${6 * size}px`, height: `${5 * size}px` }}
             ></div>
             <div
               className={s.parts}
               style={{
-                width: `${9 * objSize}px`,
-                height: `${6 * objSize}px`,
+                width: `${6 * objBoxSize}px`,
+                height: `${5 * objBoxSize}px`,
               }}
             >
               {filtredRoom.map((item, index) => (
                 <Draggable
                   key={index}
                   nodeRef={nodeRef}
-                  // handle="#imhandle"
-                  bounds=""
+                  // bounds=""
                   axis="both"
                   // onDrag={(e) => dragDrag(e, item.id)}
-                  onStart={(e) => startDrag(e, item.id)}
-                  // onStop={(e) => stopDrag(e, item.id)}
-                  // defaultPosition={{ x: 0, y: 0 }}
-                  position={item.completed ? item.defaultPos : null}
+                  onStart={(e) => startDrag(e)}
+                  onStop={(e, data) => stopDrag(e, data, item.id)}
+                  position={item.position}
                 >
                   <div ref={nodeRef}>
                     <img
-                      // onClick={(e) => clickClick(e, item.id)}
                       style={{
                         width: `${1.5 * objSize}px`,
                         height: `${1.5 * objSize}px`,
                       }}
-                      // id="imhandle"
                       src={item.url}
                       alt=""
                       className={s.room__body}
                     />
-                    {localStorage.getItem("login") && (
-                      <button
-                        className={s.btn}
-                        onClick={(e) => toggle(e, item.id)}
-                      >
-                        &times;
-                      </button>
-                    )}
+                    <button className={s.btn} onClick={() => toggle(item.id)}>
+                      &times;
+                    </button>
                   </div>
                 </Draggable>
               ))}

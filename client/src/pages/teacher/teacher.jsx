@@ -1,7 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import s from "./navigation.module.css";
-import { teacherPage } from "../../data.js";
+import { useNavigate, Link } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import {
   AppBar,
@@ -15,6 +13,8 @@ import {
   Tab,
 } from "@mui/material";
 import { StudentForm } from "./student/studentForm";
+import { teacherPage } from "../../data.js";
+import s from "./navigation.module.css";
 // import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 
 // const useStyles = makeStyles({
@@ -27,28 +27,33 @@ import { StudentForm } from "./student/studentForm";
 export const Teacher = ({ caption }) => {
   const [value, setValue] = React.useState(0);
 
+  const navigate = useNavigate();
+
   const handleChange = (event) => {
     setValue(event.target);
   };
   console.log(value);
+
+  function logout() {
+    localStorage.clear();
+    navigate("/");
+  }
 
   return (
     <>
       <AppBar sx={{ bgcolor: "#e8eaf6", p: 0.5 }} position="static">
         <Container maxWidth="xxl">
           <Toolbar className={s.navigation__navbar}>
-            <Link to="/">
-              <Typography
-                className={s.navigation__navbrand}
-                variant="h4"
-                component="div"
-              >
-                <span style={{ color: "#3399FF" }}>pi</span>
-                <span style={{ color: "#F08080" }}>ki</span>
-                <span style={{ color: "#33CC33" }}>mo</span>
-                <span style={{ color: "#FF9900" }}>ni</span>
-              </Typography>
-            </Link>
+            <Typography
+              className={s.navigation__navbrand}
+              variant="h4"
+              component="div"
+            >
+              <span style={{ color: "#3399FF" }}>pi</span>
+              <span style={{ color: "#F08080" }}>ki</span>
+              <span style={{ color: "#33CC33" }}>mo</span>
+              <span style={{ color: "#FF9900" }}>ni</span>
+            </Typography>
             <Tabs
               maxWidth="lg"
               value={value}
@@ -57,14 +62,18 @@ export const Teacher = ({ caption }) => {
               textColor="secondary"
               indicatorColor="secondary"
             >
-              {teacherPage.map((elem, index) => (
-                <Tab
-                  label={elem.title}
-                  key={index}
-                  to={elem.href}
-                  component={Link}
-                />
-              ))}
+              {teacherPage.map((elem, index) =>
+                elem.title === "Выйти" ? (
+                  <Tab label={elem.title} key={index} onClick={logout} />
+                ) : (
+                  <Tab
+                    label={elem.title}
+                    key={index}
+                    to={elem.href}
+                    component={Link}
+                  />
+                )
+              )}
             </Tabs>
           </Toolbar>
         </Container>

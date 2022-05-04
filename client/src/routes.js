@@ -12,6 +12,7 @@ import { Monster } from "./ui/monster/monster";
 import { Cards } from "./ui/cards/cards";
 import { Room } from "./ui/rooms/rooms";
 import { Teacher } from "./pages/teacher/teacher";
+import { Student } from "./pages/student/student";
 // import { CheckRoom } from "./ui/rooms/checkRoom";
 
 export const useRoutes = (isAuthenticated) => {
@@ -37,6 +38,7 @@ export const useRoutes = (isAuthenticated) => {
           path="/teacher"
           element={<Teacher caption="Регистрация ученика" />}
         />
+        <Route path="/student" element={<Student />} />
       </Routes>
     );
   }

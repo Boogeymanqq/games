@@ -1,41 +1,23 @@
 .room {
-  /* display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 0 40px; */
   display: grid;
-  gap: 40px;
-  /* grid-auto-flow: column; */
-  grid-template-columns: repeat(auto-fit, minmax(auto, 1000px));
+  margin: auto;
+  justify-content: space-between;
+  grid-template: 1fr / repeat(auto-fit, 600px);
+  width: 1300px;
 }
 
 .room15 {
   background: url("../../../public/img/room/room15.jpeg") no-repeat center /
-    cover;
-  /* display: grid; */
-  /* grid-template: minmax(auto, 600px) / minmax(auto, 900px); */
-  /* min-width: 900px;
-  height: 600px; */
-  /* flex-basis: 1000px; */
-  /* flex: 0 1 auto; */
-  /* flex-shrink: 0; */
-  border: 1px double #f31616;
-  border-radius: 5px;
+    100% 100%;
 }
 
 .parts {
-  /* display: flex;
-  flex-wrap: wrap;
-  width: 800px;
-  height: 600px; */
   display: grid;
   grid-template: repeat(auto-fit, minmax(auto, 200px)) / repeat(
       auto-fit,
       minmax(auto, 200px)
     );
   text-align: center;
-  border: 1px double #f31616;
-  border-radius: 5px;
 }
 
 .room__body {
@@ -52,7 +34,7 @@
 .drop__area {
   width: 400px;
   height: 400px;
-  border: 5px dashed black;
+  border: 5px dashed #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,7 +45,6 @@
   margin: auto;
   display: flex;
   flex-wrap: wrap;
-  border: 2px solid red;
   width: 1200px;
   align-items: center;
   justify-content: center;
