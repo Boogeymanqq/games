@@ -14,8 +14,6 @@ module.exports = getFiles = async () => {
     const files = fs.readdirSync(path.join(__dirname, "img"), "utf8");
 
     files.forEach(async (file) => await setMonsterPart(file).save());
-
-    // await monsterParts.save();
   } catch (error) {
     console.log(error);
   }

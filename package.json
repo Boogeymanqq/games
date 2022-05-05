@@ -15,7 +15,7 @@
     "mern",
     "react"
   ],
-  "author": "Anatoliy Kostarev, Artyom Bobarikin",
+  "author": "Anatoliy Kostarev, Artyom Bobarikin, Anton Olshevsky",
   "license": "ISC",
   "dependencies": {
     "@emotion/react": "^11.9.0",

@@ -3,12 +3,14 @@ const bcrypt = require("bcrypt");
 const config = require("config");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
-const User = require("../models/User");
+const Teacher = require("../models/Teacher");
+const Student = require("../models/Student");
+const auth = require("../middleware/auth.middleware");
 const router = Router();
 
-// /api/auth/register
+// /api/auth/register/teacher
 router.post(
-  "/register",
+  "/register/teacher",
   [
     check("email", "Некорректный email").isEmail(),
     check("password", "Минимальная длина пароля 6 символов").isLength({
@@ -22,30 +24,84 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
-          message: "Некорректные данные при регистрации",
-          type: "warning",
         });
       }
 
-      const { email, password } = req.body;
+      const { lastName, firstName, patronymic, email, phone, login, password } =
+        req.body;
 
-      const candidate = await User.findOne({ email });
+      const candidate = await Teacher.findOne({ email } || { login }); // ???
 
       if (candidate) {
         return res.status(400).json({
-          message: "Такой пользователь уже существует",
+          message: "Такой учитель уже существует",
+          type: "error",
         });
       }
 
       const hashedPassword = await bcrypt.hash(password, 12);
-      const user = new User({ email, password: hashedPassword });
+      const teacher = new Teacher({
+        lastName,
+        firstName,
+        patronymic,
+        email,
+        phone,
+        login,
+        password: hashedPassword,
+      });
 
-      await user.save();
+      await teacher.save();
 
-      res.status(201).json({ message: "Пользователь создан", type: "success" });
+      res
+        .status(201)
+        .json({ message: "Учитель успешно зарегистрирован", type: "success" });
     } catch (error) {
       res.status(500).json({
-        message: "Что-то полшо не так, попробуйте снова",
+        message: "Что-то пошло не так, попробуйте снова",
+        type: "error",
+      });
+    }
+  }
+);
+
+// /api/auth/register/student
+router.post(
+  "/register/student",
+  [
+    check("password", "Минимальная длина пароля 6 символов").isLength({
+      min: 6,
+    }),
+  ],
+  auth,
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          errors: errors.array(),
+        });
+      }
+
+      const { lastName, firstName, login, password } = req.body;
+
+      const hashedPassword = await bcrypt.hash(password, 12);
+      const student = new Student({
+        lastName,
+        firstName,
+        login,
+        password: hashedPassword,
+        teacher: req.user.userId,
+      });
+
+      await student.save();
+
+      res
+        .status(201)
+        .json({ message: "Ученик успешно зарегистрирован", type: "success" });
+    } catch (error) {
+      res.status(500).json({
+        message: "Что-то пошло не так, попробуйте снова",
         type: "error",
       });
     }
@@ -56,7 +112,7 @@ router.post(
 router.post(
   "/login",
   [
-    check("email", "Введите корректный email").normalizeEmail().isEmail(),
+    check("login", "Введите корректный логин").exists(),
     check("password", "Введите пароль").exists(),
   ],
   async (req, res) => {
@@ -71,9 +127,11 @@ router.post(
         });
       }
 
-      const { email, password } = req.body;
+      const { login, password } = req.body;
 
-      const user = await User.findOne({ email });
+      const user =
+        (await Teacher.findOne({ login })) ||
+        (await Student.findOne({ login }));
 
       if (!user) {
         return res
@@ -99,6 +157,7 @@ router.post(
         userId: user.id,
         message: "Добро пожаловать",
         type: "success",
+        role: user.students ? "teacher" : "student",
       });
     } catch (error) {
       res.status(500).json({
@@ -108,5 +167,15 @@ router.post(
     }
   }
 );
+
+// /api/auth/students
+router.get("/students", auth, async (req, res) => {
+  try {
+    const students = await Student.find({ teacher: req.user.iserId });
+    res.json(students);
+  } catch (e) {
+    res.status(500).json({ message: "Что-то полшо не так, попробуйте снова" });
+  }
+});
 
 module.exports = router;
