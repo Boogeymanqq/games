@@ -5,9 +5,9 @@ const MonsterPart = require("../models/MonsterPart");
 module.exports = getFiles = async () => {
   const setMonsterPart = (file) =>
     new MonsterPart({
-      src: path.join("localhost:5000", "monster", "img", file),
-      x: 0,
-      y: 0,
+      url: path.join("http://localhost:5000", "monster", "img", file).split("\\").join("/"),
+      position: { x: 0, y: 0 },
+      isChecked: false,
     });
 
   try {

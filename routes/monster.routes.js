@@ -1,9 +1,10 @@
 const { Router } = require("express");
 const router = Router();
 const MonsterPart = require("../models/MonsterPart");
+const auth = require("../middleware/auth.middleware");
 
 // api/monster/monsterparts
-router.get("/monsterparts", async (req, res) => {
+router.get("/monsterparts", auth, async (req, res) => {
   try {
     const monsterparts = await MonsterPart.find();
     res.status(201).json(monsterparts);

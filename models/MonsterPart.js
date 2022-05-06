@@ -1,9 +1,12 @@
 const { Schema, model } = require("mongoose");
 
 const schema = new Schema({
-  src: { type: String },
-  x: { type: String },
-  y: { type: String },
+  url: { type: String },
+  position: {
+    x: { type: Number },
+    y: { type: Number },
+  },
+  isChecked: { type: Boolean },
 });
 
 module.exports = model("MonsterPart", schema);
