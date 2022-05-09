@@ -47,7 +47,7 @@
 
 .drop__area {
   width: 400px;
-  height: 400px;
+  height: 200px;
   border: 5px dashed #000;
   display: flex;
   align-items: center;
@@ -56,10 +56,12 @@
 }
 
 .show {
-  margin: auto;
+  margin: 50px auto;
   display: flex;
   flex-wrap: wrap;
   width: 1200px;
+  height: 650px;
+  overflow-y: auto;
   align-items: center;
   justify-content: center;
 }

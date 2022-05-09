@@ -1,7 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
 import { Link } from "react-router-dom";
-import { monster } from "../../data";
 import s from "./monster.module.css";
 import { navGames } from "../../data";
 import style from "../navigation/navigation.module.css";
@@ -11,7 +10,7 @@ const monsterLink = "Монстер";
 const newNavGame = navGames.filter((elem) => elem.title !== monsterLink);
 
 export const Monster = () => {
-  const [cardMonster, setCardMonster] = useState(monster);
+  const [cardMonster, setCardMonster] = useState([]);
   const [size, setSize] = useState(100);
   const [objSize, setObjSize] = useState(100);
   const [objBoxSize, setObjBoxSize] = useState(100);
@@ -19,6 +18,21 @@ export const Monster = () => {
   const [isShow, setIsShow] = useState(true);
 
   const nodeRef = useRef(null);
+
+  useEffect(() => {
+    async function getMonster() {
+      const url = "api/monster/monsterparts";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      });
+      const data = await response.json();
+      setCardMonster(data);
+    }
+    getMonster();
+  }, []);
 
   function startDrag(e) {
     e.preventDefault();
@@ -28,7 +42,7 @@ export const Monster = () => {
     e.preventDefault();
     setCardMonster(
       filtredMonster.map((item) => {
-        if (item.id === id) {
+        if (item._id === id) {
           item.position = { x: data.x, y: data.y };
         }
         return item;
@@ -39,7 +53,7 @@ export const Monster = () => {
   function toggle(id) {
     setCardMonster(
       filtredMonster.map((item) => {
-        if (item.id === id) {
+        if (item._id === id) {
           item.position = { x: 0, y: 0 };
         }
         return item;
@@ -73,8 +87,8 @@ export const Monster = () => {
   function onChange(id) {
     setCardMonster(
       cardMonster.map((elem) => {
-        if (elem.id === id) {
-          elem.checked = !elem.checked;
+        if (elem._id === id) {
+          elem.isChecked = !elem.isChecked;
         }
         return elem;
       })
@@ -83,35 +97,46 @@ export const Monster = () => {
 
   function isReturn() {
     setIsShow(true);
-    // window.location.reload();
-    setCardMonster(
-      monster.map((elem) => {
-        if (elem.checked === true) {
-          elem.checked = false;
-        }
-        return elem;
-      })
-    );
+    window.location.reload();
+    // setCardMonster(
+    //   cardMonster.map((elem) => {
+    //     if (elem.isChecked === true) {
+    //       elem.isChecked = false;
+    //     }
+    //     return elem;
+    //   })
+    // );
   }
 
-  const filtredMonster = cardMonster.filter((elem) => elem.checked === true);
+  const filtredMonster = cardMonster.filter((elem) => elem.isChecked === true);
+  // console.log(filtredMonster);
 
   return (
     <>
       {isShow ? (
         <>
+          <h1 style={{ textAlign: "center", marginTop: "30px" }}>
+            Choose a subject
+          </h1>
           <div className={s.show}>
             {cardMonster.map((elem, index) => (
               <div key={index}>
                 <img
-                  style={{
-                    width: `${0.6 * objSize}px`,
-                    height: `${0.8 * objSize}px`,
-                  }}
+                  style={
+                    elem.url.includes("body")
+                      ? {
+                          width: `${0.6 * objSize}px`,
+                          height: `${1.5 * objSize}px`,
+                        }
+                      : {
+                          width: `${0.6 * objSize}px`,
+                          height: `${0.8 * objSize}px`,
+                        }
+                  }
                   src={elem.url}
                   alt=""
                 />
-                <input type="checkbox" onChange={() => onChange(elem.id)} />
+                <input type="checkbox" onChange={() => onChange(elem._id)} />
               </div>
             ))}
           </div>
@@ -224,20 +249,27 @@ export const Monster = () => {
                   axis="both"
                   // onDrag={(e) => dragDrag(e, item.id)}
                   onStart={(e) => startDrag(e)}
-                  onStop={(e, data) => stopDrag(e, data, item.id)}
+                  onStop={(e, data) => stopDrag(e, data, item._id)}
                   position={item.position}
                 >
                   <div ref={nodeRef}>
                     <img
-                      style={{
-                        width: `${0.6 * objSize}px`,
-                        height: `${0.8 * objSize}px`,
-                      }}
+                      style={
+                        item.url.includes("body")
+                          ? {
+                              width: `${0.6 * objSize}px`,
+                              height: `${1.5 * objSize}px`,
+                            }
+                          : {
+                              width: `${0.6 * objSize}px`,
+                              height: `${0.8 * objSize}px`,
+                            }
+                      }
                       src={item.url}
                       alt=""
                       className={s.room__body}
                     />
-                    <button className={s.btn} onClick={() => toggle(item.id)}>
+                    <button className={s.btn} onClick={() => toggle(item._id)}>
                       &times;
                     </button>
                   </div>
