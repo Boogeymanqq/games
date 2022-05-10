@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import s from "./cards.module.css";
 import { navGames } from "../../data";
-import style from "../navigation/navigation.module.css";
-import { Navbar, Nav, NavItem } from "reactstrap";
+import { NavigationGames } from "../navigationGames/navigationGames";
+import s from "./cards.module.css";
 
 const cardsLink = "Карточки";
 const newNavGame = navGames.filter((elem) => elem.title !== cardsLink);
@@ -42,24 +40,7 @@ export const Cards = () => {
 
   return (
     <>
-      <div className={style.navigation}>
-        <Navbar
-          className={style.navigation__navbar}
-          expand="md"
-          container="md"
-          color="light"
-        >
-          <Nav className={style.list}>
-            {newNavGame.map((elem, index) => (
-              <NavItem className={style.navigation__navitem} key={index}>
-                <Link to={elem.href}>
-                  <div className={style.navigation__navlink}>{elem.title}</div>
-                </Link>
-              </NavItem>
-            ))}
-          </Nav>
-        </Navbar>
-      </div>
+      <NavigationGames newNavGame={newNavGame} />
       <section className={s.content__block}>
         <h2>Cards game</h2>
         <div className={s.flip__body}>
