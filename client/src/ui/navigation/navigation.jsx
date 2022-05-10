@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 import s from "./navigation.module.css";
 import { mainPage } from "../../data.js";
@@ -48,7 +48,6 @@ export const Navigation = () => {
             </Typography>
           </Link>
           <Tabs
-            maxWidth="lg"
             value={value}
             aria-label="secondary tabs example"
             onChange={handleChange}
