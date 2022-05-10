@@ -9,10 +9,10 @@ export const mainPage = [
 
 export const teacherPage = [
   { title: "Личный Кабинет", href: "/teacher" },
-  { title: "Ученики", href: "/teacher" },
+  { title: "Ученики", href: "/teacher/studentlist" },
   { title: "План", href: "/teacher" },
   { title: "Урок", href: "/teacher" },
-  { title: "Игры", href: "/games" },
+  { title: "Игры", href: "/teacher/games" },
   { title: "План Урока", href: "/teacher" },
   { title: "Выйти", href: "/login" },
 ];
