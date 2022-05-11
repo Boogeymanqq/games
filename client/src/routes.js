@@ -12,7 +12,8 @@ import { Monster } from "./ui/monster/monster";
 import { Cards } from "./ui/cards/cards";
 import { Room } from "./ui/rooms/rooms";
 import { Teacher } from "./pages/teacher/teacher";
-import { Student } from "./pages/student/student";
+import { ChildrenPage } from "./pages/childrenPage/childrenPage";
+import { StudentList } from "./pages/teacher/students/studentList";
 // import { CheckRoom } from "./ui/rooms/checkRoom";
 
 export const useRoutes = (isAuthenticated) => {
@@ -20,7 +21,7 @@ export const useRoutes = (isAuthenticated) => {
     return (
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/games" element={<Games />} />
+        <Route path="/teacher/games" element={<Games />} />
         <Route path="/platform" element={<Platform />} />
         <Route path="/board" element={<Board />} />
         <Route path="/costs" element={<Costs />} />
@@ -38,7 +39,8 @@ export const useRoutes = (isAuthenticated) => {
           path="/teacher"
           element={<Teacher caption="Регистрация ученика" />}
         />
-        <Route path="/student" element={<Student />} />
+        <Route path="/teacher/studentlist" element={<StudentList />} />
+        <Route path="/childrenpage" element={<ChildrenPage />} />
       </Routes>
     );
   }

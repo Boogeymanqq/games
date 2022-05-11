@@ -1,11 +1,9 @@
 import React, { useState, useRef } from "react";
 import Draggable from "react-draggable";
-import { Link } from "react-router-dom";
 import { rooms } from "../../data";
-import s from "./rooms.module.css";
 import { navGames } from "../../data";
-import style from "../navigation/navigation.module.css";
-import { Navbar, Nav, NavItem } from "reactstrap";
+import { NavigationGames } from "../navigationGames/navigationGames";
+import s from "./rooms.module.css";
 
 const roomLink = "Комнаты";
 const newNavGame = navGames.filter((elem) => elem.title !== roomLink);
@@ -83,15 +81,15 @@ export const Room = () => {
 
   function isReturn() {
     setIsShow(true);
-    // window.location.reload();
-    setCardRooms(
-      rooms.map((elem) => {
-        if (elem.checked === true) {
-          elem.checked = false;
-        }
-        return elem;
-      })
-    );
+    window.location.reload();
+    // setCardRooms(
+    //   rooms.map((elem) => {
+    //     if (elem.checked === true) {
+    //       elem.checked = false;
+    //     }
+    //     return elem;
+    //   })
+    // );
   }
 
   const filtredRoom = cardRooms.filter((elem) => elem.checked === true);
@@ -100,6 +98,10 @@ export const Room = () => {
     <>
       {isShow ? (
         <>
+          <NavigationGames newNavGame={newNavGame} />
+          <h1 style={{ textAlign: "center", marginTop: "30px" }}>
+            Choose a subject
+          </h1>
           <div className={s.show}>
             {cardRooms.map((elem, index) => (
               <div key={index}>
@@ -144,26 +146,6 @@ export const Room = () => {
         </>
       ) : (
         <>
-          <div className={style.navigation}>
-            <Navbar
-              className={style.navigation__navbar}
-              expand="md"
-              container="md"
-              color="light"
-            >
-              <Nav className={style.list}>
-                {newNavGame.map((elem, index) => (
-                  <NavItem className={style.navigation__navitem} key={index}>
-                    <Link to={elem.href}>
-                      <div className={style.navigation__navlink}>
-                        {elem.title}
-                      </div>
-                    </Link>
-                  </NavItem>
-                ))}
-              </Nav>
-            </Navbar>
-          </div>
           <h2 style={{ textAlign: "center" }}>Make a Room</h2>
           <div
             style={{
