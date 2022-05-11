@@ -21,7 +21,6 @@ const initialValues = {
   firstName: "",
   login: "",
   password: "",
-  teacher: "",
 };
 
 export const StudentForm = ({ caption }) => {
@@ -68,17 +67,8 @@ export const StudentForm = ({ caption }) => {
           password: string()
             .trim()
             .required("Пожалуйста, введите пароль")
-            .min(6, "Минимум 6 символов")
-            .max(20, "Максимум 20 символов")
-            .matches(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
-              `Недопустимый формат. Пароль должен иметь минимум одну заглавную букву, одну строчную букву, одну цифру и один специальный символ`
-            ),
-          teacher: string()
-            .trim()
-            .min(3, "Минимум 3 символа")
-            .max(50, "Максимум 50 символов")
-            .required("Пожалуйста, введите имя учителя"),
+            .min(4, "Минимум 4 символов")
+            .max(20, "Максимум 20 символов"),
         })}
         onSubmit={async (values, formikHelpers) => {
           try {
@@ -88,6 +78,7 @@ export const StudentForm = ({ caption }) => {
               values
             );
             setAlert(true);
+            setTimeout(() => setAlert(false), 2000);
             setMessage(res.message);
             setType(res.type);
             setIsLoading(false);
@@ -153,18 +144,6 @@ export const StudentForm = ({ caption }) => {
               fullWidth
               error={Boolean(errors.password) && Boolean(touched.password)}
               helperText={Boolean(touched.password) && errors.password}
-            />
-            <Box height={10} />
-            <Field
-              name="teacher"
-              type="teacher"
-              as={TextField}
-              variant="outlined"
-              color="primary"
-              label="Учитель"
-              fullWidth
-              error={Boolean(errors.teacher) && Boolean(touched.teacher)}
-              helperText={Boolean(touched.teacher) && errors.teacher}
             />
             <Box height={30} />
             <Box>

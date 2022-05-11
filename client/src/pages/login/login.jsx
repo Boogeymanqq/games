@@ -55,7 +55,7 @@ export const Login = ({ caption }) => {
           password: string()
             .trim()
             .required("Пожалуйста, введите пароль")
-            .min(6, "Минимум 6 символов")
+            .min(4, "Минимум 4 символов")
             .max(20, "Максимум 20 символов"),
         })}
         onSubmit={async (values, formikHelpers) => {
@@ -70,7 +70,7 @@ export const Login = ({ caption }) => {
             formikHelpers.resetForm();
             res.role === "teacher"
               ? setTimeout(() => navigate("/teacher"), 1000)
-              : setTimeout(() => navigate("/student"), 1000);
+              : setTimeout(() => navigate("/childrenpage"), 1000);
           } catch (error) {
             setIsLoading(false);
             setAlert(true);

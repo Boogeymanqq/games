@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import {
   AppBar,
@@ -11,9 +11,9 @@ import {
   Tabs,
   Tab,
 } from "@mui/material";
-import s from "./student.module.css";
+import s from "./childrenPage.module.css";
 
-export const Student = () => {
+export const ChildrenPage = () => {
   const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
 
@@ -41,7 +41,6 @@ export const Student = () => {
             <span style={{ color: "#FF9900" }}>ni</span>
           </Typography>
           <Tabs
-            maxWidth="lg"
             value={value}
             aria-label="secondary tabs example"
             onChange={handleChange}

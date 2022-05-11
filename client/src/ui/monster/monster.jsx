@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
-import { Link } from "react-router-dom";
-import s from "./monster.module.css";
 import { navGames } from "../../data";
-import style from "../navigation/navigation.module.css";
-import { Navbar, Nav, NavItem } from "reactstrap";
+import { NavigationGames } from "../navigationGames/navigationGames";
+import s from "./monster.module.css";
 
 const monsterLink = "Монстер";
 const newNavGame = navGames.filter((elem) => elem.title !== monsterLink);
@@ -115,6 +113,7 @@ export const Monster = () => {
     <>
       {isShow ? (
         <>
+          <NavigationGames newNavGame={newNavGame} />
           <h1 style={{ textAlign: "center", marginTop: "30px" }}>
             Choose a subject
           </h1>
@@ -172,26 +171,6 @@ export const Monster = () => {
         </>
       ) : (
         <>
-          <div className={style.navigation}>
-            <Navbar
-              className={style.navigation__navbar}
-              expand="md"
-              container="md"
-              color="light"
-            >
-              <Nav className={style.list}>
-                {newNavGame.map((elem, index) => (
-                  <NavItem className={style.navigation__navitem} key={index}>
-                    <Link to={elem.href}>
-                      <div className={style.navigation__navlink}>
-                        {elem.title}
-                      </div>
-                    </Link>
-                  </NavItem>
-                ))}
-              </Nav>
-            </Navbar>
-          </div>
           <h2 className={s.title}>Make a Monster</h2>
           <div
             style={{
