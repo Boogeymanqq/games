@@ -23,6 +23,9 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+app.use(require('./monster/monster'));
+getDirMonsterparts();
+
 async function start() {
   try {
     await mongoose.connect(config.get("mongoUri"));

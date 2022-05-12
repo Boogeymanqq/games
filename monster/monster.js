@@ -3,39 +3,53 @@ const fs = require("fs");
 const MonsterPart = require("../models/MonsterPart");
 const DirMonsterpart = require("../models/DirMonsterpart");
 
-module.exports = getFiles = async () => {
-  const setMonsterPart = (file) => {
-    let str = path
-      .join("http:", "localhost:5000", "monster", "img", file)
-      .split("\\");
-    str.splice(1, 0, "");
-    str = str.join("/");
+// module.exports = getFiles = async () => {
+//   const setMonsterPart = (file) => {
+//     let str = path
+//       .join("http:", "localhost:5000", "monster", "img", file)
+//       .split("\\");
+//     str.splice(1, 0, "");
+//     str = str.join("/");
 
-    return new MonsterPart({
-      url: str,
-      position: { x: 0, y: 0 },
-      isChecked: false,
-    });
-  };
+//     return new MonsterPart({
+//       url: str,
+//       position: { x: 0, y: 0 },
+//       isChecked: false,
+//     });
+//   };
 
-  try {
-    const files = fs.readdirSync(path.join(__dirname, "img"), "utf8");
+//   try {
+//     const files = fs.readdirSync(path.join(__dirname, "img"), "utf8");
 
-    files.forEach(async (file) => await setMonsterPart(file).save());
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     files.forEach(async (file) => await setMonsterPart(file).save());
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 module.exports = getDirMonsterparts = async () => {
   let dirs = [];
 
-  const setDirMonsterpart = (dir) =>
-    new DirMonsterpart({
-      url: dir,
-      position: { x: 0, y: 0 },
-      isChecked: false,
+  const setDirMonsterpart = (dirs) => {
+    const { dir, img } = dirs;
+    let imageArr = img.map(el => {
+      return {
+        url: el,
+        position: {
+          x: 0,
+          y: 0
+        },
+        isChecked: false
+      }
+    })
+  
+    return new DirMonsterpart({
+      dir,
+      img: imageArr
     });
+  }
+    
+    
 
   try {
     fs.readdir(path.join(__dirname, "monsterparts"), "utf8", (err, files) => {
@@ -61,7 +75,7 @@ module.exports = getDirMonsterparts = async () => {
                   return str;
                 }),
               ],
-            }).save();
+            }).save()
           }
         );
       });
