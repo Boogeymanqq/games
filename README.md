@@ -112,3 +112,11 @@
 `status: 201 - [{ Шаблон игры успешно создан }]`
 
 `status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
+
+### get game templates
+> *api/monster/templates(get)*
+
+*example response*
+`status: 200 - [{ templates }]`
+
+`status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`

@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const MonsterPart = require("../models/MonsterPart");
 const DirMonsterpart = require("../models/DirMonsterpart");
+const GameTemplates = require("../models/GameTemplate");
 const { addTemplate } = require("../monster/templates");
 const auth = require("../middleware/auth.middleware");
 
@@ -41,6 +42,20 @@ router.post("/templates", auth, async (req, res) => {
     res.status(201).json({
       message: "Шаблон игры успешно создан",
     });
+  } catch (error) {
+    res.status(500).json({
+      message: "Что-то пошло не так, попробуйте снова.",
+      type: "error",
+    });
+  }
+});
+
+/ api/monster/templates
+router.get("/templates", auth, async (req, res) => {
+  try {
+    const templates = await GameTemplates.find();
+
+    res.status(200).json({templates});
   } catch (error) {
     res.status(500).json({
       message: "Что-то пошло не так, попробуйте снова.",
