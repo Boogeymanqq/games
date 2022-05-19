@@ -3,7 +3,6 @@ const router = Router();
 const MonsterPart = require("../models/MonsterPart");
 const DirMonsterpart = require("../models/DirMonsterpart");
 const GameTemplates = require("../models/GameTemplate");
-const { addTemplate } = require("../monster/templates");
 const auth = require("../middleware/auth.middleware");
 
 // api/monster/monsterparts
@@ -19,7 +18,7 @@ router.get("/monsterparts", auth, async (req, res) => {
 });
 
 // api/monster/dir/monsterparts
-router.get("/dir/monsterparts", async (req, res) => {
+router.get("/dir/monsterparts", auth, async (req, res) => {
   try {
     const monsterparts = await DirMonsterpart.find();
     res.status(200).json(monsterparts);
@@ -33,10 +32,11 @@ router.get("/dir/monsterparts", async (req, res) => {
 // api/monster/templates
 router.post("/templates", auth, async (req, res) => {
   try {
-    const { components } = req.body;
-    console.log(req);
-
-    const component = addTemplate(req.user.userId, components);
+    const component = new GameTemplates({
+      game: "Monster",
+      components: req.body,
+      teacher: req.user.userId,
+    });
 
     await component.save();
 
@@ -56,7 +56,7 @@ router.get("/templates", auth, async (req, res) => {
   try {
     const templates = await GameTemplates.find();
 
-    res.status(200).json({templates});
+    res.status(200).json({ templates });
   } catch (error) {
     res.status(500).json({
       message: "Что-то пошло не так, попробуйте снова.",
