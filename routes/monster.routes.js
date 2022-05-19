@@ -34,6 +34,7 @@ router.get("/dir/monsterparts", async (req, res) => {
 router.post("/templates", auth, async (req, res) => {
   try {
     const { components } = req.body;
+    console.log(req);
 
     const component = addTemplate(req.user.userId, components);
 

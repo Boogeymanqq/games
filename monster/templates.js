@@ -1,6 +1,6 @@
 const GameTemplate = require("../models/GameTemplate");
 
-export default Templates = () => {
+module.exports = Templates = () => {
   const addTemplate = async ({ teacher, components }) =>
     new GameTemplate({
       game: "Monster",
