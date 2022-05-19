@@ -97,4 +97,18 @@
 *example response*
 `status: 201 - [{ monsterparts }]`
 
-{ message: "Что-то пошло не так, попробуйте снова", type: "error" }
+`status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
+
+### create game template
+> *api/monster/templates(post)*
+
+*example request*
+
+`const data = {
+  "components": [{Monsterparts}],
+}`
+
+*example response*
+`status: 201 - [{ Шаблон игры успешно создан }]`
+
+`status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
