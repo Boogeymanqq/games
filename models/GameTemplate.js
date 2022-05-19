@@ -6,4 +6,4 @@ const schema = new Schema({
   teacher: { type: Types.ObjectId, ref: "Teacher" }
 })
 
-module.exports = model("GameTemplates", schema);
+module.exports = model("GameTemplate", schema);
