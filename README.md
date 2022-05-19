@@ -120,3 +120,17 @@
 `status: 200 - [{ templates }]`
 
 `status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
+
+### delete game template
+> *api/monster/templates(delete)*
+
+*example request*
+
+`const data = {
+  "components": [{Monsterparts}],
+}`
+
+*example response*
+`status: 200 - [{ Шаблон игры успешно удалён }]`
+
+`status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`

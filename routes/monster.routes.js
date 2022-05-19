@@ -50,12 +50,30 @@ router.post("/templates", auth, async (req, res) => {
   }
 });
 
-/ api/monster/templates
+// api/monster/templates
 router.get("/templates", auth, async (req, res) => {
   try {
     const templates = await GameTemplates.find();
 
     res.status(200).json({templates});
+  } catch (error) {
+    res.status(500).json({
+      message: "Что-то пошло не так, попробуйте снова.",
+      type: "error",
+    });
+  }
+});
+
+// api/monster/templates
+router.delete("/templates", auth, async (req, res) => {
+  try {
+    const { components } = req.body;
+
+    await GameTemplates.deleteOne(components);
+
+    res.status(201).json({
+      message: "Шаблон игры успешно удалён",
+    });
   } catch (error) {
     res.status(500).json({
       message: "Что-то пошло не так, попробуйте снова.",
