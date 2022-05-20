@@ -1,42 +1,40 @@
 ## scripts:
 
 ### run app in production mode
->*npm run start*
+
+> _npm run start_
 
 ### run server only
->*npm run server*
+
+> _npm run server_
 
 ### run client only
->*npm run client*
+
+> _npm run client_
 
 ### install dependecies on client
->*npm run client:install*
+
+> _npm run client:install_
 
 ### build client
->*npm run client:build*
+
+> _npm run client:build_
 
 ### run app on client and server in development mode
->*npm run dev*
+
+> _npm run dev_
 
 ## API:
 
 ### create new teacher
 
-> */api/auth/register/teacher*
+> _/api/auth/register/teacher_
 
-*example request*
+_example request_
 
-`const data = {
-  "lastName": lastName: String,
-  "firstName": firstName: String,
-  "patronymic": patronymic: String,
-  "email": email: String,
-  "phone": phone: String,
-  "login": login: String,
-  "password": password: String
-}`
+`const data = { "lastName": lastName: String, "firstName": firstName: String, "patronymic": patronymic: String, "email": email: String, "phone": phone: String, "login": login: String, "password": password: String }`
 
-*example response*
+_example response_
 
 `status: 201 - { message: "Учитель успешно зарегистрирован", type: "success" }`
 
@@ -44,18 +42,13 @@
 
 ### create new student
 
-> */api/auth/register/student*
+> _/api/auth/register/student_
 
-*example request*
+_example request_
 
-`const data = {
-  "lastName": lastName: String,
-  "firstName": firstName: String,
-  "login": login: String,
-  "password": password: String
-}`
+`const data = { "lastName": lastName: String, "firstName": firstName: String, "login": login: String, "password": password: String }`
 
-*example response*
+_example response_
 
 `status: 201 - { message: "Ученик успешно зарегистрирован", type: "success" }`
 
@@ -63,16 +56,13 @@
 
 ### authenticate user like teacher or student
 
-> */api/auth/login*
+> _/api/auth/login_
 
-*example request*
+_example request_
 
-`const data = {
-  "login": login: String,
-  "password": password: String
-}`
+`const data = { "login": login: String, "password": password: String }`
 
-*example response*
+_example response_
 
 `status: 200 - { token, userId, message: "Добро пожаловать", type: "success", role }`
 
@@ -83,18 +73,55 @@
 `status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
 
 ### get all students by teacher
-> */api/auth/students*
 
-*example response*
+> _/api/auth/students_
+
+_example response_
 
 `status: 200 - [{ student }]`
 
 `status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
 
 ### get monsterparts from database
-> *api/monster/monsterparts*
 
-*example response*
+> _api/monster/monsterparts_
+
+_example response_
 `status: 201 - [{ monsterparts }]`
 
-{ message: "Что-то пошло не так, попробуйте снова", type: "error" }
+`status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
+
+### create game template
+
+> _api/monster/templates(post)_
+
+_example request_
+
+`const data = [ { "_id": "627d0cbd4b851c82dce5426d" } ]`
+
+_example response_
+`status: 201 - [{ Шаблон игры успешно создан }]`
+
+`status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
+
+### get game templates
+
+> _api/monster/templates(get)_
+
+_example response_
+`status: 200 - [{ templates }]`
+
+`status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
+
+### delete game template
+
+> _api/monster/templates(delete)_
+
+_example request_
+
+`const data = [ { "_id": "628767466fa1ef9fb6aabe1f" } ]`
+
+_example response_
+`status: 201 - [{ Шаблон игры успешно удалён }]`
+`status: 401 - [{ message: "Такого шаблона нет, попробуйте снова.", type: "error" }]`
+`status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
