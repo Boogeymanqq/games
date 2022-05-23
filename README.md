@@ -125,3 +125,38 @@ _example response_
 `status: 201 - [{ Шаблон игры успешно удалён }]`
 `status: 401 - [{ message: "Такого шаблона нет, попробуйте снова.", type: "error" }]`
 `status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
+
+### create group
+
+> _api/groups(post)_
+
+_example request_
+
+`const data = [ { "name": "Group1", "students": [ "626fe957ab980164ff69a06d" ] } ]`
+
+_example response_
+`.status(201).json({ message: "Группа успешно создана.", type: "success", });`
+
+`.status(500).json({ message: "Что-то пошло не так, попробуйте снова.", type: "error", });`
+
+### get groups
+
+> _api/groups(get)_
+
+_example response_
+`.status(200).json({ groups, type: "success", });`
+`.status(400).json({ message: "Групп не найдено.", type: "error", });`
+`.status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
+
+### delete group
+
+> _api/groups(delete)_
+
+_example request_
+
+`const data = [ { "_id": "628b8b572c3ffc1dc9c207e9" } ]`
+
+_example response_
+`.status(200).json({ message: "Группа успешно удалена", type: "success", });`
+`.status(400).json({ message: "Такой группы нет, попробуйте снова.", type: "error", });`
+`.status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
