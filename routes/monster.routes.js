@@ -54,7 +54,7 @@ router.post("/templates", auth, async (req, res) => {
 // api/monster/templates
 router.get("/templates", auth, async (req, res) => {
   try {
-    const templates = await GameTemplates.find();
+    const templates = await GameTemplates.find({"_id": req.user.userId});
 
     res.status(200).json({ templates });
   } catch (error) {
@@ -76,7 +76,7 @@ router.delete("/templates", auth, async (req, res) => {
       })
     }
 
-      await GameTemplates.deleteOne(req.body[0]);
+    await GameTemplates.deleteOne(req.body[0]);
 
     res.status(201).json({
       message: "Шаблон игры успешно удалён",
