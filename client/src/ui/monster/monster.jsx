@@ -1,8 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
+import { io } from "socket.io-client";
 import { navGames } from "../../data";
 import { NavigationGames } from "../navigationGames/navigationGames";
 import s from "./monster.module.css";
+
+var socket = io("http://localhost:5000/");
+socket.on("chat message", msg => {
+  console.log("i am monster " + msg);
+});
 
 const monsterLink = "Монстер";
 const newNavGame = navGames.filter((elem) => elem.title !== monsterLink);
@@ -190,7 +196,10 @@ export const Monster = () => {
               axis="both"
               // onDrag={(e) => dragDrag(e, item.id)}
               onStart={(e) => startDrag(e)}
-              onStop={(e, data) => stopDrag(e, data, item._id)}
+              onStop={(e, data) => {
+                stopDrag(e, data, item._id);
+                socket.emit('chat message', e.pageX + "upd" + e.pageY)
+              }}
               position={item.position}
             >
               <div ref={nodeRef}>
