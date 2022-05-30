@@ -1,4 +1,5 @@
-const { Schema, model } = require("mongoose");
+import mongoose from 'mongoose'
+const { Schema, model } = mongoose
 
 const schema = new Schema({
   dir: { type: String },
@@ -12,6 +13,6 @@ const schema = new Schema({
       isChecked: { type: Boolean },
     },
   ],
-});
+})
 
-module.exports = model("DirMonsterpart", schema);
+export default model('DirMonsterpart', schema)

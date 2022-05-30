@@ -1,4 +1,5 @@
-const { Schema, model } = require("mongoose");
+import mongoose from 'mongoose'
+const { Schema, model } = mongoose
 
 const schema = new Schema({
   url: { type: String },
@@ -7,6 +8,6 @@ const schema = new Schema({
     y: { type: Number },
   },
   isChecked: { type: Boolean },
-});
+})
 
-module.exports = model("MonsterPart", schema);
+export default model('MonsterPart', schema)

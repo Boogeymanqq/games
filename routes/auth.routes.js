@@ -1,45 +1,46 @@
-const { Router } = require("express");
-const bcrypt = require("bcrypt");
-const config = require("config");
-const jwt = require("jsonwebtoken");
-const { check, validationResult } = require("express-validator");
-const Teacher = require("../models/Teacher");
-const Student = require("../models/Student");
-const auth = require("../middleware/auth.middleware");
-const router = Router();
+import express from 'express'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { JWT_SECRET } from '../config.js'
+import Teacher from '../models/Teacher.js'
+import Student from '../models/Student.js'
+import auth from '../middleware/auth.middleware.js'
+import { check, validationResult } from 'express-validator'
 
-// /api/auth/register/teacher
-router.post(
-  "/register/teacher",
+const authRouter = express.Router()
+
+//api/auth/register/teacher
+authRouter.post(
+  '/register/teacher',
   [
-    check("email", "Некорректный email").isEmail(),
-    check("password", "Минимальная длина пароля 6 символов").isLength({
+    check('email', 'Некорректный email').isEmail(),
+    check('password', 'Минимальная длина пароля 6 символов').isLength({
       min: 6,
     }),
   ],
   async (req, res) => {
     try {
-      const errors = validationResult(req);
+      const errors = validationResult(req)
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
-        });
+        })
       }
 
       const { lastName, firstName, patronymic, email, phone, login, password } =
-        req.body;
+        req.body
 
-      const candidate = await Teacher.findOne({ email } || { login }); // ???
+      const candidate = await Teacher.findOne({ email } || { login })
 
       if (candidate) {
         return res.status(400).json({
-          message: "Такой учитель уже существует",
-          type: "error",
-        });
+          message: 'Такой учитель уже существует',
+          type: 'error',
+        })
       }
 
-      const hashedPassword = await bcrypt.hash(password, 12);
+      const hashedPassword = await bcrypt.hash(password, 12)
       const teacher = new Teacher({
         lastName,
         firstName,
@@ -48,134 +49,133 @@ router.post(
         phone,
         login,
         password: hashedPassword,
-      });
+      })
 
-      await teacher.save();
+      await teacher.save()
 
       res
         .status(201)
-        .json({ message: "Учитель успешно зарегистрирован", type: "success" });
+        .json({ message: 'Учитель успешно зарегистрирован', type: 'success' })
     } catch (error) {
       res.status(500).json({
-        message: "Что-то пошло не так, попробуйте снова",
-        type: "error",
-      });
+        message: 'Что-то пошло не так, попробуйте снова',
+        type: 'error',
+      })
     }
   }
-);
+)
 
 // /api/auth/register/student
-router.post(
-  "/register/student",
+authRouter.post(
+  '/register/student',
   [
-    check("password", "Минимальная длина пароля 4 символов").isLength({
+    check('password', 'Минимальная длина пароля 4 символов').isLength({
       min: 4,
     }),
   ],
   auth,
   async (req, res) => {
     try {
-      const errors = validationResult(req);
+      const errors = validationResult(req)
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
-        });
+        })
       }
 
-      const { lastName, firstName, login, password } = req.body;
+      const { lastName, firstName, login, password } = req.body
 
-      const hashedPassword = await bcrypt.hash(password, 12);
+      const hashedPassword = await bcrypt.hash(password, 12)
       const student = new Student({
         lastName,
         firstName,
         login,
         password: hashedPassword,
         teacher: req.user.userId,
-      });
+      })
 
-      await student.save();
+      await student.save()
 
       res
         .status(201)
-        .json({ message: "Ученик успешно зарегистрирован", type: "success" });
+        .json({ message: 'Ученик успешно зарегистрирован', type: 'success' })
     } catch (error) {
       res.status(500).json({
-        message: "Что-то пошло не так, попробуйте снова",
-        type: "error",
-      });
+        message: 'Что-то пошло не так, попробуйте снова',
+        type: 'error',
+      })
     }
   }
-);
+)
 
 // /api/auth/login
-router.post(
-  "/login",
+authRouter.post(
+  '/login',
   [
-    check("login", "Введите корректный логин").exists(),
-    check("password", "Введите пароль").exists(),
+    check('login', 'Введите корректный логин').exists(),
+    check('password', 'Введите пароль').exists(),
   ],
   async (req, res) => {
     try {
-      const errors = validationResult(req);
+      const errors = validationResult(req)
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
-          message: "Некорректные данные при входе в систему",
-          type: "error",
-        });
+          message: 'Некорректные данные при входе в систему',
+          type: 'error',
+        })
       }
 
-      const { login, password } = req.body;
+      const { login, password } = req.body
 
       const user =
-        (await Teacher.findOne({ login })) ||
-        (await Student.findOne({ login }));
+        (await Teacher.findOne({ login })) || (await Student.findOne({ login }))
 
       if (!user) {
         return res
           .status(400)
-          .json({ message: "Пользователь не найден", type: "error" });
+          .json({ message: 'Пользователь не найден', type: 'error' })
       }
 
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, user.password)
 
       if (!isMatch) {
         return res.status(400).json({
-          message: "Неверный пароль, попробуйте снова",
-          type: "error",
-        });
+          message: 'Неверный пароль, попробуйте снова',
+          type: 'error',
+        })
       }
 
-      const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), {
-        expiresIn: "1h",
-      });
+      const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
+        expiresIn: '1h',
+      })
 
       res.json({
         token,
         userId: user.id,
-        message: "Добро пожаловать",
-        type: "success",
-        role: user.students ? "teacher" : "student",
-      });
+        message: 'Добро пожаловать',
+        type: 'success',
+        role: user.students ? 'teacher' : 'student',
+      })
     } catch (error) {
       res.status(500).json({
-        message: "Что-то полшо не так, попробуйте снова",
-        type: "error",
-      });
+        message: 'Что-то полшо не так, попробуйте снова',
+        type: 'error',
+      })
     }
   }
-);
+)
 
 // /api/auth/students
-router.get("/students", auth, async (req, res) => {
+authRouter.get('/students', auth, async (req, res) => {
   try {
-    const students = await Student.find({ teacher: req.user.userId });
-    res.json(students);
+    const students = await Student.find({ teacher: req.user.userId })
+    res.json(students)
   } catch (e) {
-    res.status(500).json({ message: "Что-то полшо не так, попробуйте снова" });
+    res.status(500).json({ message: 'Что-то полшо не так, попробуйте снова' })
   }
-});
+})
 
-module.exports = router;
+export default authRouter

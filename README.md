@@ -87,6 +87,7 @@ _example response_
 > _api/monster/monsterparts_
 
 _example response_
+
 `status: 201 - [{ monsterparts }]`
 
 `status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
@@ -100,6 +101,7 @@ _example request_
 `const data = [ { "_id": "627d0cbd4b851c82dce5426d" } ]`
 
 _example response_
+
 `status: 201 - [{ Шаблон игры успешно создан }]`
 
 `status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
@@ -109,6 +111,7 @@ _example response_
 > _api/monster/templates(get)_
 
 _example response_
+
 `status: 200 - [{ templates }]`
 
 `status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
@@ -122,8 +125,11 @@ _example request_
 `const data = [ { "_id": "628767466fa1ef9fb6aabe1f" } ]`
 
 _example response_
+
 `status: 201 - [{ Шаблон игры успешно удалён }]`
+
 `status: 401 - [{ message: "Такого шаблона нет, попробуйте снова.", type: "error" }]`
+
 `status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
 
 ### create group
@@ -135,6 +141,7 @@ _example request_
 `const data = [ { "name": "Group1", "students": [ "626fe957ab980164ff69a06d" ] } ]`
 
 _example response_
+
 `.status(201).json({ message: "Группа успешно создана.", type: "success", });`
 
 `.status(500).json({ message: "Что-то пошло не так, попробуйте снова.", type: "error", });`
@@ -144,8 +151,11 @@ _example response_
 > _api/groups(get)_
 
 _example response_
+
 `.status(200).json({ groups, type: "success", });`
+
 `.status(400).json({ message: "Групп не найдено.", type: "error", });`
+
 `.status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
 
 ### delete group
@@ -157,6 +167,9 @@ _example request_
 `const data = [ { "_id": "628b8b572c3ffc1dc9c207e9" } ]`
 
 _example response_
+
 `.status(200).json({ message: "Группа успешно удалена", type: "success", });`
+
 `.status(400).json({ message: "Такой группы нет, попробуйте снова.", type: "error", });`
+
 `.status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
