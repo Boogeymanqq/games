@@ -67,7 +67,7 @@ export const StudentForm = ({ caption }) => {
           password: string()
             .trim()
             .required("Пожалуйста, введите пароль")
-            .min(4, "Минимум 4 символов")
+            .min(4, "Минимум 4 символа")
             .max(20, "Максимум 20 символов"),
         })}
         onSubmit={async (values, formikHelpers) => {

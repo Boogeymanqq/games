@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavigationTeacher } from "../navigationTeacher";
+
 export const StudentList = () => {
   const [students, setStudents] = useState([]);
 
