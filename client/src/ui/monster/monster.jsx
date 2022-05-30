@@ -12,6 +12,8 @@ export const Monster = () => {
   const [secondMonster, setSecondMonster] = useState([]);
   const [cardMonster, setCardMonster] = useState([]);
 
+  const [template, setTemplate] = useState([]);
+
   const [showFolder, setShowFolder] = useState(true);
   const [showApi, setShowApi] = useState(false);
 
@@ -34,7 +36,38 @@ export const Monster = () => {
       setCardNewMonster(data);
     }
     getMonster();
+    async function getTemplate() {
+      const url = "api/monster/templates";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+    }
+    getTemplate();
   }, []);
+
+  function postTemplate() {
+    setTemplate(monstrik.map((elem) => ({ _id: elem._id })));
+    console.log(template[0]);
+    async function postTemplates() {
+      const url = "api/monster/templates";
+      const response = await fetch(url, {
+        method: "POST",
+        // body: JSON.parse(JSON.stringify(template)),
+        body: template[0],
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+    }
+    postTemplates();
+  }
 
   function startDrag(e) {
     e.preventDefault();
@@ -133,11 +166,15 @@ export const Monster = () => {
           />
         </label>
       </div>
+      <div style={{ textAlign: "center" }}>
+        <button onClick={postTemplate}>Сохранить шаблон</button>
+      </div>
       <div className={s.room}>
         <div
           className={s.room15}
           style={{ width: `${4.5 * size}px`, height: `${6 * size}px` }}
         ></div>
+
         <div
           className={s.parts}
           style={{
