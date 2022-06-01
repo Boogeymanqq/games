@@ -1,0 +1,19 @@
+.label {
+  width: 100%;
+  height: auto;
+}
+
+.icon {
+  position: relative;
+  margin: 0 auto;
+  background: url("./icon-label-ring.svg") center no-repeat;
+  max-width: 228px;
+  height: 231px;
+}
+
+.label img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

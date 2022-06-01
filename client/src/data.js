@@ -1,10 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
 
 export const mainPage = [
-  { title: "Платформа", href: "/platform" },
-  { title: "Контакты", href: "/contacts" },
-  { title: "Войти", href: "/login" },
-  { title: "Зарегистрироваться", href: "/signin" },
+  {
+    title: "о платформе",
+    href: "/platform",
+    alt: "smile",
+  },
+  { title: "регистрация", href: "/signin", alt: "pen" },
+  { title: "войти", href: "/login", alt: "enter" },
+  { title: "контакты", href: "/contacts", alt: "contacts" },
 ];
 
 export const teacherPage = [
