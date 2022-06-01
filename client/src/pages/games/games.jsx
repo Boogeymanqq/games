@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -12,6 +12,24 @@ import {
 import { NavigationTeacher } from "../teacher/navigationTeacher";
 
 export const Games = () => {
+  const [templates, setTemplates] = useState([]);
+
+  useEffect(() => {
+    async function getTemplate() {
+      const url = "http://localhost:3000/api/monster/templates";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      });
+      const data = await response.json();
+      setTemplates(data);
+      console.log(data);
+    }
+    getTemplate();
+  }, []);
+
   return (
     <>
       <NavigationTeacher />
@@ -95,6 +113,11 @@ export const Games = () => {
           </CardActions>
         </Card>
       </Container>
+      {/* <ul>
+        {templates.map((template, index) => (
+          <li key={index}>{template}</li>
+        ))}
+      </ul> */}
     </>
   );
 };
