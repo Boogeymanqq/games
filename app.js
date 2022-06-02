@@ -11,7 +11,7 @@ import { getFilePath } from './utils/file.js'
 import authRouter from './routes/auth.routes.js'
 import groupsRouter from './routes/groups.routes.js'
 import monsterRouter from './routes/monster.routes.js'
-// import onConnection from './socket_io/onConnection.js'
+import onConnection from './socket_io/onConnection.js'
 import { ALLOWED_ORIGIN, MONGODB_URI } from './config.js'
 
 const app = express()
@@ -56,17 +56,23 @@ const io = new Server(server, {
 })
 
 io.on('connection', (socket) => {
-  console.log('user connected')
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected')
-  })
-
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg)
-    console.log('message: ' + msg)
-  })
+  onConnection(io, socket)
 })
+
+// io.on('connection', (socket) => {
+//   console.log('user connected')
+
+//   socket.on('disconnect', () => {
+//     console.log('user disconnected')
+//   })
+
+//   socket.on('chat message', (msg) => {
+//     io.emit('chat message', msg)
+//     console.log('message: ' + msg)
+//   })
+// })
+
+
 
 const PORT = process.env.PORT || 5000
 

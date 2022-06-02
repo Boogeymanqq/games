@@ -32,5 +32,16 @@ export default function userHandlers(io, socket) {
   })
 
   // обрабатываем отключение пользователя
-  // socket.on('disconnect')
+  socket.on('disconnect', () => {
+    if (!users[roomId]) return
+
+    // сообщаем об этом другим пользователям
+    socket.to(roomId).emit('log', `User ${userName} disconnected`)
+
+    // удаляем пользователя из хранилища
+    users[roomId] = users[roomId].filter((u) => u.socketId !== socket.id)
+
+    // обновляем список пользователей
+    updateUserList()
+  })
 }
