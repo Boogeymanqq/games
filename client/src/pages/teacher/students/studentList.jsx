@@ -50,11 +50,14 @@ export const StudentList = () => {
     );
   }
 
-  console.log(group);
+  console.log("group", group);
+
   const filtredgroup = group
     .filter((elem) => elem.isChecked === true)
+
     .map((elem) => elem._id);
   console.log(filtredgroup);
+
 
   const createSelectGroup = [
     {
@@ -67,7 +70,7 @@ export const StudentList = () => {
 
   function createGroup() {
     async function postGroup() {
-      const url = "http://localhost:3000/api/groups";
+      const url = "http://localhost:5000/api/groups";
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify(createSelectGroup),
@@ -79,7 +82,7 @@ export const StudentList = () => {
       });
       setNameGroup("");
       const data = await response.json();
-      console.log(data);
+      console.log("data", data);
     }
     postGroup();
   }

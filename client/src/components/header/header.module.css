@@ -3,5 +3,6 @@
   justify-content: space-between;
   align-items: center;
   column-gap: 358px;
-  margin-bottom: 136px;
+  margin: 0 auto 136px;
+  max-width: 1200px;
 }

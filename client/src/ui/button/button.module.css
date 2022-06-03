@@ -1,0 +1,19 @@
+.btn {
+  display: block;
+  padding: 10px 102px;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 59px;
+  text-align: center;
+  border: 0;
+  outline: none;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s linear;
+}
+
+.btn {
+  background: #333;
+  transition: 0.2s linear;
+}
