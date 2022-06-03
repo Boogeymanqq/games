@@ -3,6 +3,9 @@ import messageHandlers from './handlers/message.handlers.js'
 import { SportsCricket } from '@mui/icons-material'
 
 export default function onConnection(io, socket) {
+  //test
+  console.log('user connected')
+
   // извлекаем идентификатор комнаты и имя пользователя
   const { roomId, userName } = socket.handshake.query
 
