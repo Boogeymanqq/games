@@ -5,9 +5,9 @@ import s from "./main.module.css";
 
 export function Main() {
   return (
-    <div className={s.main}>
+    <>
       <Header />
       <Navigation />
-    </div>
+    </>
   );
 }
