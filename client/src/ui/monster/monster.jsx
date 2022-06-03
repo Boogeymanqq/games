@@ -6,7 +6,7 @@ import { NavigationGames } from "../navigationGames/navigationGames";
 import s from "./monster.module.css";
 
 var socket = io("http://localhost:5000/");
-socket.on("chat message", msg => {
+socket.on("chat message", (msg) => {
   console.log("i am monster " + msg);
 });
 
@@ -42,30 +42,20 @@ export const Monster = () => {
       setCardNewMonster(data);
     }
     getMonster();
-    async function getTemplate() {
-      const url = "api/monster/templates";
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-    }
-    getTemplate();
   }, []);
 
   function postTemplate() {
     setTemplate(monstrik.map((elem) => ({ _id: elem._id })));
-    console.log(template[0]);
+    console.log(`JSON.stringify: ${JSON.stringify(template)}`);
+    // console.log(template);
     async function postTemplates() {
       const url = "api/monster/templates";
       const response = await fetch(url, {
         method: "POST",
-        // body: JSON.parse(JSON.stringify(template)),
-        body: template[0],
+        body: JSON.stringify(template),
         headers: {
+          "Content-Type": "application/json",
+          // Accept: "application/json",
           Authorization: `Bearer ${localStorage.token}`,
         },
       });
@@ -198,7 +188,7 @@ export const Monster = () => {
               onStart={(e) => startDrag(e)}
               onStop={(e, data) => {
                 stopDrag(e, data, item._id);
-                socket.emit('chat message', e.pageX + "upd" + e.pageY)
+                socket.emit("chat message", e.pageX + "upd" + e.pageY);
               }}
               position={item.position}
             >
