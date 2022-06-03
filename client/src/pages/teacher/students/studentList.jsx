@@ -4,6 +4,8 @@ import { NavigationTeacher } from "../navigationTeacher";
 export const StudentList = () => {
   const [students, setStudents] = useState([]);
   const [group, setGroup] = useState([]);
+  const [listGroup, setListGroup] = useState([]);
+  const [nameGropup, setNameGroup] = useState("");
 
   useEffect(() => {
     async function getStudents() {
@@ -19,10 +21,22 @@ export const StudentList = () => {
         ...elem,
         isChecked: false,
       }));
-      console.log(dataArr);
       setStudents(dataArr);
     }
     getStudents();
+    async function getGroup() {
+      const url = "http://localhost:3000/api/groups";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      });
+      const data = await response.json();
+      console.log(data.groups);
+      setListGroup(data.groups);
+    }
+    getGroup();
   }, []);
 
   function selectedStudent(id) {
@@ -39,19 +53,31 @@ export const StudentList = () => {
   console.log(group);
   const filtredgroup = group
     .filter((elem) => elem.isChecked === true)
-    .map((elem) => ({ _id: elem._id }));
+    .map((elem) => elem._id);
   console.log(filtredgroup);
+
+  const createSelectGroup = [
+    {
+      name: nameGropup,
+      students: filtredgroup,
+    },
+  ];
+
+  console.log(createSelectGroup);
 
   function createGroup() {
     async function postGroup() {
       const url = "http://localhost:3000/api/groups";
       const response = await fetch(url, {
         method: "POST",
-        body: filtredgroup,
+        body: JSON.stringify(createSelectGroup),
         headers: {
           Authorization: `Bearer ${localStorage.token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
       });
+      setNameGroup("");
       const data = await response.json();
       console.log(data);
     }
@@ -79,7 +105,25 @@ export const StudentList = () => {
             </li>
           ))}
         </ul>
+        <input
+          type="text"
+          value={nameGropup}
+          onChange={(e) => setNameGroup(e.target.value)}
+        />
         <button onClick={createGroup}>создать группу</button>
+        <h2>Список групп:</h2>
+        <ul style={{ listStyle: "auto" }}>
+          {listGroup.map((group, index) =>
+            group.students.length > 0 ? (
+              <li key={index}>
+                {group.groupName} :{" "}
+                {group.students.map((elem, index) => (
+                  <span key={index}>{elem}; </span>
+                ))}
+              </li>
+            ) : null
+          )}
+        </ul>
       </div>
     </>
   );
