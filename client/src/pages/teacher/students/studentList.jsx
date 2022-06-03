@@ -21,7 +21,6 @@ export const StudentList = () => {
         ...elem,
         isChecked: false,
       }));
-      console.log(dataArr);
       setStudents(dataArr);
     }
     getStudents();
@@ -114,9 +113,16 @@ export const StudentList = () => {
         <button onClick={createGroup}>создать группу</button>
         <h2>Список групп:</h2>
         <ul style={{ listStyle: "auto" }}>
-          {listGroup.map((group, index) => (
-            <li key={index}>{group.groupName}</li>
-          ))}
+          {listGroup.map((group, index) =>
+            group.students.length > 0 ? (
+              <li key={index}>
+                {group.groupName} :{" "}
+                {group.students.map((elem, index) => (
+                  <span key={index}>{elem}; </span>
+                ))}
+              </li>
+            ) : null
+          )}
         </ul>
       </div>
     </>
