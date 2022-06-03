@@ -24,11 +24,12 @@ export const Games = () => {
         },
       });
       const data = await response.json();
-      setTemplates(data);
-      console.log(data);
+      setTemplates(data.templates);
     }
     getTemplate();
   }, []);
+
+  console.log(templates);
 
   return (
     <>
@@ -113,11 +114,21 @@ export const Games = () => {
           </CardActions>
         </Card>
       </Container>
-      {/* <ul>
-        {templates.map((template, index) => (
-          <li key={index}>{template}</li>
-        ))}
-      </ul> */}
+      <div>
+        <h2>Список шаблонов</h2>
+        <ul>
+          {templates.map((template, index) =>
+            template.components.length > 0 ? (
+              <li key={index}>
+                {template.game} :
+                {template.components.map((elem, index) => (
+                  <span key={index}>{elem}; </span>
+                ))}
+              </li>
+            ) : null
+          )}
+        </ul>
+      </div>
     </>
   );
 };
