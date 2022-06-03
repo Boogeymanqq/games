@@ -36,15 +36,17 @@ export const StudentList = () => {
     );
   }
 
-  console.log(group);
+  console.log("group", group);
+
   const filtredgroup = group
     .filter((elem) => elem.isChecked === true)
     .map((elem) => ({ _id: elem._id }));
-  console.log(filtredgroup);
+
+  console.log("new group", filtredgroup);
 
   function createGroup() {
     async function postGroup() {
-      const url = "http://localhost:3000/api/groups";
+      const url = "http://localhost:5000/api/groups";
       const response = await fetch(url, {
         method: "POST",
         body: filtredgroup,
@@ -53,7 +55,7 @@ export const StudentList = () => {
         },
       });
       const data = await response.json();
-      console.log(data);
+      console.log("data", data);
     }
     postGroup();
   }
