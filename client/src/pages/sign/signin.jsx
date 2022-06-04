@@ -21,6 +21,25 @@ const initialValues = {
   password: "",
 };
 
+// styles for MUI Button
+
+const buttonStyled = {
+  padding: "10px 102px",
+  fontFamily: "Oswald",
+  fontSize: "40px",
+  backgroundColor: "#000",
+  border: 0,
+  borderRadius: 0,
+  boxShadow: "none",
+  transition: "0.2s l.inear",
+  color: "#fff",
+  "&:hover": {
+    backgroundColor: "#333",
+    boxShadow: "none",
+    transition: "0.2s l.inear",
+  },
+};
+
 export const Signin = ({ caption }) => {
   const { loading, request } = useHttp();
   const [alert, setAlert] = useState(false);
