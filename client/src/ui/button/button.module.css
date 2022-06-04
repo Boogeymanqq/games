@@ -1,6 +1,9 @@
 .btn {
   display: block;
   padding: 10px 102px;
+  margin: 0 auto;
+  max-width: 246px;
+  font-family: Oswald;
   font-size: 40px;
   font-weight: 400;
   line-height: 59px;
@@ -13,7 +16,7 @@
   transition: 0.2s linear;
 }
 
-.btn {
+.btn:hover {
   background: #333;
   transition: 0.2s linear;
 }
