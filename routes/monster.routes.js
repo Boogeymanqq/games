@@ -55,8 +55,7 @@ monsterRouter.post('/templates', auth, async (req, res) => {
 // api/monster/templates
 monsterRouter.get('/templates', auth, async (req, res) => {
   try {
-    const templates = await GameTemplates.find({ _id: req.user.userId })
-
+    const templates = await GameTemplates.find({ teacher: req.user.userId })
     res.status(200).json({ templates })
   } catch (error) {
     res.status(500).json({
