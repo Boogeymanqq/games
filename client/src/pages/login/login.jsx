@@ -14,6 +14,25 @@ const initialValues = {
   password: "",
 };
 
+const buttonStyled = {
+  display: "block",
+  margin: "0 auto",
+  padding: "10px 102px",
+  fontFamily: "Oswald",
+  fontSize: "40px",
+  backgroundColor: "#000",
+  border: 0,
+  borderRadius: 0,
+  boxShadow: "none",
+  transition: "0.2s l.inear",
+  color: "#fff",
+  "&:hover": {
+    backgroundColor: "#333",
+    boxShadow: "none",
+    transition: "0.2s l.inear",
+  },
+};
+
 export const Login = ({ caption }) => {
   const { loading, request } = useHttp();
   const [alert, setAlert] = useState(false);
@@ -106,12 +125,10 @@ export const Login = ({ caption }) => {
                     onClick={() => setIsLoading(true)}
                     type="submit"
                     variant="contained"
-                    color="success"
-                    size="large"
-                    fullWidth
+                    sx={buttonStyled}
                     disabled={!dirty || !isValid}
                   >
-                    Войти
+                    OK
                   </Button>
                 </Box>
               </Form>
