@@ -1,6 +1,13 @@
 import { useState } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import { Headerpage } from "../../components/header-page/header-page";
+
+import { useNavigate } from "react-router-dom";
+import { Pagelogo } from "../../ui/pageLogo/pageLogo";
+import { Label } from "../../ui/label/label";
+import { Burger } from "../../ui/burger/burger";
+
 import { Box, Button, TextField, CircularProgress } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
@@ -17,6 +24,25 @@ const initialValues = {
   phone: "",
   login: "",
   password: "",
+};
+
+// styles for MUI Button
+
+const buttonStyled = {
+  padding: "10px 102px",
+  fontFamily: "Oswald",
+  fontSize: "40px",
+  backgroundColor: "#000",
+  border: 0,
+  borderRadius: 0,
+  boxShadow: "none",
+  transition: "0.2s l.inear",
+  color: "#fff",
+  "&:hover": {
+    backgroundColor: "#333",
+    boxShadow: "none",
+    transition: "0.2s l.inear",
+  },
 };
 
 export const Signin = ({ caption }) => {
@@ -213,13 +239,7 @@ export const Signin = ({ caption }) => {
                   <Button
                     className={s.btn}
                     onClick={() => setIsLoading(true)}
-                    sx={{
-                      fontFamily: "Oswald",
-                      fontSize: "38px",
-                      width: "246px",
-                      background: "#000",
-                      borderRadius: 0,
-                    }}
+                    sx={buttonStyled}
                     type="submit"
                     variant="contained"
                     disabled={!dirty || !isValid}
