@@ -1,13 +1,6 @@
 import { useState } from "react";
-
-import { Link, useNavigate } from "react-router-dom";
-import { Headerpage } from "../../components/header-page/header-page";
-
 import { useNavigate } from "react-router-dom";
-import { Pagelogo } from "../../ui/pageLogo/pageLogo";
-import { Label } from "../../ui/label/label";
-import { Burger } from "../../ui/burger/burger";
-
+import { Headerpage } from "../../components/header-page/header-page";
 import { Box, Button, TextField, CircularProgress } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
