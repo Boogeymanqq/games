@@ -8,7 +8,6 @@ import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { useHttp } from "../../hooks/http.hook";
 import { AlertInfo } from "../../ui/alert/alert";
-// import { Button } from "../../ui/button/button";
 import pen from "./img/icon-pen.svg";
 import s from "./signin.module.css";
 
