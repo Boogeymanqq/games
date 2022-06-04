@@ -238,13 +238,7 @@ export const Signin = ({ caption }) => {
                   <Button
                     className={s.btn}
                     onClick={() => setIsLoading(true)}
-                    sx={{
-                      fontFamily: "Oswald",
-                      fontSize: "38px",
-                      width: "246px",
-                      background: "#000",
-                      borderRadius: 0,
-                    }}
+                    sx={buttonStyled}
                     type="submit"
                     variant="contained"
                     disabled={!dirty || !isValid}
