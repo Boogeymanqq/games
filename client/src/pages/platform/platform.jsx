@@ -1,18 +1,12 @@
 import React from "react";
-import { Pagelogo } from "../../ui/pageLogo/pageLogo";
-import { Label } from "../../ui/label/label";
+import { Headerpage } from "../../components/header-page/header-page";
 import smile from "./img/icon-smile.svg";
 import s from "./platform.module.css";
-import { Burger } from "../../ui/burger/burger";
 
 export const Platform = ({ caption }) => {
   return (
     <>
-      <header className={s.header}>
-        <Pagelogo />
-        <Label picture={smile} />
-        <Burger />
-      </header>
+      <Headerpage picture={smile} />
       <main className={s.main}>
         <h2>{caption}</h2>
 
