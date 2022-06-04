@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { Pagelogo } from "../../ui/pageLogo/pageLogo";
 import { Label } from "../../ui/label/label";
 import { Burger } from "../../ui/burger/burger";
-import { Box, TextField, CircularProgress } from "@mui/material";
+import { Box, Button, TextField, CircularProgress } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { useHttp } from "../../hooks/http.hook";
 import { AlertInfo } from "../../ui/alert/alert";
-import { Button } from "../../ui/button/button";
+// import { Button } from "../../ui/button/button";
 import pen from "./img/icon-pen.svg";
 import s from "./signin.module.css";
 
@@ -122,7 +122,7 @@ export const Signin = ({ caption }) => {
                   type="lastName"
                   as={TextField}
                   variant="outlined"
-                  color="primary"
+                  color="success"
                   label="Фамилия"
                   fullWidth
                   error={Boolean(errors.lastName) && Boolean(touched.lastName)}
@@ -135,7 +135,7 @@ export const Signin = ({ caption }) => {
                   type="firstName"
                   as={TextField}
                   variant="outlined"
-                  color="primary"
+                  color="success"
                   label="Имя"
                   fullWidth
                   error={
@@ -150,7 +150,7 @@ export const Signin = ({ caption }) => {
                   type="patronymic"
                   as={TextField}
                   variant="outlined"
-                  color="primary"
+                  color="success"
                   label="Отчество"
                   fullWidth
                   error={
@@ -165,7 +165,7 @@ export const Signin = ({ caption }) => {
                   type="email"
                   as={TextField}
                   variant="outlined"
-                  color="primary"
+                  color="success"
                   label="Электронная почта"
                   fullWidth
                   error={Boolean(errors.email) && Boolean(touched.email)}
@@ -178,7 +178,7 @@ export const Signin = ({ caption }) => {
                   type="phone"
                   as={TextField}
                   variant="outlined"
-                  color="primary"
+                  color="success"
                   label="Номер телефона"
                   placeholder="+7XXXXXXXXXX"
                   fullWidth
@@ -192,7 +192,7 @@ export const Signin = ({ caption }) => {
                   type="login"
                   as={TextField}
                   variant="outlined"
-                  color="primary"
+                  color="success"
                   label="Логин"
                   fullWidth
                   error={Boolean(errors.login) && Boolean(touched.login)}
@@ -200,19 +200,23 @@ export const Signin = ({ caption }) => {
                 />
                 <Box height={10} />
                 <Field
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  sx={{
+                    background: "#fff",
+                    borderRadius: "5px",
+                  }}
                   name="password"
                   type="password"
                   as={TextField}
                   variant="outlined"
-                  color="primary"
+                  color="success"
                   label="Пароль"
                   fullWidth
                   error={Boolean(errors.password) && Boolean(touched.password)}
                   // helperText={Boolean(touched.password) && errors.password}
                 />
+
                 <Box height={30} />
-                {/* <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
                   <Button
                     className={s.btn}
                     onClick={() => setIsLoading(true)}
@@ -229,8 +233,7 @@ export const Signin = ({ caption }) => {
                   >
                     OK
                   </Button>
-                </Box> */}
-                <Button caption="OK" />
+                </Box>
               </Form>
             )}
           </Formik>
