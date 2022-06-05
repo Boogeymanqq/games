@@ -5,7 +5,7 @@ import { StudentForm } from "./students/studentForm";
 export const Teacher = ({ caption }) => {
   return (
     <>
-      <NavigationTeacher />
+      {/* <NavigationTeacher /> */}
       <StudentForm caption={caption} />
     </>
   );
