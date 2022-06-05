@@ -16,6 +16,27 @@ const initialValues = {
   password: "",
 };
 
+// styles for MUI Button
+
+const buttonStyled = {
+  display: "block",
+  margin: "0 auto",
+  padding: "10px 102px",
+  fontFamily: "Oswald",
+  fontSize: "40px",
+  backgroundColor: "#000",
+  border: 0,
+  borderRadius: 0,
+  boxShadow: "none",
+  transition: "0.2s l.inear",
+  color: "#fff",
+  "&:hover": {
+    backgroundColor: "#333",
+    boxShadow: "none",
+    transition: "0.2s l.inear",
+  },
+};
+
 const useStyles = makeStyles(classes);
 
 export const Login = ({ caption }) => {
@@ -105,11 +126,9 @@ export const Login = ({ caption }) => {
                 <Box>
                   <Button
                     onClick={() => setIsLoading(true)}
+                    sx={buttonStyled}
                     type="submit"
                     variant="contained"
-                    color="success"
-                    size="large"
-                    fullWidth
                     disabled={!dirty || !isValid}
                   >
                     Войти

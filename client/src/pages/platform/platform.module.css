@@ -22,3 +22,21 @@
   line-height: 35px;
   text-align: center;
 }
+
+.images img:nth-child(1) {
+  position: absolute;
+  top: 470px;
+  right: 369px;
+}
+
+.images img:nth-child(2) {
+  position: absolute;
+  top: 607px;
+  right: 491px;
+}
+
+.images img:nth-child(3) {
+  position: absolute;
+  top: 607px;
+  right: 305px;
+}
