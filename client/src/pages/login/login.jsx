@@ -131,7 +131,7 @@ export const Login = ({ caption }) => {
                     variant="contained"
                     disabled={!dirty || !isValid}
                   >
-                    Войти
+                    OK
                   </Button>
                 </Box>
               </Form>
