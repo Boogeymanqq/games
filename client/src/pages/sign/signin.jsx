@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Headerpage } from "../../components/header-page/header-page";
 import { Box, Button, TextField, CircularProgress } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { useHttp } from "../../hooks/http.hook";
 import { AlertInfo } from "../../ui/alert/alert";
+import { classes } from "../../data";
 import pen from "./img/icon-pen.svg";
 import s from "./signin.module.css";
 
@@ -38,6 +40,8 @@ const buttonStyled = {
   },
 };
 
+const useStyles = makeStyles(classes);
+
 export const Signin = ({ caption }) => {
   const { loading, request } = useHttp();
   const [alert, setAlert] = useState(false);
@@ -46,6 +50,8 @@ export const Signin = ({ caption }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const classes = useStyles();
 
   return (
     <>
@@ -126,111 +132,111 @@ export const Signin = ({ caption }) => {
             {({ errors, isValid, touched, dirty }) => (
               <Form>
                 <Field
-                  sx={{
-                    background: "#fff",
-                    borderRadius: "5px",
-                  }}
+                  className={classes.tool}
                   name="lastName"
                   type="lastName"
                   as={TextField}
                   variant="outlined"
+                  size="small"
                   color="success"
                   label="Фамилия"
                   fullWidth
                   error={Boolean(errors.lastName) && Boolean(touched.lastName)}
-                  // helperText={Boolean(touched.lastName) && errors.lastName}
+                  helperText={Boolean(touched.lastName) && errors.lastName}
                 />
                 <Box height={10} />
                 <Field
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  className={classes.tool}
                   name="firstName"
                   type="firstName"
                   as={TextField}
                   variant="outlined"
+                  size="small"
                   color="success"
                   label="Имя"
                   fullWidth
                   error={
                     Boolean(errors.firstName) && Boolean(touched.firstName)
                   }
-                  // helperText={Boolean(touched.firstName) && errors.firstName}
+                  helperText={Boolean(touched.firstName) && errors.firstName}
                 />
                 <Box height={10} />
                 <Field
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  className={classes.tool}
                   name="patronymic"
                   type="patronymic"
                   as={TextField}
                   variant="outlined"
+                  size="small"
                   color="success"
                   label="Отчество"
                   fullWidth
                   error={
                     Boolean(errors.patronymic) && Boolean(touched.patronymic)
                   }
-                  // helperText={Boolean(touched.patronymic) && errors.patronymic}
+                  helperText={Boolean(touched.patronymic) && errors.patronymic}
                 />
                 <Box height={10} />
                 <Field
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  className={classes.tool}
                   name="email"
                   type="email"
                   as={TextField}
                   variant="outlined"
+                  size="small"
                   color="success"
                   label="Электронная почта"
                   fullWidth
                   error={Boolean(errors.email) && Boolean(touched.email)}
-                  // helperText={Boolean(touched.email) && errors.email}
+                  helperText={Boolean(touched.email) && errors.email}
                 />
                 <Box height={10} />
                 <Field
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  className={classes.tool}
                   name="phone"
                   type="phone"
                   as={TextField}
                   variant="outlined"
+                  size="small"
                   color="success"
                   label="Номер телефона"
                   placeholder="+7XXXXXXXXXX"
                   fullWidth
                   error={Boolean(errors.phone) && Boolean(touched.phone)}
-                  // helperText={Boolean(touched.phone) && errors.phone}
+                  helperText={Boolean(touched.phone) && errors.phone}
                 />
                 <Box height={10} />
                 <Field
-                  sx={{ background: "#fff", borderRadius: "5px" }}
+                  className={classes.tool}
                   name="login"
                   type="login"
                   as={TextField}
                   variant="outlined"
+                  size="small"
                   color="success"
                   label="Логин"
                   fullWidth
                   error={Boolean(errors.login) && Boolean(touched.login)}
-                  // helperText={Boolean(touched.login) && errors.login}
+                  helperText={Boolean(touched.login) && errors.login}
                 />
                 <Box height={10} />
                 <Field
-                  sx={{
-                    background: "#fff",
-                    borderRadius: "5px",
-                  }}
+                  className={classes.tool}
                   name="password"
                   type="password"
                   as={TextField}
                   variant="outlined"
+                  size="small"
                   color="success"
                   label="Пароль"
                   fullWidth
                   error={Boolean(errors.password) && Boolean(touched.password)}
-                  // helperText={Boolean(touched.password) && errors.password}
+                  helperText={Boolean(touched.password) && errors.password}
                 />
 
                 <Box height={30} />
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
                   <Button
-                    className={s.btn}
                     onClick={() => setIsLoading(true)}
                     sx={buttonStyled}
                     type="submit"
