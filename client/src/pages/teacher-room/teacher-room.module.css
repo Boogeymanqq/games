@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  column-gap: 283px;
+  margin: 0 auto;
+  padding-top: 61px;
+  max-width: 1200px;
+}
+
+.header h2 {
+  padding-top: 7px;
+  font-size: 60px;
+  font-weight: 400;
+  line-height: 89px;
+  text-align: center;
+}
+
+.main {
+  margin-top: 58px;
+}
+
+.panels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 40px;
+  margin: 0 auto;
+  max-width: 786px;
+}
