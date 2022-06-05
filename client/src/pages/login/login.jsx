@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Headerpage } from "../../components/header-page/header-page";
 import { Button, Box, TextField, CircularProgress } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { useHttp } from "../../hooks/http.hook";
 import { AlertInfo } from "../../ui/alert/alert";
+import { classes } from "../../data";
 import enter from "./img/icon-enter.svg";
 import s from "./login.module.css";
 
@@ -14,24 +16,7 @@ const initialValues = {
   password: "",
 };
 
-const buttonStyled = {
-  display: "block",
-  margin: "0 auto",
-  padding: "10px 102px",
-  fontFamily: "Oswald",
-  fontSize: "40px",
-  backgroundColor: "#000",
-  border: 0,
-  borderRadius: 0,
-  boxShadow: "none",
-  transition: "0.2s l.inear",
-  color: "#fff",
-  "&:hover": {
-    backgroundColor: "#333",
-    boxShadow: "none",
-    transition: "0.2s l.inear",
-  },
-};
+const useStyles = makeStyles(classes);
 
 export const Login = ({ caption }) => {
   const { loading, request } = useHttp();
@@ -41,6 +26,7 @@ export const Login = ({ caption }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const classes = useStyles();
 
   return (
     <>
@@ -89,10 +75,8 @@ export const Login = ({ caption }) => {
             {({ errors, isValid, touched, dirty }) => (
               <Form>
                 <Field
-                  sx={{
-                    background: "#fff",
-                    borderRadius: "5px",
-                  }}
+                  className={classes.tool}
+                  size="small"
                   name="login"
                   type="login"
                   as={TextField}
@@ -101,14 +85,12 @@ export const Login = ({ caption }) => {
                   label="Логин"
                   fullWidth
                   error={Boolean(errors.login) && Boolean(touched.login)}
-                  // helperText={Boolean(touched.login) && errors.login}
+                  helperText={Boolean(touched.login) && errors.login}
                 />
                 <Box height={10} />
                 <Field
-                  sx={{
-                    background: "#fff",
-                    borderRadius: "5px",
-                  }}
+                  className={classes.tool}
+                  size="small"
                   name="password"
                   type="password"
                   as={TextField}
@@ -117,7 +99,7 @@ export const Login = ({ caption }) => {
                   label="Пароль"
                   fullWidth
                   error={Boolean(errors.password) && Boolean(touched.password)}
-                  // helperText={Boolean(touched.password) && errors.password}
+                  helperText={Boolean(touched.password) && errors.password}
                 />
                 <Box height={30} />
                 <Box>
@@ -125,10 +107,12 @@ export const Login = ({ caption }) => {
                     onClick={() => setIsLoading(true)}
                     type="submit"
                     variant="contained"
-                    sx={buttonStyled}
+                    color="success"
+                    size="large"
+                    fullWidth
                     disabled={!dirty || !isValid}
                   >
-                    OK
+                    Войти
                   </Button>
                 </Box>
               </Form>
