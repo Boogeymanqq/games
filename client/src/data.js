@@ -1,5 +1,23 @@
 import { v4 as uuidv4 } from "uuid";
 
+export const classes = {
+  tool: {
+    fontSize: "20px",
+    background: "#fff",
+    "&  .MuiFormHelperText-root": {
+      backgroundColor: "#ff9e4f",
+      margin: 0,
+      paddingLeft: "10px",
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderRadius: 0,
+    },
+    "& .css-3v5nb6-MuiFormLabel-root-MuiInputLabel-root": {
+      top: "-5px",
+    },
+  },
+};
+
 export const mainPage = [
   {
     title: "о платформе",
