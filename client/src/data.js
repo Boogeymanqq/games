@@ -102,3 +102,16 @@ export const rooms = [
     checked: false,
   },
 ];
+
+export const navRoom = [
+  { title: "Стикер", type: "submit", route: "/teacherroom/stickers" },
+  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
+  { title: "Покупки", type: "submit", route: "/teacherroom/purshases" },
+  { title: "Урок", type: "submit", route: "/teacherroom/lesson" },
+];
+
+export const teacherStudentsNav = [
+  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
+  { title: "Регистрация", type: "submit", route: "/teacherroom/sign" },
+  { title: "Назад", type: "submit", route: "/teacherroom" },
+];

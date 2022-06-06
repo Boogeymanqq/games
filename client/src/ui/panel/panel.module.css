@@ -1,0 +1,6 @@
+.panel {
+  flex-basis: 50%;
+  height: 643px;
+  background: #a7dfff;
+  box-sizing: border-box;
+}

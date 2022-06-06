@@ -13,6 +13,9 @@ import { Room } from "./ui/rooms/rooms";
 import { Teacher } from "./pages/teacher/teacher";
 import { ChildrenPage } from "./pages/childrenPage/childrenPage";
 import { StudentList } from "./pages/teacher/students/studentList";
+import { Teacherroom } from "./pages/teacher-room/teacher-room";
+import { Studentform } from "./pages/student-form/student-form";
+import { Teacherstudents } from "./pages/teacher-room/teacher-students";
 
 function App() {
   return (
@@ -33,6 +36,22 @@ function App() {
         />
         <Route path="/teacher/studentlist" element={<StudentList />} />
         <Route path="/childrenpage" element={<ChildrenPage />} />
+        <Route
+          path="/teacherroom"
+          element={<Teacherroom caption="Личный кабинет" />}
+        />
+        <Route
+          path="/studentform"
+          element={<Studentform caption="Регистрация" />}
+        />
+        <Route
+          path="/teacherroom/students"
+          element={<Teacherstudents caption="Студенты" />}
+        />
+        <Route
+          path="/teacherroom/sign"
+          element={<Studentform caption="Регистрация" />}
+        />
       </Routes>
     </BrowserRouter>
   );
