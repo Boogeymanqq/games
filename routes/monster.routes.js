@@ -1,7 +1,7 @@
 import express from 'express'
 import MonsterPart from '../models/MonsterPart.js'
 import DirMonsterpart from '../models/DirMonsterpart.js'
-import GameTemplates from '../models/GameTemplate.js'
+import GameTemplate from '../models/GameTemplate.js'
 import auth from '../middleware/auth.middleware.js'
 
 const monsterRouter = express.Router()
@@ -33,12 +33,15 @@ monsterRouter.get('/dir/monsterparts', auth, async (req, res) => {
 // api/monster/templates
 monsterRouter.post('/templates', auth, async (req, res) => {
   try {
-    const component = new GameTemplates({
-      game: 'Monster',
-      components: req.body,
+    const [request] = req.body
+    console.log(request)
+    const component = new GameTemplate({
+      templateName: request.templateName,
+      game: 'Monster2',
+      components: request.templateParts,
       teacher: req.user.userId,
     })
-
+    console.log(component)
     await component.save()
 
     res.status(201).json({
@@ -55,7 +58,7 @@ monsterRouter.post('/templates', auth, async (req, res) => {
 // api/monster/templates
 monsterRouter.get('/templates', auth, async (req, res) => {
   try {
-    const templates = await GameTemplates.find({ teacher: req.user.userId })
+    const templates = await GameTemplate.find({ teacher: req.user.userId })
     res.status(200).json({ templates })
   } catch (error) {
     res.status(500).json({
@@ -68,7 +71,7 @@ monsterRouter.get('/templates', auth, async (req, res) => {
 // api/monster/templates
 monsterRouter.delete('/templates', auth, async (req, res) => {
   try {
-    const templateId = await GameTemplates.findOne(req.body[0])
+    const templateId = await GameTemplate.findOne(req.body[0])
     if (!templateId) {
       return res.status(401).json({
         message: 'Такого шаблона нет, попробуйте снова.',
@@ -76,7 +79,7 @@ monsterRouter.delete('/templates', auth, async (req, res) => {
       })
     }
 
-    await GameTemplates.deleteOne(req.body[0])
+    await GameTemplate.deleteOne(req.body[0])
 
     res.status(201).json({
       message: 'Шаблон игры успешно удалён',
