@@ -9,7 +9,7 @@ var socket = io("http://localhost:5000/");
 socket.on("chat message", (msg) => {
   console.log("i am monster " + msg);
 });
-
+console.log(socket);
 const monsterLink = "Монстер";
 const newNavGame = navGames.filter((elem) => elem.title !== monsterLink);
 

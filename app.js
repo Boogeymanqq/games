@@ -55,22 +55,22 @@ const io = new Server(server, {
   serveClient: false,
 })
 
-io.on('connection', (socket) => {
-  onConnection(io, socket)
-})
-
 // io.on('connection', (socket) => {
-//   console.log('user connected')
-
-//   socket.on('disconnect', () => {
-//     console.log('user disconnected')
-//   })
-
-//   socket.on('chat message', (msg) => {
-//     io.emit('chat message', msg)
-//     console.log('message: ' + msg)
-//   })
+//   onConnection(io, socket)
 // })
+
+io.on('connection', (socket) => {
+  console.log('user connected')
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg)
+    console.log('message: ' + msg)
+  })
+})
 
 
 
