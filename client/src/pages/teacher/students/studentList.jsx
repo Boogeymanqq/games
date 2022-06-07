@@ -3,10 +3,11 @@ import { NavigationTeacher } from "../navigationTeacher";
 
 export const StudentList = () => {
   const [students, setStudents] = useState([]);
-  const [group, setGroup] = useState([]);
   const [listGroup, setListGroup] = useState([]);
   const [nameGropup, setNameGroup] = useState("");
   const [trackAnswer, setTrackAnswer] = useState();
+  const [groupId, setGroupId] = useState();
+  const [checked, setChecked] = useState();
 
   useEffect(() => {
     async function getStudents() {
@@ -23,6 +24,7 @@ export const StudentList = () => {
         isChecked: false,
       }));
       setStudents(dataArr);
+      setChecked();
     }
     getStudents();
     async function getGroup() {
@@ -41,7 +43,7 @@ export const StudentList = () => {
   }, [null, trackAnswer]);
 
   function selectedStudent(id) {
-    setGroup(
+    setStudents(
       students.map((elem) => {
         if (elem._id === id) {
           elem.isChecked = !elem.isChecked;
@@ -51,12 +53,10 @@ export const StudentList = () => {
     );
   }
 
-  // console.log("group", group);
-
-  const filtredgroup = group
+  const filtredgroup = students
     .filter((elem) => elem.isChecked === true)
     .map((elem) => elem._id);
-  // console.log(filtredgroup);
+  console.log(filtredgroup, students);
 
   const createSelectGroup = [
     {
@@ -82,9 +82,32 @@ export const StudentList = () => {
       setNameGroup("");
       const data = await response.json();
       setTrackAnswer(data);
+      setChecked("");
       console.log("data", data);
     }
     postGroup();
+  }
+
+  function deleteGroup(id) {
+    setGroupId(id);
+    const obj = [{ _id: groupId }];
+    console.log(obj);
+    async function deleteApi() {
+      const url = "http://localhost:3000/api/groups";
+      const response = await fetch(url, {
+        method: "DELETE",
+        body: JSON.stringify(obj),
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+      const data = await response.json();
+      setTrackAnswer(data);
+      console.log("data", data);
+    }
+    deleteApi();
   }
 
   return (
@@ -103,6 +126,7 @@ export const StudentList = () => {
               {student.lastName} {student.firstName}
               <input
                 type="checkbox"
+                checked={checked}
                 onChange={() => selectedStudent(student._id)}
               />
             </li>
@@ -116,16 +140,17 @@ export const StudentList = () => {
         <button onClick={createGroup}>создать группу</button>
         <h2>Список групп:</h2>
         <ul style={{ listStyle: "auto" }}>
-          {listGroup.map((group, index) =>
-            group.students.length > 0 ? (
-              <li key={index}>
+          {listGroup.map((group, index) => (
+            <div key={index}>
+              <li>
                 {group.groupName} :{" "}
                 {group.students.map((elem, index) => (
                   <span key={index}>{elem}; </span>
                 ))}
               </li>
-            ) : null
-          )}
+              <button onClick={() => deleteGroup(group._id)}>&times;</button>
+            </div>
+          ))}
         </ul>
       </div>
     </>
