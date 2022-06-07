@@ -15,6 +15,9 @@ export const classes = {
     "& .css-3v5nb6-MuiFormLabel-root-MuiInputLabel-root": {
       top: "-5px",
     },
+    "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root": {
+      top: "-5px",
+    },
   },
 };
 
