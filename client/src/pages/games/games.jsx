@@ -13,7 +13,6 @@ import { NavigationTeacher } from "../teacher/navigationTeacher";
 
 export const Games = () => {
   const [templates, setTemplates] = useState([]);
-  const [templatesId, setTemplatesId] = useState();
   const [trackAnswer, setTrackAnswer] = useState();
 
   useEffect(() => {
@@ -34,8 +33,7 @@ export const Games = () => {
   console.log(templates);
 
   function deleteTemplates(id) {
-    setTemplatesId(id);
-    const obj = [{ _id: templatesId }];
+    const obj = [{ _id: id }];
     async function deleteApi() {
       const url = "http://localhost:3000/api/monster/templates";
       const response = await fetch(url, {
@@ -143,7 +141,7 @@ export const Games = () => {
           {templates.map((template, index) => (
             <div key={index}>
               <li>
-                {template.game} :
+                {template.templateName} :
                 {template.components.map((elem, index) => (
                   <span key={index}>{elem}; </span>
                 ))}
