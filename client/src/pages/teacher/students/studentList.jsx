@@ -5,8 +5,8 @@ export const StudentList = () => {
   const [students, setStudents] = useState([]);
   const [listGroup, setListGroup] = useState([]);
   const [nameGropup, setNameGroup] = useState("");
-  const [trackAnswer, setTrackAnswer] = useState();
-  const [checked, setChecked] = useState();
+  const [trackAnswer, setTrackAnswer] = useState("");
+  const [checked, setChecked] = useState("");
 
   useEffect(() => {
     async function getStudents() {
