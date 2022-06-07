@@ -10,7 +10,6 @@ export const Teacherstudents = ({ caption }) => {
   const [listGroup, setListGroup] = useState([]);
   const [nameGropup, setNameGroup] = useState("");
   const [trackAnswer, setTrackAnswer] = useState();
-  const [groupId, setGroupId] = useState();
   const [checked, setChecked] = useState();
 
   useEffect(() => {
@@ -93,8 +92,7 @@ export const Teacherstudents = ({ caption }) => {
   }
 
   function deleteGroup(id) {
-    setGroupId(id);
-    const obj = [{ _id: groupId }];
+    const obj = [{ _id: id }];
     async function deleteApi() {
       const url = "http://localhost:3000/api/groups";
       const response = await fetch(url, {

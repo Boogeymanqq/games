@@ -6,7 +6,6 @@ export const StudentList = () => {
   const [listGroup, setListGroup] = useState([]);
   const [nameGropup, setNameGroup] = useState("");
   const [trackAnswer, setTrackAnswer] = useState();
-  const [groupId, setGroupId] = useState();
   const [checked, setChecked] = useState();
 
   useEffect(() => {
@@ -56,7 +55,7 @@ export const StudentList = () => {
   const filtredgroup = students
     .filter((elem) => elem.isChecked === true)
     .map((elem) => elem._id);
-  console.log(filtredgroup, students);
+  // console.log(filtredgroup, students);
 
   const createSelectGroup = [
     {
@@ -89,8 +88,7 @@ export const StudentList = () => {
   }
 
   function deleteGroup(id) {
-    setGroupId(id);
-    const obj = [{ _id: groupId }];
+    const obj = [{ _id: id }];
     console.log(obj);
     async function deleteApi() {
       const url = "http://localhost:3000/api/groups";
