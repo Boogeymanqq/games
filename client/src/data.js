@@ -1,5 +1,26 @@
 import { v4 as uuidv4 } from "uuid";
 
+export const classes = {
+  tool: {
+    fontSize: "20px",
+    background: "#fff",
+    "&  .MuiFormHelperText-root": {
+      backgroundColor: "#ff9e4f",
+      margin: 0,
+      paddingLeft: "10px",
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderRadius: 0,
+    },
+    "& .css-3v5nb6-MuiFormLabel-root-MuiInputLabel-root": {
+      top: "-5px",
+    },
+    "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root": {
+      top: "-5px",
+    },
+  },
+};
+
 export const mainPage = [
   {
     title: "о платформе",
@@ -83,4 +104,17 @@ export const rooms = [
     position: { x: 0, y: 0 },
     checked: false,
   },
+];
+
+export const navRoom = [
+  { title: "Стикер", type: "submit", route: "/teacherroom/stickers" },
+  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
+  { title: "Покупки", type: "submit", route: "/teacherroom/purshases" },
+  { title: "Урок", type: "submit", route: "/teacherroom/lesson" },
+];
+
+export const teacherStudentsNav = [
+  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
+  { title: "Регистрация", type: "submit", route: "/teacherroom/sign" },
+  { title: "Назад", type: "submit", route: "/teacherroom" },
 ];

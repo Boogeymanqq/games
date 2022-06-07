@@ -1,0 +1,42 @@
+.main h2 {
+  margin: 7px 0 33px;
+  font-size: 70px;
+  font-weight: 400;
+  line-height: 104px;
+  text-align: center;
+}
+
+.description {
+  margin: 0 auto;
+  max-width: 996px;
+  background: url("./img/icon-ellipse-bsg.svg") no-repeat center/contain;
+}
+
+.description p {
+  max-width: 755px;
+  margin: 0 auto;
+  padding: 93px 0 37px;
+  font-family: "Roboto", sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 35px;
+  text-align: center;
+}
+
+.images img:nth-child(1) {
+  position: absolute;
+  top: 470px;
+  right: 369px;
+}
+
+.images img:nth-child(2) {
+  position: absolute;
+  top: 607px;
+  right: 491px;
+}
+
+.images img:nth-child(3) {
+  position: absolute;
+  top: 607px;
+  right: 305px;
+}

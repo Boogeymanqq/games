@@ -188,7 +188,9 @@ export const Monster = () => {
               onStart={(e) => startDrag(e)}
               onStop={(e, data) => {
                 stopDrag(e, data, item._id);
+
                 socket.emit("chat message", e.pageX + "upd" + e.pageY);
+
               }}
               position={item.position}
             >
