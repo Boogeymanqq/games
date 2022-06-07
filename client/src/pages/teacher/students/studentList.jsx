@@ -6,6 +6,7 @@ export const StudentList = () => {
   const [group, setGroup] = useState([]);
   const [listGroup, setListGroup] = useState([]);
   const [nameGropup, setNameGroup] = useState("");
+  const [trackAnswer, setTrackAnswer] = useState();
 
   useEffect(() => {
     async function getStudents() {
@@ -37,7 +38,7 @@ export const StudentList = () => {
       setListGroup(data.groups);
     }
     getGroup();
-  }, []);
+  }, [null, trackAnswer]);
 
   function selectedStudent(id) {
     setGroup(
@@ -50,14 +51,12 @@ export const StudentList = () => {
     );
   }
 
-  console.log("group", group);
+  // console.log("group", group);
 
   const filtredgroup = group
     .filter((elem) => elem.isChecked === true)
-
     .map((elem) => elem._id);
-  console.log(filtredgroup);
-
+  // console.log(filtredgroup);
 
   const createSelectGroup = [
     {
@@ -66,11 +65,11 @@ export const StudentList = () => {
     },
   ];
 
-  console.log(createSelectGroup);
+  // console.log(createSelectGroup);
 
   function createGroup() {
     async function postGroup() {
-      const url = "http://localhost:5000/api/groups";
+      const url = "http://localhost:3000/api/groups";
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify(createSelectGroup),
@@ -82,6 +81,7 @@ export const StudentList = () => {
       });
       setNameGroup("");
       const data = await response.json();
+      setTrackAnswer(data);
       console.log("data", data);
     }
     postGroup();
