@@ -5,13 +5,13 @@ import express from 'express'
 import mongoose from 'mongoose'
 import { Server } from 'socket.io'
 import { createServer } from 'http'
-// import upload from './utils/upload.js'
+import upload from './utils/upload.js'
 import onError from './utils/onError.js'
 import { getFilePath } from './utils/file.js'
 import authRouter from './routes/auth.routes.js'
 import groupsRouter from './routes/groups.routes.js'
 import monsterRouter from './routes/monster.routes.js'
-// import onConnection from './socket_io/onConnection.js'
+import onConnection from './socket_io/onConnection.js'
 import { ALLOWED_ORIGIN, MONGODB_URI } from './config.js'
 
 const app = express()
@@ -55,6 +55,10 @@ const io = new Server(server, {
   serveClient: false,
 })
 
+// io.on('connection', (socket) => {
+//   onConnection(io, socket)
+// })
+
 io.on('connection', (socket) => {
   console.log('user connected')
 
@@ -67,6 +71,8 @@ io.on('connection', (socket) => {
     console.log('message: ' + msg)
   })
 })
+
+
 
 const PORT = process.env.PORT || 5000
 
