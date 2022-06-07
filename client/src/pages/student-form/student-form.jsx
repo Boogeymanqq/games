@@ -85,7 +85,7 @@ export const Studentform = ({ caption }) => {
             onSubmit={async (values, formikHelpers) => {
               try {
                 const res = await request(
-                  "api/auth/register/student",
+                  "http://localhost:3000/api/auth/register/student",
                   "POST",
                   values
                 );
@@ -115,6 +115,7 @@ export const Studentform = ({ caption }) => {
                   name="lastName"
                   type="lastName"
                   as={TextField}
+                  size="small"
                   variant="outlined"
                   color="primary"
                   label="Фамилия"
@@ -128,6 +129,7 @@ export const Studentform = ({ caption }) => {
                   name="firstName"
                   type="firstName"
                   as={TextField}
+                  size="small"
                   variant="outlined"
                   color="primary"
                   label="Имя"
@@ -143,6 +145,7 @@ export const Studentform = ({ caption }) => {
                   name="login"
                   type="login"
                   as={TextField}
+                  size="small"
                   variant="outlined"
                   color="primary"
                   label="Логин"
@@ -156,6 +159,7 @@ export const Studentform = ({ caption }) => {
                   name="password"
                   type="password"
                   as={TextField}
+                  size="small"
                   variant="outlined"
                   color="primary"
                   label="Пароль"
