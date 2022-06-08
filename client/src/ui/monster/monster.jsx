@@ -18,7 +18,8 @@ export const Monster = () => {
   const [secondMonster, setSecondMonster] = useState([]);
   const [cardMonster, setCardMonster] = useState([]);
 
-  const [template, setTemplate] = useState([]);
+  // const [template, setTemplate] = useState([]);
+  const [nameTemplate, setNameTemplate] = useState("");
 
   const [showFolder, setShowFolder] = useState(true);
   const [showApi, setShowApi] = useState(false);
@@ -44,21 +45,34 @@ export const Monster = () => {
     getMonster();
   }, []);
 
+  const filtredMonster = secondMonster.filter((elem) =>
+    elem.isChecked === true ? cardMonster.push(elem) : null
+  );
+  const monstrik = [...new Set(cardMonster)];
+  console.log(monstrik);
+
+  const saveTemplate = monstrik.map((elem) => elem._id);
+
   function postTemplate() {
-    setTemplate(monstrik.map((elem) => ({ _id: elem._id })));
-    console.log(`JSON.stringify: ${JSON.stringify(template)}`);
-    // console.log(template);
+    const createSelectTemplate = [
+      {
+        templateName: nameTemplate,
+        templateParts: saveTemplate,
+      },
+    ];
+    console.log(createSelectTemplate);
     async function postTemplates() {
-      const url = "api/monster/templates";
+      const url = "http://localhost:3000/api/monster/templates";
       const response = await fetch(url, {
         method: "POST",
-        body: JSON.stringify(template),
+        body: JSON.stringify(createSelectTemplate),
         headers: {
           "Content-Type": "application/json",
-          // Accept: "application/json",
+          Accept: "application/json",
           Authorization: `Bearer ${localStorage.token}`,
         },
       });
+      setNameTemplate("");
       const data = await response.json();
       console.log(data);
     }
@@ -116,10 +130,10 @@ export const Monster = () => {
     );
   }
 
-  const filtredMonster = secondMonster.filter((elem) =>
-    elem.isChecked === true ? cardMonster.push(elem) : null
-  );
-  const monstrik = [...new Set(cardMonster)];
+  // const filtredMonster = secondMonster.filter((elem) =>
+  //   elem.isChecked === true ? cardMonster.push(elem) : null
+  // );
+  // const monstrik = [...new Set(cardMonster)];
   // console.log(monstrik);
 
   return (
@@ -163,6 +177,11 @@ export const Monster = () => {
         </label>
       </div>
       <div style={{ textAlign: "center" }}>
+        <input
+          type="text"
+          value={nameTemplate}
+          onChange={(e) => setNameTemplate(e.target.value)}
+        />
         <button onClick={postTemplate}>Сохранить шаблон</button>
       </div>
       <div className={s.room}>
@@ -190,7 +209,6 @@ export const Monster = () => {
                 stopDrag(e, data, item._id);
 
                 socket.emit("chat message", e.pageX + "upd" + e.pageY);
-
               }}
               position={item.position}
             >
