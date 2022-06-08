@@ -10,7 +10,6 @@ export const Teacherstudents = ({ caption }) => {
   const [listGroup, setListGroup] = useState([]);
   const [nameGropup, setNameGroup] = useState("");
   const [trackAnswer, setTrackAnswer] = useState("");
-  const [checked, setChecked] = useState("");
 
   useEffect(() => {
     async function getStudents() {
@@ -27,7 +26,8 @@ export const Teacherstudents = ({ caption }) => {
         isChecked: false,
       }));
       setStudents(dataArr);
-      setChecked();
+      const check = document.querySelectorAll('input[type="checkbox"]');
+      check.forEach((elem) => (elem.checked = false));
     }
     getStudents();
     async function getGroup() {
@@ -85,7 +85,6 @@ export const Teacherstudents = ({ caption }) => {
       setNameGroup("");
       const data = await response.json();
       setTrackAnswer(data);
-      setChecked("");
       console.log("data", data);
     }
     postGroup();
@@ -136,7 +135,6 @@ export const Teacherstudents = ({ caption }) => {
               <li key={index}>
                 {student.lastName} {student.firstName}
                 <input
-                  checked={checked}
                   type="checkbox"
                   onChange={() => selectedStudent(student._id)}
                 />
