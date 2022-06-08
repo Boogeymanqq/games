@@ -7,11 +7,9 @@ import onError from './onError.js'
 
 // путь к текущей директории
 const _dirname = dirname(fileURLToPath(import.meta.url))
-console.log('_dirname', _dirname)
 
 // путь к директории с файлами
 const fileDir = join(_dirname, '../')
-console.log('fileDir', fileDir)
 
 // утилита для получения пути к файлу
 export const getFilePath = filePath => join(fileDir, filePath)
