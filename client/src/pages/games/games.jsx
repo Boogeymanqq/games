@@ -13,6 +13,7 @@ import { NavigationTeacher } from "../teacher/navigationTeacher";
 
 export const Games = () => {
   const [templates, setTemplates] = useState([]);
+  const [trackAnswer, setTrackAnswer] = useState();
 
   useEffect(() => {
     async function getTemplate() {
@@ -27,9 +28,29 @@ export const Games = () => {
       setTemplates(data.templates);
     }
     getTemplate();
-  }, []);
+  }, [null, trackAnswer]);
 
   console.log(templates);
+
+  function deleteTemplates(id) {
+    const obj = [{ _id: id }];
+    async function deleteApi() {
+      const url = "http://localhost:3000/api/monster/templates";
+      const response = await fetch(url, {
+        method: "DELETE",
+        body: JSON.stringify(obj),
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+      const data = await response.json();
+      setTrackAnswer(data);
+      console.log("data", data);
+    }
+    deleteApi();
+  }
 
   return (
     <>
@@ -117,16 +138,19 @@ export const Games = () => {
       <div>
         <h2>Список шаблонов</h2>
         <ul>
-          {templates.map((template, index) =>
-            template.components.length > 0 ? (
-              <li key={index}>
-                {template.game} :
+          {templates.map((template, index) => (
+            <div key={index}>
+              <li>
+                {template.templateName} :
                 {template.components.map((elem, index) => (
                   <span key={index}>{elem}; </span>
                 ))}
               </li>
-            ) : null
-          )}
+              <button onClick={() => deleteTemplates(template._id)}>
+                &times;
+              </button>
+            </div>
+          ))}
         </ul>
       </div>
     </>
