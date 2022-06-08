@@ -1,8 +1,9 @@
-const path = require('path')
-const fs = require('fs')
-const DirMonsterpart = require('../models/DirMonsterpart')
+import fs from 'fs'
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
+import DirMonsterpart from '../models/DirMonsterpart.js'
 
-module.exports = getDirMonsterparts = async () => {
+export const getDirMonsterparts = async () => {
   let dirs = []
 
   const setDirMonsterpart = (dirs) => {
@@ -25,13 +26,16 @@ module.exports = getDirMonsterparts = async () => {
   }
 
   try {
-    fs.readdir(path.join(__dirname, 'monsterparts'), 'utf8', (err, files) => {
+    const _dirname = dirname(fileURLToPath(import.meta.url))
+    console.log(_dirname)
+
+    fs.readdir(_dirname, 'utf8', (err, files) => {
       if (err) throw err
 
       files.forEach((dir, ind) => {
         dirs.push({ dir })
         fs.readdir(
-          path.join(__dirname, 'monsterparts', dir),
+          join(_dirname, 'monsterparts', dir),
           'utf8',
           (err, img) => {
             if (err) throw err
