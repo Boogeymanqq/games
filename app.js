@@ -14,19 +14,23 @@ import monsterRouter from './routes/monster.routes.js'
 import onConnection from './socket_io/onConnection.js'
 import { ALLOWED_ORIGIN, MONGODB_URI } from './config.js'
 
+import { getDirMonsterparts } from './monster/monster.js'
+
 const app = express()
 
 app.use(cors({ origin: '*' }))
 
 app.use(express.json({ extended: true }))
 
-app.use('/monster/img', express.static(getFilePath('monster/img'))) // ??? отдача файлов со структурой
+app.use('/monster/img', express.static(getFilePath('monster/monsterparts'))) // ??? отдача файлов со структурой
 
 app.use('/api/auth', authRouter)
 
 app.use('/api/groups', groupsRouter)
 
 app.use('/api/monster', monsterRouter)
+
+getDirMonsterparts()
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')))

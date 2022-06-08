@@ -1,8 +1,9 @@
-const path = require('path')
-const fs = require('fs')
-const DirMonsterpart = require('../models/DirMonsterpart')
+import fs from 'fs'
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
+import DirMonsterpart from '../models/DirMonsterpart.js'
 
-module.exports = getDirMonsterparts = async () => {
+export const getDirMonsterparts = async () => {
   let dirs = []
 
   const setDirMonsterpart = (dirs) => {
@@ -25,32 +26,36 @@ module.exports = getDirMonsterparts = async () => {
   }
 
   try {
-    fs.readdir(path.join(__dirname, 'monsterparts'), 'utf8', (err, files) => {
-      if (err) throw err
+    const _dirname = dirname(fileURLToPath(import.meta.url))
 
+    fs.readdir(join(_dirname, 'monsterparts'), 'utf8', (err, files) => {
+      if (err) throw err
+      // console.log("#files", files);
       files.forEach((dir, ind) => {
         dirs.push({ dir })
-        fs.readdir(
-          path.join(__dirname, 'monsterparts', dir),
-          'utf8',
-          (err, img) => {
-            if (err) throw err
 
-            setDirMonsterpart({
-              ...dirs[ind],
-              img: [
-                ...img.map((file) => {
-                  let str = path
-                    .join('http:', 'localhost:5000', 'monster', 'img', file)
-                    .split('\\')
-                  str.splice(1, 0, '')
-                  str = str.join('/')
-                  return str
-                }),
-              ],
-            }).save()
-          }
-        )
+        fs.readdir(join(_dirname, 'monsterparts', dir), 'utf8', (err, img) => {
+          if (err) throw err
+          // console.log("#img", img)
+          setDirMonsterpart({
+            ...dirs[ind],
+            img: [
+              ...img.map((file) => {
+                let str = join(
+                  'http:',
+                  'localhost:5000',
+                  'monster',
+                  'monsterparts',
+                  dir,
+                  file
+                ).split('\\')
+                str.splice(1, 0, '')
+                str = str.join('/')
+                return str
+              }),
+            ],
+          }).save()
+        })
       })
     })
   } catch (err) {
