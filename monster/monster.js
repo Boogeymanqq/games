@@ -27,34 +27,35 @@ export const getDirMonsterparts = async () => {
 
   try {
     const _dirname = dirname(fileURLToPath(import.meta.url))
-    console.log(_dirname)
 
-    fs.readdir(_dirname, 'utf8', (err, files) => {
+    fs.readdir(join(_dirname, 'monsterparts'), 'utf8', (err, files) => {
       if (err) throw err
-
+      // console.log("#files", files);
       files.forEach((dir, ind) => {
         dirs.push({ dir })
-        fs.readdir(
-          join(_dirname, 'monsterparts', dir),
-          'utf8',
-          (err, img) => {
-            if (err) throw err
 
-            setDirMonsterpart({
-              ...dirs[ind],
-              img: [
-                ...img.map((file) => {
-                  let str = path
-                    .join('http:', 'localhost:5000', 'monster', 'img', file)
-                    .split('\\')
-                  str.splice(1, 0, '')
-                  str = str.join('/')
-                  return str
-                }),
-              ],
-            }).save()
-          }
-        )
+        fs.readdir(join(_dirname, 'monsterparts', dir), 'utf8', (err, img) => {
+          if (err) throw err
+          // console.log("#img", img)
+          setDirMonsterpart({
+            ...dirs[ind],
+            img: [
+              ...img.map((file) => {
+                let str = join(
+                  'http:',
+                  'localhost:5000',
+                  'monster',
+                  'monsterparts',
+                  dir,
+                  file
+                ).split('\\')
+                str.splice(1, 0, '')
+                str = str.join('/')
+                return str
+              }),
+            ],
+          }).save()
+        })
       })
     })
   } catch (err) {
