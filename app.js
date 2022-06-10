@@ -22,7 +22,7 @@ app.use(cors({ origin: '*' }))
 
 app.use(express.json({ extended: true }))
 
-app.use('/monster/img', express.static(getFilePath('monster/monsterparts'))) // ??? отдача файлов со структурой
+app.use('/monster/img', express.static(getFilePath('monster/monsterparts')))
 
 app.use('/api/auth', authRouter)
 
@@ -30,7 +30,7 @@ app.use('/api/groups', groupsRouter)
 
 app.use('/api/monster', monsterRouter)
 
-getDirMonsterparts()
+// getDirMonsterparts()
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')))
