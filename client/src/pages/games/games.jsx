@@ -30,7 +30,7 @@ export const Games = () => {
     getTemplate();
   }, [null, trackAnswer]);
 
-  console.log(templates);
+  // console.log(templates);
 
   function deleteTemplates(id) {
     const obj = [{ _id: id }];
@@ -47,7 +47,7 @@ export const Games = () => {
       });
       const data = await response.json();
       setTrackAnswer(data);
-      console.log("data", data);
+      // console.log("data", data);
     }
     deleteApi();
   }
