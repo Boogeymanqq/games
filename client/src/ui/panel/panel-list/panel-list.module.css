@@ -1,0 +1,23 @@
+.list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 26px;
+}
+
+.list p:nth-child(1) {
+  font-family: Oswald;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 59px;
+  text-align: center;
+}
+
+.list p:last-child {
+  max-width: 206px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  text-align: left;
+}
