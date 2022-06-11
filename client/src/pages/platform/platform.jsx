@@ -1,5 +1,6 @@
 import React from "react";
 import { Headerpage } from "../../components/header-page/header-page";
+import { Main } from "../../layouts/main";
 import smile from "./img/icon-smile.svg";
 import heart from "./img/icon-heart.svg";
 import lightning from "./img/icon-lightning.svg";
@@ -10,9 +11,8 @@ export const Platform = ({ caption }) => {
   return (
     <>
       <Headerpage picture={smile} />
-      <main className={s.main}>
+      <Main className={s.main}>
         <h2>{caption}</h2>
-
         <div className={s.description}>
           <p>
             Small Talk — это сайт для преподавателей, которые считают, что
@@ -31,7 +31,7 @@ export const Platform = ({ caption }) => {
           <img src={lightning} alt="icon" width="100" height="139" />
           <img src={star} alt="icon" width="96" height="92" />
         </div>
-      </main>
+      </Main>
     </>
   );
 };

@@ -131,7 +131,7 @@ export const Teacherstudents = ({ caption }) => {
         >
           <h2>Список учеников:</h2>
           <ul style={{ listStyle: "auto" }}>
-            {students.map((student, index) => (
+            {students?.map((student, index) => (
               <li key={index}>
                 {student.lastName} {student.firstName}
                 <input

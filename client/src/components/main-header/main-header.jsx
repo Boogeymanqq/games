@@ -1,16 +1,16 @@
 import React from "react";
+import { Header } from "../../layouts/header";
 import { Mainlogo } from "../../ui/mainLogo/mainLogo";
 import { Title } from "../../ui/title/title";
+import s from "./main-header.module.css";
 
-import s from "./header.module.css";
-
-export const Header = () => {
+export const Mainheader = () => {
   return (
     <>
-      <header className={s.header}>
+      <Header className={s.header}>
         <Mainlogo />
         <Title caption="Учись играя" />
-      </header>
+      </Header>
     </>
   );
 };

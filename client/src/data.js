@@ -24,12 +24,32 @@ export const classes = {
 export const mainPage = [
   {
     title: "о платформе",
-    href: "/platform",
+    href: "platform",
     alt: "smile",
   },
-  { title: "регистрация", href: "/signin", alt: "pen" },
-  { title: "войти", href: "/login", alt: "enter" },
-  { title: "контакты", href: "/contacts", alt: "contacts" },
+  { title: "регистрация", href: "signin", alt: "pen" },
+  { title: "войти", href: "login", alt: "enter" },
+  { title: "контакты", href: "contacts", alt: "contacts" },
+];
+
+export const navGames = [
+  { title: "Кабинет учителя", href: "/teacher" },
+  { title: "Монстер", href: "/monster" },
+  { title: "Карточки", href: "/cards" },
+  { title: "Комнаты", href: "/room" },
+];
+
+export const navRoom = [
+  { title: "Стикер", type: "submit", route: "/teacherroom/stickers" },
+  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
+  { title: "Покупки", type: "submit", route: "/teacherroom/purshases" },
+  { title: "Урок", type: "submit", route: "/teacherroom/lesson" },
+];
+
+export const teacherStudentsNav = [
+  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
+  { title: "Регистрация", type: "submit", route: "/teacherroom/sign" },
+  { title: "Назад", type: "submit", route: "/teacherroom" },
 ];
 
 export const teacherPage = [
@@ -40,13 +60,6 @@ export const teacherPage = [
   { title: "Игры", href: "/teacher/games" },
   { title: "План Урока", href: "/teacher" },
   { title: "Выйти", href: "/login" },
-];
-
-export const navGames = [
-  { title: "Кабинет учителя", href: "/teacher" },
-  { title: "Монстер", href: "/monster" },
-  { title: "Карточки", href: "/cards" },
-  { title: "Комнаты", href: "/room" },
 ];
 
 export const rooms = [
@@ -104,17 +117,4 @@ export const rooms = [
     position: { x: 0, y: 0 },
     checked: false,
   },
-];
-
-export const navRoom = [
-  { title: "Стикер", type: "submit", route: "/teacherroom/stickers" },
-  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
-  { title: "Покупки", type: "submit", route: "/teacherroom/purshases" },
-  { title: "Урок", type: "submit", route: "/teacherroom/lesson" },
-];
-
-export const teacherStudentsNav = [
-  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
-  { title: "Регистрация", type: "submit", route: "/teacherroom/sign" },
-  { title: "Назад", type: "submit", route: "/teacherroom" },
 ];
