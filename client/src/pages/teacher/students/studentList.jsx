@@ -37,7 +37,7 @@ export const StudentList = () => {
         },
       });
       const data = await response.json();
-      console.log(data.groups);
+      // console.log(data.groups);
       setListGroup(data.groups);
     }
     getGroup();
@@ -91,7 +91,7 @@ export const StudentList = () => {
 
   function deleteGroup(id) {
     const obj = [{ _id: id }];
-    console.log(obj);
+    // console.log(obj);
     async function deleteApi() {
       const url = "http://localhost:3000/api/groups";
       const response = await fetch(url, {
@@ -105,7 +105,7 @@ export const StudentList = () => {
       });
       const data = await response.json();
       setTrackAnswer(data);
-      console.log("data", data);
+      // console.log("data", data);
     }
     deleteApi();
   }

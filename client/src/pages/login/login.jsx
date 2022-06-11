@@ -77,7 +77,7 @@ export const Login = ({ caption }) => {
                 setType(res.type);
                 setIsLoading(false);
                 localStorage.setItem("token", res.token);
-                console.log(res);
+                // console.log(res);
                 formikHelpers.resetForm();
                 res.role === "teacher"
                   ? setTimeout(() => navigate("/teacher"), 1000)
@@ -89,7 +89,7 @@ export const Login = ({ caption }) => {
                 setType(error.type);
                 console.log(error);
               }
-              console.log(values);
+              // console.log(values);
               formikHelpers.resetForm();
             }}
           >

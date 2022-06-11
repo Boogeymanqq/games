@@ -115,7 +115,7 @@ export const Signin = ({ caption }) => {
                 setMessage(res.message);
                 setType(res.type);
                 setIsLoading(false);
-                console.log(res);
+                // console.log(res);
                 setTimeout(() => navigate("/login"), 1000);
               } catch (error) {
                 setIsLoading(false);
@@ -125,7 +125,7 @@ export const Signin = ({ caption }) => {
                 setType(error.type);
                 console.log(error);
               }
-              console.log(values);
+              // console.log(values);
               formikHelpers.resetForm();
             }}
           >
