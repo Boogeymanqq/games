@@ -26,6 +26,21 @@ function App() {
         <Route path="/signin" element={<Signin caption="Регистрация" />} />
         <Route path="/login" element={<Login caption="Войти" />} />
         <Route path="/contacts" element={<Contacts caption="Контакты" />} />
+        <Route
+          path="/teacherroom"
+          element={<Teacherroom caption="Личный кабинет" />}
+        />
+        <Route
+          path="/teacherroom/students"
+          element={<Teacherstudents caption="Студенты" />}
+        />
+
+        <Route
+          path="/teacherroom/sign"
+          element={<Studentform caption="Регистрация" />}
+        />
+        <Route path="/childrenpage" element={<ChildrenPage />} />
+        <Route path="/teacher/studentlist" element={<StudentList />} />
         <Route path="/teacher/games" element={<Games />} />
         <Route path="/monster" element={<Monster />} />
         <Route path="/cards" element={<Cards />} />
@@ -33,24 +48,6 @@ function App() {
         <Route
           path="/teacher"
           element={<Teacher caption="Регистрация ученика" />}
-        />
-        <Route path="/teacher/studentlist" element={<StudentList />} />
-        <Route path="/childrenpage" element={<ChildrenPage />} />
-        <Route
-          path="/teacherroom"
-          element={<Teacherroom caption="Личный кабинет" />}
-        />
-        <Route
-          path="/studentform"
-          element={<Studentform caption="Регистрация" />}
-        />
-        <Route
-          path="/teacherroom/students"
-          element={<Teacherstudents caption="Студенты" />}
-        />
-        <Route
-          path="/teacherroom/sign"
-          element={<Studentform caption="Регистрация" />}
         />
       </Routes>
     </BrowserRouter>
