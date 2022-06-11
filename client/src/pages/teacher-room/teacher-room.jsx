@@ -12,10 +12,11 @@ import arroWhite from "../teacher-room/img/icon-white-arrow.svg";
 import s from "./teacher-room.module.css";
 
 export const Teacherroom = ({ caption }) => {
-  const [panel, setPanel] = React.useState(true);
+  const [book, setBook] = React.useState(true);
+  const [plan, setPlan] = React.useState(true);
 
-  const changePanel = () => setPanel(!panel);
-  const id = 1;
+  const changeBook = () => setBook(!book);
+  const changePlan = () => setPlan(!plan);
   return (
     <>
       <Header className={s.header}>
@@ -26,8 +27,8 @@ export const Teacherroom = ({ caption }) => {
       <Main className={s.main}>
         <div className={s.panels}>
           <Panel caption="Пособия" background="#A7DFFF">
-            <div onClick={changePanel} key="1">
-              {panel ? (
+            <div onClick={changeBook}>
+              {book ? (
                 <Panelitem
                   caption="Small Talk"
                   icon={arrowRight}
@@ -55,8 +56,10 @@ export const Teacherroom = ({ caption }) => {
                 </Panelinfo>
               )}
             </div>
-            {/* <div>
-              {panel ? (
+          </Panel>
+          <Panel caption="Свой план" background="#B5FF9A">
+            <div onClick={changePlan} key="1">
+              {plan ? (
                 <Panelitem
                   caption="Small Talk"
                   icon={arrowRight}
@@ -67,7 +70,7 @@ export const Teacherroom = ({ caption }) => {
               ) : (
                 <Panelinfo
                   caption="Small Talk"
-                  title="Book 2"
+                  title="Book 1"
                   icon={arroWhite}
                   alt="arrow"
                   width="25"
@@ -83,9 +86,8 @@ export const Teacherroom = ({ caption }) => {
                   />
                 </Panelinfo>
               )}
-            </div> */}
+            </div>
           </Panel>
-          <Panel caption="Свой план" background="#B5FF9A"></Panel>
         </div>
       </Main>
     </>
