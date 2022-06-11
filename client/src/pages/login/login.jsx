@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Headerpage } from "../../components/header-page/header-page";
+import { Main } from "../../layouts/main";
 import { Button, Box, TextField, CircularProgress } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Field, Form, Formik } from "formik";
@@ -52,7 +53,7 @@ export const Login = ({ caption }) => {
   return (
     <>
       <Headerpage picture={enter} />
-      <main className={s.main}>
+      <Main className={s.main}>
         <h2>{caption}</h2>
         <div className={s.materialForm}>
           <Formik
@@ -80,7 +81,7 @@ export const Login = ({ caption }) => {
                 console.log(res);
                 formikHelpers.resetForm();
                 res.role === "teacher"
-                  ? setTimeout(() => navigate("/teacher"), 1000)
+                  ? setTimeout(() => navigate("/teacherroom"), 1000)
                   : setTimeout(() => navigate("/childrenpage"), 1000);
               } catch (error) {
                 setIsLoading(false);
@@ -144,7 +145,7 @@ export const Login = ({ caption }) => {
           )}
           {alert && <AlertInfo type={type} title={message} />}
         </div>
-      </main>
+      </Main>
     </>
   );
 };
