@@ -9,14 +9,26 @@ import { Panelinfo } from "../../ui/panel/panel-info/panel-info";
 import { Panellist } from "../../ui/panel/panel-list/panel-list";
 import arrowRight from "../teacher-room/img/icon-black-arrow.svg";
 import arroWhite from "../teacher-room/img/icon-white-arrow.svg";
+import { teacherBookPanel } from "../../data";
+import { teacherPlanPanel } from "../../data";
 import s from "./teacher-room.module.css";
 
 export const Teacherroom = ({ caption }) => {
-  const [book, setBook] = React.useState(true);
-  const [plan, setPlan] = React.useState(true);
+  const [activeBooks, setActiveBooks] = React.useState([]);
+  const [activePlans, setActivePlans] = React.useState([]);
 
-  const changeBook = () => setBook(!book);
-  const changePlan = () => setPlan(!plan);
+  const changeBook = (id) => {
+    activeBooks.includes(id)
+      ? setActiveBooks(activeBooks.filter((activeID) => activeID !== id))
+      : setActiveBooks([...activeBooks, id]);
+  };
+
+  const changePlan = (id) => {
+    activePlans.includes(id)
+      ? setActivePlans(activePlans.filter((activeID) => activeID !== id))
+      : setActivePlans([...activePlans, id]);
+  };
+
   return (
     <>
       <Header className={s.header}>
