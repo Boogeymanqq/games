@@ -39,66 +39,34 @@ export const Teacherroom = ({ caption }) => {
       <Main className={s.main}>
         <div className={s.panels}>
           <Panel caption="Пособия" background="#A7DFFF">
-            <div onClick={changeBook}>
-              {book ? (
-                <Panelitem
-                  caption="Small Talk"
-                  icon={arrowRight}
-                  alt="arrow"
-                  width="30"
-                  height="25"
-                />
-              ) : (
-                <Panelinfo
-                  caption="Small Talk"
-                  title="Book 1"
-                  icon={arroWhite}
-                  alt="arrow"
-                  width="25"
-                  height="30"
-                >
-                  <Panellist
-                    number="1"
-                    text="Text text text text Text text text text Text text text text"
-                  />
-                  <Panellist
-                    number="2"
-                    text="Text text text text Text text text text Text text text text"
-                  />
-                </Panelinfo>
-              )}
-            </div>
+            {teacherBookPanel.map((elem, index) => (
+              <div onClick={() => changeBook(elem.id)} key={index}>
+                {!activeBooks.includes(elem.id) ? (
+                  <Panelitem {...elem} icon={arrowRight} />
+                ) : (
+                  <Panelinfo {...elem} icon={arroWhite}>
+                    {elem.panelList?.map((item, index) => (
+                      <Panellist number={index + 1} text={item} key={index} />
+                    ))}
+                  </Panelinfo>
+                )}
+              </div>
+            ))}
           </Panel>
           <Panel caption="Свой план" background="#B5FF9A">
-            <div onClick={changePlan} key="1">
-              {plan ? (
-                <Panelitem
-                  caption="Small Talk"
-                  icon={arrowRight}
-                  alt="arrow"
-                  width="30"
-                  height="25"
-                />
-              ) : (
-                <Panelinfo
-                  caption="Small Talk"
-                  title="Book 1"
-                  icon={arroWhite}
-                  alt="arrow"
-                  width="25"
-                  height="30"
-                >
-                  <Panellist
-                    number="1"
-                    text="Text text text text Text text text text Text text text text"
-                  />
-                  <Panellist
-                    number="2"
-                    text="Text text text text Text text text text Text text text text"
-                  />
-                </Panelinfo>
-              )}
-            </div>
+            {teacherPlanPanel.map((elem, index) => (
+              <div onClick={() => changePlan(elem.id)} key={index}>
+                {!activePlans.includes(elem.id) ? (
+                  <Panelitem {...elem} icon={arrowRight} />
+                ) : (
+                  <Panelinfo {...elem} icon={arroWhite}>
+                    {elem.panelList?.map((item, index) => (
+                      <Panellist number={index + 1} text={item} key={index} />
+                    ))}
+                  </Panelinfo>
+                )}
+              </div>
+            ))}
           </Panel>
         </div>
       </Main>
