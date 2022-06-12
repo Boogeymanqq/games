@@ -1,7 +1,7 @@
 .panel {
   flex-basis: 50%;
   /* padding: 17px 31px 35px 28px; */
-  height: 643px;
+  min-height: 643px;
   outline: 3px solid #000;
   box-sizing: border-box;
 }
