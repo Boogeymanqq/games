@@ -22,7 +22,7 @@ app.use(cors({ origin: '*' }))
 
 app.use(express.json({ extended: true }))
 
-app.use('/monster/img', express.static(getFilePath('monster/monsterparts')))
+app.use('/monster/monsterparts', express.static(getFilePath('monster/monsterparts')))
 
 app.use('/api/auth', authRouter)
 

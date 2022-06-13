@@ -7,9 +7,9 @@ import s from "./monster.module.css";
 
 var socket = io("http://localhost:5000/");
 socket.on("chat message", (msg) => {
-  console.log("i am monster " + msg);
+  // console.log("i am monster " + msg);
 });
-console.log(socket);
+// console.log(socket);
 const monsterLink = "Монстер";
 const newNavGame = navGames.filter((elem) => elem.title !== monsterLink);
 
@@ -40,6 +40,7 @@ export const Monster = () => {
         },
       });
       const data = await response.json();
+      // console.log(data);
       setCardNewMonster(data);
     }
     getMonster();
@@ -49,7 +50,7 @@ export const Monster = () => {
     elem.isChecked === true ? cardMonster.push(elem) : null
   );
   const monstrik = [...new Set(cardMonster)];
-  console.log(monstrik);
+  // console.log(monstrik);
 
   const saveTemplate = monstrik.map((elem) => elem._id);
 
@@ -60,7 +61,7 @@ export const Monster = () => {
         templateParts: saveTemplate,
       },
     ];
-    console.log(createSelectTemplate);
+    // console.log(createSelectTemplate);
     async function postTemplates() {
       const url = "http://localhost:3000/api/monster/templates";
       const response = await fetch(url, {
@@ -74,7 +75,7 @@ export const Monster = () => {
       });
       setNameTemplate("");
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
     }
     postTemplates();
   }
@@ -112,7 +113,6 @@ export const Monster = () => {
         if (elem._id === id) {
           setShowFolder(false);
           setSecondMonster(elem.img);
-          // console.log(secondMonster);
         }
         return elem;
       })
@@ -129,12 +129,6 @@ export const Monster = () => {
       })
     );
   }
-
-  // const filtredMonster = secondMonster.filter((elem) =>
-  //   elem.isChecked === true ? cardMonster.push(elem) : null
-  // );
-  // const monstrik = [...new Set(cardMonster)];
-  // console.log(monstrik);
 
   return (
     <>

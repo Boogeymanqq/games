@@ -24,12 +24,32 @@ export const classes = {
 export const mainPage = [
   {
     title: "о платформе",
-    href: "/platform",
+    href: "platform",
     alt: "smile",
   },
-  { title: "регистрация", href: "/signin", alt: "pen" },
-  { title: "войти", href: "/login", alt: "enter" },
-  { title: "контакты", href: "/contacts", alt: "contacts" },
+  { title: "регистрация", href: "signin", alt: "pen" },
+  { title: "войти", href: "login", alt: "enter" },
+  { title: "контакты", href: "contacts", alt: "contacts" },
+];
+
+export const navGames = [
+  { title: "Кабинет учителя", href: "/teacher" },
+  { title: "Монстер", href: "/monster" },
+  { title: "Карточки", href: "/cards" },
+  { title: "Комнаты", href: "/room" },
+];
+
+export const navRoom = [
+  { title: "Стикер", type: "submit", route: "/teacherroom/stickers" },
+  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
+  { title: "Покупки", type: "submit", route: "/teacherroom/purshases" },
+  { title: "Урок", type: "submit", route: "/teacherroom/lesson" },
+];
+
+export const teacherStudentsNav = [
+  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
+  { title: "Регистрация", type: "submit", route: "/teacherroom/sign" },
+  { title: "Назад", type: "submit", route: "/teacherroom" },
 ];
 
 export const teacherPage = [
@@ -40,13 +60,6 @@ export const teacherPage = [
   { title: "Игры", href: "/teacher/games" },
   { title: "План Урока", href: "/teacher" },
   { title: "Выйти", href: "/login" },
-];
-
-export const navGames = [
-  { title: "Кабинет учителя", href: "/teacher" },
-  { title: "Монстер", href: "/monster" },
-  { title: "Карточки", href: "/cards" },
-  { title: "Комнаты", href: "/room" },
 ];
 
 export const rooms = [
@@ -106,15 +119,152 @@ export const rooms = [
   },
 ];
 
-export const navRoom = [
-  { title: "Стикер", type: "submit", route: "/teacherroom/stickers" },
-  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
-  { title: "Покупки", type: "submit", route: "/teacherroom/purshases" },
-  { title: "Урок", type: "submit", route: "/teacherroom/lesson" },
+export const teacherBookPanel = [
+  {
+    id: 1,
+    caption: "Small Talk",
+    alt: "arrow",
+    width: [30, 25],
+    height: [30, 25],
+    title: "Book 1",
+    panelList: [
+      "Text text text text Text text text text Text text text text",
+      "Text text text text Text text text text Text text text text",
+    ],
+  },
+  {
+    id: 2,
+    caption: "Spot Light",
+    alt: "arrow",
+    width: [30, 25],
+    height: [30, 25],
+    title: "Book 2",
+    panelList: [
+      "Text text text text Text text text text Text text text text",
+      "Text text text text Text text text text Text text text text",
+    ],
+  },
+  {
+    id: 3,
+    caption: "Grammarway",
+    alt: "arrow",
+    width: [30, 25],
+    height: [30, 25],
+    title: "Book 2",
+    panelList: [
+      "Text text text text Text text text text Text text text text",
+      "Text text text text Text text text text Text text text text",
+    ],
+  },
+  {
+    id: 4,
+    caption: "Grammarway",
+    alt: "arrow",
+    width: [30, 25],
+    height: [30, 25],
+    title: "Book 2",
+    panelList: [
+      "Text text text text Text text text text Text text text text",
+      "Text text text text Text text text text Text text text text",
+    ],
+  },
+  {
+    id: 5,
+    caption: "Grammarway",
+    alt: "arrow",
+    width: [30, 25],
+    height: [30, 25],
+    title: "Book 2",
+    panelList: [
+      "Text text text text Text text text text Text text text text",
+      "Text text text text Text text text text Text text text text",
+    ],
+  },
+  {
+    id: 6,
+    caption: "Grammarway",
+    alt: "arrow",
+    width: [30, 25],
+    height: [30, 25],
+    title: "Book 2",
+    panelList: [
+      "Text text text text Text text text text Text text text text",
+      "Text text text text Text text text text Text text text text",
+    ],
+  },
 ];
 
-export const teacherStudentsNav = [
-  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
-  { title: "Регистрация", type: "submit", route: "/teacherroom/sign" },
-  { title: "Назад", type: "submit", route: "/teacherroom" },
+export const teacherPlanPanel = [
+  {
+    id: 1,
+    caption: "План 1",
+    alt: "arrow",
+    width: [30, 25],
+    height: [30, 25],
+    title: "Book 1",
+    panelList: [
+      "Text text text text Text text text text Text text text text",
+      "Text text text text Text text text text Text text text text",
+    ],
+  },
+  {
+    id: 2,
+    caption: "План 2",
+    alt: "arrow",
+    width: [30, 25],
+    height: [30, 25],
+    title: "Book 2",
+    panelList: [
+      "Text text text text Text text text text Text text text text",
+      "Text text text text Text text text text Text text text text",
+    ],
+  },
+  {
+    id: 3,
+    caption: "План 3",
+    alt: "arrow",
+    width: [30, 25],
+    height: [30, 25],
+    title: "Book 2",
+    panelList: [
+      "Text text text text Text text text text Text text text text",
+      "Text text text text Text text text text Text text text text",
+    ],
+  },
+  {
+    id: 4,
+    caption: "План 4",
+    alt: "arrow",
+    width: [30, 25],
+    height: [30, 25],
+    title: "Book 2",
+    panelList: [
+      "Text text text text Text text text text Text text text text",
+      "Text text text text Text text text text Text text text text",
+    ],
+  },
+  {
+    id: 5,
+    caption: "План 5",
+    alt: "arrow",
+    width: [30, 25],
+    height: [30, 25],
+    title: "Book 2",
+    panelList: [
+      "Text text text text Text text text text Text text text text",
+      "Text text text text Text text text text Text text text text",
+    ],
+  },
+  {
+    id: 6,
+    caption: "План 6",
+    alt: "arrow",
+    width: [30, 25],
+    height: [30, 25],
+    title: "Book 2",
+    panelList: [
+      "Text text text text Text text text text Text text text text",
+      "Text text text text Text text text text Text text text text",
+    ],
+  },
 ];

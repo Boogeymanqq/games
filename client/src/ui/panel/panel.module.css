@@ -1,6 +1,15 @@
 .panel {
   flex-basis: 50%;
-  height: 643px;
-  background: #a7dfff;
+  /* padding: 17px 31px 35px 28px; */
+  min-height: 643px;
+  outline: 3px solid #000;
   box-sizing: border-box;
+}
+
+.panel h3 {
+  margin-bottom: 37px;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 59px;
+  text-align: center;
 }

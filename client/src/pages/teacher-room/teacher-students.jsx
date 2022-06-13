@@ -39,7 +39,7 @@ export const Teacherstudents = ({ caption }) => {
         },
       });
       const data = await response.json();
-      console.log(data.groups);
+      // console.log(data.groups);
       setListGroup(data.groups);
     }
     getGroup();
@@ -85,7 +85,7 @@ export const Teacherstudents = ({ caption }) => {
       setNameGroup("");
       const data = await response.json();
       setTrackAnswer(data);
-      console.log("data", data);
+      // console.log("data", data);
     }
     postGroup();
   }
@@ -105,7 +105,7 @@ export const Teacherstudents = ({ caption }) => {
       });
       const data = await response.json();
       setTrackAnswer(data);
-      console.log("data", data);
+      // console.log("data", data);
     }
     deleteApi();
   }
@@ -131,7 +131,7 @@ export const Teacherstudents = ({ caption }) => {
         >
           <h2>Список учеников:</h2>
           <ul style={{ listStyle: "auto" }}>
-            {students.map((student, index) => (
+            {students?.map((student, index) => (
               <li key={index}>
                 {student.lastName} {student.firstName}
                 <input

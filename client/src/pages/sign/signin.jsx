@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Headerpage } from "../../components/header-page/header-page";
+import { Main } from "../../layouts/main";
 import { Box, Button, TextField, CircularProgress } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Field, Form, Formik } from "formik";
@@ -56,7 +57,7 @@ export const Signin = ({ caption }) => {
   return (
     <>
       <Headerpage picture={pen} />
-      <main className={s.main}>
+      <Main className={s.main}>
         <h2>{caption}</h2>
         <div className={s.materialForm}>
           <Formik
@@ -115,7 +116,7 @@ export const Signin = ({ caption }) => {
                 setMessage(res.message);
                 setType(res.type);
                 setIsLoading(false);
-                console.log(res);
+                // console.log(res);
                 setTimeout(() => navigate("/login"), 1000);
               } catch (error) {
                 setIsLoading(false);
@@ -125,7 +126,7 @@ export const Signin = ({ caption }) => {
                 setType(error.type);
                 console.log(error);
               }
-              console.log(values);
+              // console.log(values);
               formikHelpers.resetForm();
             }}
           >
@@ -256,7 +257,7 @@ export const Signin = ({ caption }) => {
           )}
           {alert && <AlertInfo type={type} title={message} />}
         </div>
-      </main>
+      </Main>
     </>
   );
 };
