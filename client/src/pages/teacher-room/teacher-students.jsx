@@ -49,7 +49,7 @@ export const Teacherstudents = ({ caption }) => {
     getGroup();
   }, [trackAnswer]);
 
-  console.log("students", students);
+  // console.log("students", students);
 
   function selectedStudent(id) {
     setStudents(
@@ -65,7 +65,7 @@ export const Teacherstudents = ({ caption }) => {
   const filtredgroup = students
     .filter((elem) => elem.isChecked === true)
     .map((elem) => elem._id);
-  console.log("filtredgroup", filtredgroup);
+  // console.log("filtredgroup", filtredgroup);
 
   const createSelectGroup = [
     {
@@ -116,7 +116,6 @@ export const Teacherstudents = ({ caption }) => {
     deleteApi();
   }
 
-  console.log(listGroup);
   return (
     <>
       <Header className={s.header}>
