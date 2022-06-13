@@ -17,13 +17,13 @@
 }
 
 .main {
-  margin-top: 58px;
+  margin: 58px 0;
 }
 
 .panels {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   column-gap: 40px;
   margin: 0 auto;
   max-width: 786px;
