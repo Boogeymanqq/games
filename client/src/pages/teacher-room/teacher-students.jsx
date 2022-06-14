@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "../../ui/button/button";
+import { Header } from "../../layouts/header";
 import { Pagelogo } from "../../ui/pageLogo/pageLogo";
-import { teacherStudentsNav } from "../../data";
+import { Navigationstudents } from "../../components/navigation-students/navigation-students";
+import { Main } from "../../layouts/main";
+import { Panel } from "../../ui/panel/panel";
+import { Panelstudents } from "../../ui/panel/panel-students/panel-students";
+import { Button } from "../../ui/button/button";
 import s from "./teacher-students.module.css";
 
 export const Teacherstudents = ({ caption }) => {
   const [students, setStudents] = useState([]);
   const [listGroup, setListGroup] = useState([]);
-  const [nameGropup, setNameGroup] = useState("");
+  const [nameGroup, setNameGroup] = useState("");
   const [trackAnswer, setTrackAnswer] = useState("");
 
   useEffect(() => {
@@ -30,6 +33,7 @@ export const Teacherstudents = ({ caption }) => {
       check.forEach((elem) => (elem.checked = false));
     }
     getStudents();
+
     async function getGroup() {
       const url = "http://localhost:3000/api/groups";
       const response = await fetch(url, {
@@ -43,7 +47,9 @@ export const Teacherstudents = ({ caption }) => {
       setListGroup(data.groups);
     }
     getGroup();
-  }, [null, trackAnswer]);
+  }, [trackAnswer]);
+
+  // console.log("students", students);
 
   function selectedStudent(id) {
     setStudents(
@@ -59,11 +65,11 @@ export const Teacherstudents = ({ caption }) => {
   const filtredgroup = students
     .filter((elem) => elem.isChecked === true)
     .map((elem) => elem._id);
-  // console.log(filtredgroup, students);
+  // console.log("filtredgroup", filtredgroup);
 
   const createSelectGroup = [
     {
-      name: nameGropup,
+      name: nameGroup,
       students: filtredgroup,
     },
   ];
@@ -109,60 +115,61 @@ export const Teacherstudents = ({ caption }) => {
     }
     deleteApi();
   }
+
   return (
     <>
-      <header className={s.header}>
+      <Header className={s.header}>
         <Pagelogo />
         <h2>{caption}</h2>
-      </header>
-      <nav className={s.nav}>
-        {teacherStudentsNav.map((elem, index) => (
-          <Link to={elem.route} key={index}>
-            <Button type={elem.type}>{elem.title}</Button>
-          </Link>
-        ))}
-      </nav>
-      <main className={s.main}>
-        <div
-          style={{
-            marginLeft: "200px",
-            fontSize: "20px",
-          }}
-        >
-          <h2>Список учеников:</h2>
-          <ul style={{ listStyle: "auto" }}>
-            {students?.map((student, index) => (
-              <li key={index}>
-                {student.lastName} {student.firstName}
-                <input
-                  type="checkbox"
-                  onChange={() => selectedStudent(student._id)}
-                />
-              </li>
+      </Header>
+      <Navigationstudents />
+      <Main className={s.main}>
+        <div className={s.panels}>
+          <Panel caption="Список студентов" background="#A7DFFF">
+            {students?.map((elem, index) => (
+              <Panelstudents
+                key={index}
+                {...elem}
+                number={`${index + 1}.`}
+                select={() => selectedStudent(elem._id)}
+              />
             ))}
-          </ul>
-          <input
-            type="text"
-            value={nameGropup}
-            onChange={(e) => setNameGroup(e.target.value)}
-          />
-          <button onClick={createGroup}>создать группу</button>
-          <h2>Список групп:</h2>
-          <ul style={{ listStyle: "auto" }}>
-            {listGroup.map((group, index) => (
-              <div key={index}>
-                <li>
-                  {group.groupName} :{" "}
-                  {group.students.map((elem, index) => (
-                    <span key={index}>{elem}; </span>
-                  ))}
-                </li>
-                <button onClick={() => deleteGroup(group._id)}>&times;</button>
+          </Panel>
+          <Panel caption="Список групп" background="#B5FF9A">
+            <ul style={{ listStyle: "auto" }}>
+              {listGroup.map((group, index) => (
+                <div key={index}>
+                  <li>
+                    {group.groupName}
+                    {group.students.map((elem, index) => (
+                      <span key={index}>{elem}; </span>
+                    ))}
+                  </li>
+                  <button onClick={() => deleteGroup(group._id)}>
+                    &times;
+                  </button>
+                </div>
+              ))}
+            </ul>
+            <div className={s.group__name}>
+              <input
+                type="text"
+                placeholder="Название группы"
+                value={nameGroup}
+                onChange={(e) => setNameGroup(e.target.value.trim())}
+              />
+              <div onClick={createGroup}>
+                <Button
+                  type="submit"
+                  disabled={!nameGroup || filtredgroup.length === 0}
+                >
+                  OK
+                </Button>
               </div>
-            ))}
-          </ul>
+            </div>
+          </Panel>
         </div>
-      </main>
+      </Main>
     </>
   );
 };

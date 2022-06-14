@@ -17,14 +17,39 @@
 }
 
 .main {
-  margin-top: 58px;
+  margin: 58px 0;
 }
 
-.nav {
+.panels {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  column-gap: 40px;
+  margin: 0 auto;
+  max-width: 786px;
+}
+
+.group__name {
   display: flex;
   justify-content: center;
   align-items: center;
-  column-gap: 40px;
-  margin: 0 auto;
-  min-width: 786px;
+  column-gap: 10px;
+}
+
+input[type="text"] {
+  display: block;
+  padding: 15px 0 16px 10px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  outline: none;
+}
+
+input[type="text"]::placeholder {
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+input[type="text"]:focus {
+  outline: 2px solid green;
 }

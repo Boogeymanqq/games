@@ -17,6 +17,7 @@ import { StudentList } from "./pages/teacher/students/studentList";
 import { Teacherroom } from "./pages/teacher-room/teacher-room";
 import { Studentform } from "./pages/student-form/student-form";
 import { Teacherstudents } from "./pages/teacher-room/teacher-students";
+import { Lesson } from "./pages/lesson/lesson";
 
 function App() {
   const { users, messages, log, sendMessage, removeMessage } = useSocket();
@@ -40,6 +41,10 @@ function App() {
         <Route
           path="/teacherroom/sign"
           element={<Studentform caption="Регистрация" />}
+        />
+        <Route
+          path="/teacherroom/lesson"
+          element={<Lesson caption="Урок 1" />}
         />
         <Route path="/childrenpage" element={<ChildrenPage />} />
         <Route path="/teacher/studentlist" element={<StudentList />} />
