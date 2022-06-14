@@ -78,7 +78,8 @@ export const Login = ({ caption }) => {
                 setType(res.type);
                 setIsLoading(false);
                 localStorage.setItem("token", res.token);
-                // console.log(res);
+                localStorage.setItem("room", JSON.stringify(res.userId));
+                console.log(res);
                 formikHelpers.resetForm();
                 res.role === "teacher"
                   ? setTimeout(() => navigate("/teacherroom"), 1000)
