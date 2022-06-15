@@ -7,60 +7,56 @@ export default function useSocket() {
   // локальное состояние для списка пользователей
   const [users, setUsers] = useState([]);
   // локальное состояние для списка сообщений
-  const [messages, setMessages] = useState({});
+  const [messages, setMessages] = useState([]);
   // состояние для системного сообщения
   const [log, setLog] = useState(null);
   // иммутабельное состояние для сокета
-  const { current: socket } = useRef(
-    io("http://localhost:5000", {
-      query: {
-        //отправляем id учителя??
-        // отправляем идентификатор комнаты и имя пользователя на сервер
-        roomId: JSON.parse(user),
-        userName: JSON.parse(user),
-      },
-    })
-  );
+  const socket = useRef(null);
 
-  const dirtyObj = {
-    roomId: JSON.parse(user),
-    userName: JSON.parse(user),
-  };
+  const roomId = JSON.parse(user);
+  const userName = JSON.parse(user);
 
   // регистрируем обработчики
   useEffect(() => {
+    socket.current = io("http://localhost:5000", {
+      query: {
+        roomId,
+        userName,
+      },
+    });
+
     // сообщаем о подключении нового пользователя
-    socket.emit("user:add", dirtyObj); //id учеников???
+    socket.current.emit("user:add", { roomId, userName });
 
     // запрашиваем сообщения из БД
-    socket.emit("message:get");
+    socket.current.emit("message:get");
 
     // обрабатываем получение системного сообщения
-    socket.on("log", (log) => {
+    socket.current.on("log", (log) => {
       console.log(log);
       setLog(log);
     });
 
     // обрабатываем получение обновленного списка пользователей
-    socket.on("user_list:update", (users) => {
+    socket.current.on("user_list:update", (users) => {
       setUsers(users);
       console.log(users);
     });
 
     // обрабатываем получение обновленного списка сообщений
-    socket.on("message_list:update", (messages) => {
+    socket.current.on("message_list:update", (messages) => {
       setMessages(messages);
     });
   }, []);
 
   // метод для отправки сообщения (координат)
   const sendMessage = (message) => {
-    socket.emit("message:add", message);
+    socket.current.emit("message:add", message);
   };
 
   // метод для удаления сообщения (координат)
   const removeMessage = (message) => {
-    socket.emit("message:remove", message);
+    socket.current.emit("message:remove", message);
   };
 
   return { users, messages, log, sendMessage, removeMessage };
