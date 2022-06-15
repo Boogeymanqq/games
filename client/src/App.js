@@ -1,4 +1,5 @@
 import React from "react";
+import useSocket from "./hooks/useSocket";
 import { BrowserRouter } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { Main } from "./pages/main/main";
@@ -16,8 +17,10 @@ import { StudentList } from "./pages/teacher/students/studentList";
 import { Teacherroom } from "./pages/teacher-room/teacher-room";
 import { Studentform } from "./pages/student-form/student-form";
 import { Teacherstudents } from "./pages/teacher-room/teacher-students";
+import { Lesson } from "./pages/lesson/lesson";
 
 function App() {
+  const { users, messages, log, sendMessage, removeMessage } = useSocket();
   return (
     <BrowserRouter>
       <Routes>
@@ -39,10 +42,24 @@ function App() {
           path="/teacherroom/sign"
           element={<Studentform caption="Регистрация" />}
         />
+        <Route
+          path="/teacherroom/lesson"
+          element={<Lesson caption="Урок 1" />}
+        />
         <Route path="/childrenpage" element={<ChildrenPage />} />
         <Route path="/teacher/studentlist" element={<StudentList />} />
         <Route path="/teacher/games" element={<Games />} />
-        <Route path="/monster" element={<Monster />} />
+        <Route
+          path="/monster"
+          element={
+            <Monster
+              users={users}
+              log={log}
+              sendMessage={sendMessage}
+              removeMessage={removeMessage}
+            />
+          }
+        />
         <Route path="/cards" element={<Cards />} />
         <Route path="/room" element={<Room />} />
         <Route

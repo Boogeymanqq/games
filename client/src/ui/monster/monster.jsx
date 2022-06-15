@@ -1,19 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import { navGames } from "../../data";
 import { NavigationGames } from "../navigationGames/navigationGames";
 import s from "./monster.module.css";
 
-var socket = io("http://localhost:5000/");
-socket.on("chat message", (msg) => {
-  // console.log("i am monster " + msg);
-});
+// var socket = io("http://localhost:5000/");
+// socket.on("chat message", (msg) => {
+//   console.log("i am monster " + msg);
+// });
 // console.log(socket);
 const monsterLink = "Монстер";
 const newNavGame = navGames.filter((elem) => elem.title !== monsterLink);
 
-export const Monster = () => {
+export const Monster = ({ users, log, sendMessage, removeMessage }) => {
   const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);
   const [cardMonster, setCardMonster] = useState([]);
@@ -28,8 +28,10 @@ export const Monster = () => {
   const [objSize, setObjSize] = useState(100);
   const [objBoxSize, setObjBoxSize] = useState(100);
 
-  const nodeRef = useRef(null);
+  const [coordinate, setCoordinate] = useState({ x: 0, y: 0 });
 
+  const nodeRef = useRef(null);
+  // console.log(log, users);
   useEffect(() => {
     async function getMonster() {
       const url = "api/monster/dir/monsterparts";
@@ -90,6 +92,10 @@ export const Monster = () => {
       monstrik.map((item) => {
         if (item._id === id) {
           item.position = { x: data.x, y: data.y };
+          setCoordinate(item.position);
+          sendMessage(coordinate);
+          console.log(sendMessage);
+          // socket.emit("chat message", JSON.stringify(item.position));
         }
         return item;
       })
@@ -101,6 +107,9 @@ export const Monster = () => {
       monstrik.map((item) => {
         if (item._id === id) {
           item.position = { x: 0, y: 0 };
+          setCoordinate(item.position);
+          removeMessage(JSON.stringify(item.position));
+          console.log(removeMessage);
         }
         return item;
       })
@@ -201,8 +210,7 @@ export const Monster = () => {
               onStart={(e) => startDrag(e)}
               onStop={(e, data) => {
                 stopDrag(e, data, item._id);
-
-                socket.emit("chat message", e.pageX + "upd" + e.pageY);
+                // socket.emit("chat message", e.pageX + "upd" + e.pageY);
               }}
               position={item.position}
             >
