@@ -1,6 +1,7 @@
 import express from 'express'
 import StudentsGroup from '../models/StudentsGroup.js'
 import auth from '../middleware/auth.middleware.js'
+import Student from '../models/Student.js'
 
 const groupsRouter = express.Router()
 
@@ -32,14 +33,41 @@ groupsRouter.post('/', auth, async (req, res) => {
 groupsRouter.get('/', auth, async (req, res) => {
   try {
     const groups = await StudentsGroup.find({ teacher: req.user.userId })
+    console.log('#groups', groups)
+
+    let $res = []
+    
+    for (let key of groups) {
+      let firstName = ''
+      let lastName = ''
+      let studentsArr = []
+      let studentsInGroups = []
+
+      if (key.students) {
+        studentsArr = [...key.students]
+        const studentsFromGroup = await Student.find({
+          _id: {
+            $in: studentsArr,
+          },
+        })
+        studentsFromGroup.forEach((e) => {
+          firstName = e.firstName
+          lastName = e.lastName
+          studentsInGroups.push({firstName, lastName})
+        })
+      }
+      $res.push({groups: key, studentsInGroups})
+    }
+
     if (!groups) {
       return res.status(400).json({
         message: 'Групп не найдено.',
         type: 'error',
       })
     }
+
     res.status(200).json({
-      groups,
+      $res,
       type: 'success',
     })
   } catch (error) {

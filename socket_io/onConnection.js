@@ -14,7 +14,7 @@ export default function onConnection(io, socket) {
   socket.roomId = roomId;
   socket.userName = userName || "userName";
   // console.log(socket);
-
+  
   // присоединяемся к комнате
   socket.join(roomId);
 
