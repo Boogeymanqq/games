@@ -139,13 +139,9 @@ export const Teacherstudents = ({ caption }) => {
               {listGroup.map((group, index) => (
                 <div key={index}>
                   <li>
-                    {group.groups.groupName}:{"  "}
-                    {group.studentsInGroups.map((elem, index) => (
-                      <span key={index}>
-                        {elem.firstName}
-                        {"  "}
-                        {elem.lastName},{"  "}
-                      </span>
+                    <span>{group.groupName}. </span>
+                    {group.students.map((elem, index) => (
+                      <span key={index}>{elem}; </span>
                     ))}
                   </li>
                   <button onClick={() => deleteGroup(group._id)}>
@@ -157,7 +153,7 @@ export const Teacherstudents = ({ caption }) => {
             <div className={s.group__name}>
               <input
                 type="text"
-                placeholder="Название группы"
+                placeholder="Введите название группы"
                 value={nameGroup}
                 onChange={(e) => setNameGroup(e.target.value.trim())}
               />
