@@ -40,19 +40,16 @@ groupsRouter.get('/', auth, async (req, res) => {
     for (let key of groups) {
       let firstName = ''
       let lastName = ''
-      let test = []
+      let studentsArr = []
       let studentsInGroups = []
 
-      // console.log(key.students)
       if (key.students) {
-        test = [...key.students]
-        // console.log(test)
+        studentsArr = [...key.students]
         const studentsFromGroup = await Student.find({
           _id: {
-            $in: test,
+            $in: studentsArr,
           },
         })
-        // console.log(studentsFromGroup)
         studentsFromGroup.forEach((e) => {
           firstName = e.firstName
           lastName = e.lastName
@@ -62,16 +59,13 @@ groupsRouter.get('/', auth, async (req, res) => {
       $res.push({groups: key, studentsInGroups})
     }
 
-    console.log('###########', $res)
-
     if (!groups) {
       return res.status(400).json({
         message: 'Групп не найдено.',
         type: 'error',
       })
     }
-    // console.log(firstName)
-    // console.log(lastName)
+
     res.status(200).json({
       $res,
       type: 'success',

@@ -13,7 +13,7 @@ export default function onConnection(io, socket) {
   socket.roomId = roomId
   socket.userName = userName
 
-  // присоединяемся к комнате
+  // присоединяемся к комнате 
   socket.join(roomId)
 
   // регистрируем обработчики для пользователей
