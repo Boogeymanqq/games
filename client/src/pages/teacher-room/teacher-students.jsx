@@ -43,8 +43,7 @@ export const Teacherstudents = ({ caption }) => {
         },
       });
       const data = await response.json();
-      // console.log(data.groups);
-      setListGroup(data.groups);
+      setListGroup(data.$res);
     }
     getGroup();
   }, [trackAnswer]);
@@ -140,9 +139,13 @@ export const Teacherstudents = ({ caption }) => {
               {listGroup.map((group, index) => (
                 <div key={index}>
                   <li>
-                    {group.groupName}
-                    {group.students.map((elem, index) => (
-                      <span key={index}>{elem}; </span>
+                    {group.groups.groupName}:{"  "}
+                    {group.studentsInGroups.map((elem, index) => (
+                      <span key={index}>
+                        {elem.firstName}
+                        {"  "}
+                        {elem.lastName},{"  "}
+                      </span>
                     ))}
                   </li>
                   <button onClick={() => deleteGroup(group._id)}>
