@@ -148,7 +148,7 @@ export const Teacherstudents = ({ caption }) => {
                       </span>
                     ))}
                   </li>
-                  <button onClick={() => deleteGroup(group._id)}>
+                  <button onClick={() => deleteGroup(group.groups._id)}>
                     &times;
                   </button>
                 </div>
@@ -157,7 +157,7 @@ export const Teacherstudents = ({ caption }) => {
             <div className={s.group__name}>
               <input
                 type="text"
-                placeholder="Название группы"
+                placeholder="Введите название группы"
                 value={nameGroup}
                 onChange={(e) => setNameGroup(e.target.value.trim())}
               />

@@ -102,7 +102,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  column-gap: 60px;
   padding: 9px 0 10px;
 }
 
