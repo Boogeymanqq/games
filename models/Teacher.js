@@ -9,7 +9,7 @@ const schema = new Schema({
   phone: { type: String, required: true, unique: true },
   login: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  students: [{ type: Types.ObjectId, hef: 'Student' }],
+  students: [{ type: Types.ObjectId, ref: 'Student' }],
 })
 
 export default model('Teacher', schema)

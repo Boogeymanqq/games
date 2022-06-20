@@ -6,6 +6,7 @@ import Teacher from '../models/Teacher.js'
 import Student from '../models/Student.js'
 import auth from '../middleware/auth.middleware.js'
 import { check, validationResult } from 'express-validator'
+import getTeacherId from '../query/getTeacherId.js'
 
 const authRouter = express.Router()
 
@@ -149,8 +150,11 @@ authRouter.post(
       }
 
       const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
-        expiresIn: '1h',
+        expiresIn: '3h',
       })
+
+      // получение айди учителя по айди ученика
+      const teacherId = await getTeacherId(user.id)
 
       res.json({
         token,
@@ -158,6 +162,7 @@ authRouter.post(
         message: 'Добро пожаловать',
         type: 'success',
         role: user.students ? 'teacher' : 'student',
+        teacherId
       })
     } catch (error) {
       res.status(500).json({
