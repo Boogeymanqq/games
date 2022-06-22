@@ -78,9 +78,9 @@ export const Login = ({ caption }) => {
                 setType(res.type);
                 setIsLoading(false);
                 localStorage.setItem("token", res.token);
-                res.role === "teacher"
-                  ? localStorage.setItem("room", JSON.stringify(res.userId))
-                  : localStorage.setItem("student", JSON.stringify(res.userId));
+                localStorage.setItem("room", JSON.stringify(res.teacherId));
+                localStorage.setItem("login", JSON.stringify(values.login));
+                localStorage.setItem("userId", JSON.stringify(res.userId));
                 console.log(res);
                 formikHelpers.resetForm();
                 res.role === "teacher"
@@ -93,7 +93,7 @@ export const Login = ({ caption }) => {
                 setType(error.type);
                 console.log(error);
               }
-              // console.log(values);
+              // console.log(values.login);
               formikHelpers.resetForm();
             }}
           >
