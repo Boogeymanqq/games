@@ -9,7 +9,6 @@ export default function userHandlers(io, socket) {
   if (!users[roomId]) {
     users[roomId] = [];
   }
-  // console.log("users with rooms", users);
 
   // утилита для обновления списка пользователей
   const updateUserList = () => {
@@ -20,7 +19,7 @@ export default function userHandlers(io, socket) {
   // обрабатываем подключение нового пользователя
   socket.on("user:add", async (user) => {
     // сообщаем другим пользователям об этом
-    // console.log("qqq", user);
+    console.log("qqq", user);
     socket.to(roomId).emit("log", `User ${userName} connected`);
     // записываем идентификатор сокета пользователя
     user.socketId = socket.id;
@@ -30,6 +29,7 @@ export default function userHandlers(io, socket) {
 
     // обновляем список пользователей
     updateUserList();
+    console.log("users with rooms", users);
   });
 
   // обрабатываем отключение пользователя

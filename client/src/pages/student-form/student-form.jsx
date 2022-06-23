@@ -94,7 +94,7 @@ export const Studentform = ({ caption }) => {
                 setMessage(res.message);
                 setType(res.type);
                 setIsLoading(false);
-                // console.log(res);
+                console.log(res);
                 setTimeout(() => navigate("/teacherroom/students"), 1000);
               } catch (error) {
                 setIsLoading(false);

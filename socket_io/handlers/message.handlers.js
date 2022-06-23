@@ -1,67 +1,71 @@
-import Message from '../../models/message.model.js'
-import { removeFile } from '../../utils/file.js'
-import onError from '../../utils/onError.js'
+import Message from "../../models/message.model.js";
+import { removeFile } from "../../utils/file.js";
+import onError from "../../utils/onError.js";
 
 // хранилище для сообщений
-const messages = {}
+const messages = {};
 
 export default function messageHandlers(io, socket) {
   // извлекаем идентификатор комнаты
-  const { roomId } = socket
+  const { roomId } = socket;
+  console.log("messageHandlers", roomId);
 
   // утилита для обновления списка сообщений
   const updateMessageList = () => {
-    io.to(roomId).emit('message_list:update', messages[roomId])
-  }
+    io.to(roomId).emit("message_list:update", messages[roomId]);
+  };
 
   // обрабатываем получение сообщений
-  socket.on('message:get', async () => {
+  socket.on("message:get", async () => {
     try {
       // получаем сообщения по id комнаты
       const _messages = await Message.find({
-        roomId
-      })
+        roomId,
+      });
       // инициализируем хранилище сообщений
-      messages[roomId] = _messages
-
+      messages[roomId] = _messages;
+    
       // обновляем список сообщений
-      updateMessageList()
+      updateMessageList();
     } catch (e) {
-      onError(e)
+      onError(e);
     }
-  })
+  });
 
   // обрабатываем создание нового сообщения
-  socket.on('message:add', (message) => {
+  socket.on("message:add", (message) => {
     // пользователи не должны ждать записи сообщения в БД
-    Message.create(message).catch(onError)
+    Message.create(message).catch(onError);
 
     // для клиента
-    message.createAt = Date.now()
+    message.createAt = Date.now();
 
+    console.log(message);
     // создаём сообщение
-    messages[roomId].push(message)
+    // messages[roomId].push(message);
 
     // обновляем список сообщений
-    updateMessageList()
-  })
+    updateMessageList();
+  });
 
   // обрабатываем удаление сообщения
-  // socket.on('message:remove', (message) => {
-  //   const { messageId, messageType, textOrPathToFile } = message
+  socket.on("message:remove", (message) => {
+    const { messageId, messageType, textOrPathToFile } = message;
 
-  //   Message.deleteOne({ messageId })
-  //     .then(() => {
-  //       if (messageType !== 'text') {
-  //         removeFile(textOrPathToFile)
-  //       }
-  //     })
-  //     .catch(onError)
+    Message.deleteOne({ messageId })
+      .then(() => {
+        if (messageType !== "text") {
+          removeFile(textOrPathToFile);
+        }
+      })
+      .catch(onError);
 
-  //   // удаляем сообщение
-  //   messages[roomId] = messages[roomId].filter((m) => m.messageId !== messageId)
+    // удаляем сообщение
+    messages[roomId] = messages[roomId].filter(
+      (m) => m.messageId !== messageId
+    );
 
-  //   // обновляем список сообщений
-  //   updateMessageList()
-  // })
+    // обновляем список сообщений
+    updateMessageList();
+  });
 }
