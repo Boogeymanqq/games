@@ -47,21 +47,21 @@ export default function messageHandlers(io, socket) {
   })
 
   // обрабатываем удаление сообщения
-  socket.on('message:remove', (message) => {
-    const { messageId, messageType, textOrPathToFile } = message
+  // socket.on('message:remove', (message) => {
+  //   const { messageId, messageType, textOrPathToFile } = message
 
-    Message.deleteOne({ messageId })
-      .then(() => {
-        if (messageType !== 'text') {
-          removeFile(textOrPathToFile)
-        }
-      })
-      .catch(onError)
+  //   Message.deleteOne({ messageId })
+  //     .then(() => {
+  //       if (messageType !== 'text') {
+  //         removeFile(textOrPathToFile)
+  //       }
+  //     })
+  //     .catch(onError)
 
-    // удаляем сообщение
-    messages[roomId] = messages[roomId].filter((m) => m.messageId !== messageId)
+  //   // удаляем сообщение
+  //   messages[roomId] = messages[roomId].filter((m) => m.messageId !== messageId)
 
-    // обновляем список сообщений
-    updateMessageList()
-  })
+  //   // обновляем список сообщений
+  //   updateMessageList()
+  // })
 }
