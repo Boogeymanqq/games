@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
+import { v4 as uuidv4 } from "uuid";
 // import { io } from "socket.io-client";
 import { navGames } from "../../data";
 import { NavigationGames } from "../navigationGames/navigationGames";
@@ -28,7 +29,16 @@ export const Monster = ({ users, log, sendMessage, removeMessage }) => {
   const [objSize, setObjSize] = useState(100);
   const [objBoxSize, setObjBoxSize] = useState(100);
 
-  const [coordinate, setCoordinate] = useState({ x: 0, y: 0 });
+  const [coordinate, setCoordinate] = useState({ coordinates: { x: 0, y: 0 } });
+
+  const sendCoordinate = {
+    messageId: uuidv4(),
+    iserId: localStorage.getItem("userId"),
+    userName: localStorage.getItem("login"),
+    roomId: localStorage.getItem("room"),
+  };
+
+  sendCoordinate.textOrPathToFile = coordinate;
 
   const nodeRef = useRef(null);
   // console.log(log, users);
@@ -93,8 +103,8 @@ export const Monster = ({ users, log, sendMessage, removeMessage }) => {
         if (item._id === id) {
           item.position = { x: data.x, y: data.y };
           setCoordinate(item.position);
-          sendMessage(coordinate);
-          console.log(sendMessage);
+          sendMessage(sendCoordinate);
+          console.log(sendCoordinate);
           // socket.emit("chat message", JSON.stringify(item.position));
         }
         return item;
@@ -108,7 +118,7 @@ export const Monster = ({ users, log, sendMessage, removeMessage }) => {
         if (item._id === id) {
           item.position = { x: 0, y: 0 };
           setCoordinate(item.position);
-          removeMessage(JSON.stringify(item.position));
+          removeMessage(item.position);
           console.log(removeMessage);
         }
         return item;
