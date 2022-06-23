@@ -23,7 +23,6 @@ export default function userHandlers(io, socket) {
     socket.to(roomId).emit("log", `User ${userName} connected`);
     // записываем идентификатор сокета пользователя
     user.socketId = socket.id;
-
     // записываем пользователя в хранилище
     users[roomId].push(user);
 

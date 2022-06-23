@@ -14,7 +14,13 @@ import s from "./monster.module.css";
 const monsterLink = "Монстер";
 const newNavGame = navGames.filter((elem) => elem.title !== monsterLink);
 
-export const Monster = ({ users, log, sendMessage, removeMessage }) => {
+export const Monster = ({
+  users,
+  log,
+  messages,
+  sendMessage,
+  removeMessage,
+}) => {
   const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);
   const [cardMonster, setCardMonster] = useState([]);
@@ -29,16 +35,33 @@ export const Monster = ({ users, log, sendMessage, removeMessage }) => {
   const [objSize, setObjSize] = useState(100);
   const [objBoxSize, setObjBoxSize] = useState(100);
 
-  const [coordinate, setCoordinate] = useState({ coordinates: { x: 0, y: 0 } });
+  const [coordinate, setCoordinate] = useState({ x: 0, y: 0 });
+  const [idSubject, setIdSubject] = useState("");
+  const [coordinateSubject, setCoordinateSubject] = useState();
 
   const sendCoordinate = {
     messageId: uuidv4(),
-    iserId: localStorage.getItem("userId"),
-    userName: localStorage.getItem("login"),
-    roomId: localStorage.getItem("room"),
+    userId: JSON.parse(localStorage.getItem("userId")),
+    userName: JSON.parse(localStorage.getItem("login")),
+    roomId: JSON.parse(localStorage.getItem("room")),
   };
 
-  sendCoordinate.textOrPathToFile = coordinate;
+  // console.log(JSON.parse(messages));
+
+  const messageCoordinate = JSON.parse(messages);
+
+  console.log(messageCoordinate);
+
+  // const arrForCoordinate = messageCoordinate.map((elem) =>
+  //   console.log(elem.coordinates)
+  // );
+  // // console.log(arrForCoordinate);
+  // setCoordinateSubject(arrForCoordinate);
+  // console.log(arrForCoordinate);
+
+  sendCoordinate.messageType = "text";
+  sendCoordinate.coordinates = coordinate;
+  sendCoordinate.subjectId = idSubject;
 
   const nodeRef = useRef(null);
   // console.log(log, users);
@@ -103,8 +126,9 @@ export const Monster = ({ users, log, sendMessage, removeMessage }) => {
         if (item._id === id) {
           item.position = { x: data.x, y: data.y };
           setCoordinate(item.position);
+          setIdSubject(item._id);
           sendMessage(sendCoordinate);
-          console.log(sendCoordinate);
+          console.log(sendCoordinate, idSubject);
           // socket.emit("chat message", JSON.stringify(item.position));
         }
         return item;
