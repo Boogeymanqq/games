@@ -1,8 +1,8 @@
 // модель сообщения для `Mongoose`
 
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-const { Schema, model } = mongoose
+const { Schema, model } = mongoose;
 
 const messageSchema = new Schema(
   {
@@ -10,38 +10,43 @@ const messageSchema = new Schema(
     messageId: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     // тип сообщения
     messageType: {
       type: String,
-      required: true
+      required: true,
     },
     // координаты предмета
     coordinates: {
-      type: String,
-      required: true
+      type: Object,
+      required: true,
     },
     // идентификатор комнаты
     roomId: {
       type: String,
-      required: true
+      required: true,
     },
     // идентификатор пользователя
     userId: {
       type: String,
-      required: true
+      required: true,
     },
     // имя пользователя
     userName: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
+    //
+    subjectId: {
+      type: String,
+      required: true,
+    },
   },
   // createAt, updateAt - дата и время создания и обновления сообщения
   {
-    timestamps: true
+    timestamps: true,
   }
-)
+);
 
-export default model('Message', messageSchema)
+export default model("Message", messageSchema);
