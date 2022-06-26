@@ -19,12 +19,13 @@ export default function messageHandlers(io, socket) {
   socket.on("message:get", async () => {
     try {
       // получаем сообщения по id комнаты
+      console.log("message-get-roomId", roomId);
       const _messages = await Message.find({
         roomId,
       });
       // инициализируем хранилище сообщений
       messages[roomId] = _messages;
-    
+      console.log("messages-get", _messages);
       // обновляем список сообщений
       updateMessageList();
     } catch (e) {
@@ -41,9 +42,11 @@ export default function messageHandlers(io, socket) {
     message.createAt = Date.now();
 
     console.log(message);
+    // console.log(roomId.toString());
     // создаём сообщение
-    // messages[roomId].push(message);
-
+    messages.roomId = [];
+    messages.roomId.push(message);
+    console.log(messages);
     // обновляем список сообщений
     updateMessageList();
   });
