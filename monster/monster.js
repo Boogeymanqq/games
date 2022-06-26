@@ -1,13 +1,13 @@
-import fs from 'fs'
-import { dirname, join } from 'path'
-import { fileURLToPath } from 'url'
-import DirMonsterpart from '../models/DirMonsterpart.js'
+import fs from "fs";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+import DirMonsterpart from "../models/DirMonsterpart.js";
 
 export const getDirMonsterparts = async () => {
-  let dirs = []
+  let dirs = [];
 
   const setDirMonsterpart = (dirs) => {
-    const { dir, img } = dirs
+    const { dir, img } = dirs;
     let imageArr = img.map((el) => {
       return {
         url: el,
@@ -16,49 +16,49 @@ export const getDirMonsterparts = async () => {
           y: 0,
         },
         isChecked: false,
-      }
-    })
+      };
+    });
 
     return new DirMonsterpart({
       dir,
       img: imageArr,
-    })
-  }
+    });
+  };
 
   try {
-    const _dirname = dirname(fileURLToPath(import.meta.url))
+    const _dirname = dirname(fileURLToPath(import.meta.url));
 
-    fs.readdir(join(_dirname, 'monsterparts'), 'utf8', (err, files) => {
-      if (err) throw err
+    fs.readdir(join(_dirname, "monsterparts"), "utf8", (err, files) => {
+      if (err) throw err;
       // console.log("#files", files);
       files.forEach((dir, ind) => {
-        dirs.push({ dir })
+        dirs.push({ dir });
 
-        fs.readdir(join(_dirname, 'monsterparts', dir), 'utf8', (err, img) => {
-          if (err) throw err
+        fs.readdir(join(_dirname, "monsterparts", dir), "utf8", (err, img) => {
+          if (err) throw err;
           // console.log("#img", img)
           setDirMonsterpart({
             ...dirs[ind],
             img: [
               ...img.map((file) => {
                 let str = join(
-                  'http:',
-                  'localhost:5000',
-                  'monster',
-                  'monsterparts',
+                  "http:",
+                  "localhost:5000",
+                  "monster",
+                  "monsterparts",
                   dir,
                   file
-                ).split('\\')
-                str.splice(1, 0, '')
-                str = str.join('/')
-                return str
+                ).split("\\");
+                str.splice(1, 0, "");
+                str = str.join("/");
+                return str;
               }),
             ],
-          }).save()
-        })
-      })
-    })
+          }).save();
+        });
+      });
+    });
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-}
+};
