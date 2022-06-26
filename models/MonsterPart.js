@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-const { Schema, model } = mongoose
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
 
 const schema = new Schema({
   url: { type: String },
@@ -8,6 +8,6 @@ const schema = new Schema({
     y: { type: Number },
   },
   isChecked: { type: Boolean },
-})
+});
 
-export default model('MonsterPart', schema)
+export default model("MonsterPart", schema);

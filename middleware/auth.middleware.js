@@ -1,24 +1,24 @@
-import jwt from 'jsonwebtoken'
-import { JWT_SECRET } from '../config.js'
+import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "../config.js";
 
 function auth(req, res, next) {
-  if (req.method === 'OPTIONS') {
-    return next()
+  if (req.method === "OPTIONS") {
+    return next();
   }
 
   try {
-    const token = req.headers.authorization.split(' ')[1]
+    const token = req.headers.authorization.split(" ")[1];
 
     if (!token) {
-      return res.status(401).json({ message: 'Нет авторизации' })
+      return res.status(401).json({ message: "Нет авторизации" });
     }
 
-    const decoded = jwt.verify(token, JWT_SECRET)
-    req.user = decoded
-    next()
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.user = decoded;
+    next();
   } catch (e) {
-    res.status(401).json({ message: 'Нет авторизации' })
+    res.status(401).json({ message: "Нет авторизации" });
   }
 }
 
-export default auth
+export default auth;
