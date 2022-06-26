@@ -55,7 +55,6 @@ function App() {
             <Monster
               users={users}
               log={log}
-              messages={messages}
               sendMessage={sendMessage}
               removeMessage={removeMessage}
             />
