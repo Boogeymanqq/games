@@ -1,16 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
 import { v4 as uuidv4 } from "uuid";
-// import { io } from "socket.io-client";
 import { navGames } from "../../data";
 import { NavigationGames } from "../navigationGames/navigationGames";
 import s from "./monster.module.css";
 
-// var socket = io("http://localhost:5000/");
-// socket.on("chat message", (msg) => {
-//   console.log("i am monster " + msg);
-// });
-// console.log(socket);
 const monsterLink = "Монстер";
 const newNavGame = navGames.filter((elem) => elem.title !== monsterLink);
 
@@ -23,7 +17,6 @@ export const Monster = ({
 }) => {
   const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);
-  const [cardMonster, setCardMonster] = useState([]);
 
   // const [template, setTemplate] = useState([]);
   const [nameTemplate, setNameTemplate] = useState("");
@@ -35,9 +28,8 @@ export const Monster = ({
   const [objSize, setObjSize] = useState(100);
   const [objBoxSize, setObjBoxSize] = useState(100);
 
-  const [coordinate, setCoordinate] = useState({ x: 0, y: 0 });
   const [idSubject, setIdSubject] = useState("");
-  const [coordinateSubject, setCoordinateSubject] = useState();
+  const [selectMonster, setSelectMonster] = useState([]);
 
   const sendCoordinate = {
     messageId: uuidv4(),
@@ -46,22 +38,21 @@ export const Monster = ({
     roomId: JSON.parse(localStorage.getItem("room")),
   };
 
-  // console.log(JSON.parse(messages));
+  const messageForUsers = messages.length > 0 ? JSON.parse(messages) : messages;
+  console.log(messageForUsers);
 
-  const messageCoordinate = JSON.parse(messages);
+  const messageCoordinate = messageForUsers.map((elem) => elem.coordinates);
+  console.log(messageCoordinate[messageCoordinate.length - 1]);
 
-  console.log(messageCoordinate);
-
-  // const arrForCoordinate = messageCoordinate.map((elem) =>
-  //   console.log(elem.coordinates)
-  // );
-  // // console.log(arrForCoordinate);
-  // setCoordinateSubject(arrForCoordinate);
-  // console.log(arrForCoordinate);
+  const messageSubject = messageForUsers.map((elem) => elem.subjectId);
+  // console.log(messageSubject[messageSubject.length - 1]);
+  // console.log(selectMonster[selectMonster.length - 1]);
+  // selectMonster.map((elem) => console.log(elem));
 
   sendCoordinate.messageType = "text";
-  sendCoordinate.coordinates = coordinate;
+  sendCoordinate.coordinates = selectMonster.position;
   sendCoordinate.subjectId = idSubject;
+  sendCoordinate.subjectArr = selectMonster;
 
   const nodeRef = useRef(null);
   // console.log(log, users);
@@ -81,13 +72,7 @@ export const Monster = ({
     getMonster();
   }, []);
 
-  const filtredMonster = secondMonster.filter((elem) =>
-    elem.isChecked === true ? cardMonster.push(elem) : null
-  );
-  const monstrik = [...new Set(cardMonster)];
-  // console.log(monstrik);
-
-  const saveTemplate = monstrik.map((elem) => elem._id);
+  const saveTemplate = selectMonster.map((elem) => elem._id);
 
   function postTemplate() {
     const createSelectTemplate = [
@@ -121,33 +106,33 @@ export const Monster = ({
 
   function stopDrag(e, data, id) {
     e.preventDefault();
-    setCardMonster(
-      monstrik.map((item) => {
+    setSelectMonster(
+      selectMonster.map((item) => {
         if (item._id === id) {
-          item.position = { x: data.x, y: data.y };
-          setCoordinate(item.position);
-          setIdSubject(item._id);
-          sendMessage(sendCoordinate);
-          console.log(sendCoordinate, idSubject);
-          // socket.emit("chat message", JSON.stringify(item.position));
+          const position = { x: data.x, y: data.y };
+          console.log(position);
+          return { ...item, position };
         }
         return item;
       })
     );
+    setIdSubject(id);
+    sendMessage(sendCoordinate);
   }
 
   function toggle(id) {
-    setCardMonster(
-      monstrik.map((item) => {
+    setSelectMonster(
+      selectMonster.map((item) => {
         if (item._id === id) {
-          item.position = { x: 0, y: 0 };
-          setCoordinate(item.position);
-          removeMessage(item.position);
-          console.log(removeMessage);
+          const position = { x: 0, y: 0 };
+          console.log(position);
+          return { ...item, position };
         }
         return item;
       })
     );
+    // removeMessage(sendCoordinate);
+    // console.log(removeMessage);
   }
 
   function changeHandler(id) {
@@ -162,12 +147,17 @@ export const Monster = ({
     );
   }
 
-  function onChange(id) {
+  function onChange(e, id) {
     setSecondMonster(
       secondMonster.map((elem) => {
         if (elem._id === id) {
           elem.isChecked = !elem.isChecked;
+          setSelectMonster([...selectMonster, elem]);
+          if (e.target.checked === false) {
+            setSelectMonster(selectMonster.filter((item) => item._id !== id));
+          }
         }
+
         return elem;
       })
     );
@@ -234,7 +224,7 @@ export const Monster = ({
             height: `${6 * objBoxSize}px`,
           }}
         >
-          {monstrik.map((item, index) => (
+          {selectMonster.map((item, index) => (
             <Draggable
               key={index}
               nodeRef={nodeRef}
@@ -244,7 +234,6 @@ export const Monster = ({
               onStart={(e) => startDrag(e)}
               onStop={(e, data) => {
                 stopDrag(e, data, item._id);
-                // socket.emit("chat message", e.pageX + "upd" + e.pageY);
               }}
               position={item.position}
             >
@@ -317,7 +306,7 @@ export const Monster = ({
                     />
                     <input
                       type="checkbox"
-                      onChange={() => onChange(elem._id)}
+                      onChange={(e) => onChange(e, elem._id)}
                     />
                   </div>
                 ))}

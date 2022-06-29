@@ -42,6 +42,10 @@ const messageSchema = new Schema(
       type: String,
       required: true,
     },
+    subjectArr: {
+      type: Object,
+      required: true,
+    },
   },
   // createAt, updateAt - дата и время создания и обновления сообщения
   {
