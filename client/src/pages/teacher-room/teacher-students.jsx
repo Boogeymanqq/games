@@ -24,11 +24,7 @@ export const Teacherstudents = ({ caption }) => {
         },
       });
       const data = await response.json();
-      const dataArr = data.map((elem) => ({
-        ...elem,
-        isChecked: false,
-      }));
-      setStudents(dataArr);
+      setStudents(data.map((elem) => ({ ...elem, isChecked: false })));
       const check = document.querySelectorAll('input[type="checkbox"]');
       check.forEach((elem) => (elem.checked = false));
     }
@@ -130,7 +126,7 @@ export const Teacherstudents = ({ caption }) => {
                 key={index}
                 {...elem}
                 number={`${index + 1}.`}
-                select={() => selectedStudent(elem._id)}
+                onChange={() => selectedStudent(elem._id)}
               />
             ))}
           </Panel>
