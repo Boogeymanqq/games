@@ -38,23 +38,38 @@ export const Monster = ({
     roomId: JSON.parse(localStorage.getItem("room")),
   };
 
-  const messageForUsers = messages.length > 0 ? JSON.parse(messages) : messages;
-  console.log(messageForUsers);
-
-  const messageCoordinate = messageForUsers.map((elem) => elem.coordinates);
-  console.log(messageCoordinate[messageCoordinate.length - 1]);
-
-  const messageSubject = messageForUsers.map((elem) => elem.subjectId);
   // console.log(messageSubject[messageSubject.length - 1]);
   // console.log(selectMonster[selectMonster.length - 1]);
   // selectMonster.map((elem) => console.log(elem));
 
   sendCoordinate.messageType = "text";
-  sendCoordinate.coordinates = selectMonster.position;
-  sendCoordinate.subjectId = idSubject;
+  // sendCoordinate.coordinates = selectMonster.position;
+  // sendCoordinate.subjectId = idSubject;
   sendCoordinate.subjectArr = selectMonster;
 
   const nodeRef = useRef(null);
+
+  useEffect(() => {
+    const messageForUsers =
+      messages.length > 0 ? JSON.parse(messages) : messages;
+    console.log(messageForUsers);
+
+    const messageCoordinate = messageForUsers.map((elem) => elem.coordinates);
+    // console.log(messageCoordinate[messageCoordinate.length - 1]);
+
+    const messageSubject = messageForUsers.map((elem) => elem.subjectId);
+
+    if (messageForUsers.length !== 0) {
+      const selectSubjectArr = messageForUsers.filter((elem) =>
+        elem !== undefined ? elem.subjectArr : null
+      );
+      console.log(selectSubjectArr);
+      setSelectMonster(
+        selectSubjectArr[selectSubjectArr.length - 1].subjectArr
+      );
+    }
+    console.log(selectMonster);
+  }, [messages]);
   // console.log(log, users);
   useEffect(() => {
     async function getMonster() {
@@ -70,6 +85,8 @@ export const Monster = ({
       setCardNewMonster(data);
     }
     getMonster();
+
+    // console.log(selectSubjectArr[selectSubjectArr.length - 1].subjectArr);
   }, []);
 
   const saveTemplate = selectMonster.map((elem) => elem._id);

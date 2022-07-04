@@ -18,10 +18,10 @@ const messageSchema = new Schema(
       required: true,
     },
     // координаты предмета
-    coordinates: {
-      type: Object,
-      required: true,
-    },
+    // coordinates: {
+    //   type: Object,
+    //   required: true,
+    // },
     // идентификатор комнаты
     roomId: {
       type: String,
@@ -38,10 +38,6 @@ const messageSchema = new Schema(
       required: true,
     },
     //
-    subjectId: {
-      type: String,
-      required: true,
-    },
     subjectArr: {
       type: Object,
       required: true,
