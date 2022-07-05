@@ -17,7 +17,6 @@ export default function useSocket() {
 
   const roomId = JSON.parse(user);
   const userName = JSON.parse(login);
-
   // регистрируем обработчики
   useEffect(() => {
     socket.current = io("http://localhost:5000", {
@@ -30,7 +29,7 @@ export default function useSocket() {
     socket.current.emit("user:add", { userName });
 
     // запрашиваем сообщения из БД
-    socket.current.emit("message:get");
+    // socket.current.emit("message:get");
 
     // обрабатываем получение системного сообщения
     socket.current.on("log", (log) => {
@@ -46,7 +45,8 @@ export default function useSocket() {
 
     // обрабатываем получение обновленного списка сообщений
     socket.current.on("message_list:update", (messages) => {
-      setMessages(JSON.stringify(messages));
+      // setMessages(JSON.stringify(messages));
+      setMessages(messages);
       console.log(messages);
     });
   }, [roomId]);
