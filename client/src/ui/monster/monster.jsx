@@ -28,7 +28,6 @@ export const Monster = ({
   const [objSize, setObjSize] = useState(100);
   const [objBoxSize, setObjBoxSize] = useState(100);
 
-  const [idSubject, setIdSubject] = useState("");
   const [selectMonster, setSelectMonster] = useState([]);
 
   const sendCoordinate = {
@@ -43,31 +42,24 @@ export const Monster = ({
   // selectMonster.map((elem) => console.log(elem));
 
   sendCoordinate.messageType = "text";
-  // sendCoordinate.coordinates = selectMonster.position;
-  // sendCoordinate.subjectId = idSubject;
   sendCoordinate.subjectArr = selectMonster;
 
   const nodeRef = useRef(null);
 
   useEffect(() => {
-    const messageForUsers =
-      messages.length > 0 ? JSON.parse(messages) : messages;
-    console.log(messageForUsers);
+    const messageForUsers = messages !== null ? messages : null;
+    // console.log(messageForUsers);
 
-    const messageCoordinate = messageForUsers.map((elem) => elem.coordinates);
-    // console.log(messageCoordinate[messageCoordinate.length - 1]);
-
-    const messageSubject = messageForUsers.map((elem) => elem.subjectId);
-
-    if (messageForUsers.length !== 0) {
-      const selectSubjectArr = messageForUsers.filter((elem) =>
-        elem !== undefined ? elem.subjectArr : null
-      );
-      console.log(selectSubjectArr);
-      setSelectMonster(
-        selectSubjectArr[selectSubjectArr.length - 1].subjectArr
-      );
-    }
+    // if (messageForUsers.length !== 0) {
+    //   const selectSubjectArr = messageForUsers.filter((elem) =>
+    //     elem !== undefined ? elem.subjectArr : null
+    //   );
+    //   console.log(selectSubjectArr);
+    //   setSelectMonster(
+    //     selectSubjectArr[selectSubjectArr.length - 1].subjectArr
+    //   );
+    // }
+    setSelectMonster(messageForUsers);
     console.log(selectMonster);
   }, [messages]);
   // console.log(log, users);
@@ -126,14 +118,12 @@ export const Monster = ({
     setSelectMonster(
       selectMonster.map((item) => {
         if (item._id === id) {
-          const position = { x: data.x, y: data.y };
-          console.log(position);
-          return { ...item, position };
+          item.position = { x: data.x, y: data.y };
         }
         return item;
       })
     );
-    setIdSubject(id);
+    console.log(selectMonster);
     sendMessage(sendCoordinate);
   }
 
@@ -141,15 +131,12 @@ export const Monster = ({
     setSelectMonster(
       selectMonster.map((item) => {
         if (item._id === id) {
-          const position = { x: 0, y: 0 };
-          console.log(position);
-          return { ...item, position };
+          item.position = { x: 0, y: 0 };
         }
         return item;
       })
     );
-    // removeMessage(sendCoordinate);
-    // console.log(removeMessage);
+    sendMessage(sendCoordinate);
   }
 
   function changeHandler(id) {
@@ -174,7 +161,6 @@ export const Monster = ({
             setSelectMonster(selectMonster.filter((item) => item._id !== id));
           }
         }
-
         return elem;
       })
     );

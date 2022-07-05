@@ -8,7 +8,7 @@ const messages = {};
 export default function messageHandlers(io, socket) {
   // извлекаем идентификатор комнаты
   const { roomId } = socket;
-  console.log("messageHandlers", roomId);
+  // console.log("messageHandlers", roomId);
 
   // утилита для обновления списка сообщений
   const updateMessageList = () => {
@@ -16,40 +16,26 @@ export default function messageHandlers(io, socket) {
   };
 
   // обрабатываем получение сообщений
-  socket.on("message:get", async () => {
-    try {
-      // получаем сообщения по id комнаты
-      console.log("message-get-roomId", roomId);
-      const _messages = await Message.find({
-        roomId,
-      });
-      // инициализируем хранилище сообщений
-      messages[roomId] = _messages;
-      console.log("messages-get", _messages);
-      // обновляем список сообщений
-      updateMessageList();
-    } catch (e) {
-      onError(e);
-    }
-  });
+  // socket.on("message:get", async () => {
+  //   try {
+  //     // получаем сообщения по id комнаты
+  //     console.log("message-get-roomId", roomId);
+  //     const _messages = await Message.find({
+  //       roomId,
+  //     });
+  //     // инициализируем хранилище сообщений
+  //     messages[roomId] = _messages;
+  //     console.log("messages-get", _messages);
+  //     // обновляем список сообщений
+  //     updateMessageList();
+  //   } catch (e) {
+  //     onError(e);
+  //   }
+  // });
 
   // обрабатываем создание нового сообщения
   socket.on("message:add", (message) => {
-    // socket.to(roomId).emit("message_list:update", message);
-    // пользователи не должны ждать записи сообщения в БД
-    Message.create(message).catch(onError);
-
-    // для клиента
-    message.createAt = Date.now();
-
-    console.log(message);
-    // console.log(roomId.toString());
-    // создаём сообщение
-    messages.roomId = [];
-    messages.roomId.push(message);
-    console.log(messages);
-    // обновляем список сообщений
-    updateMessageList();
+    io.to(roomId).emit("message_list:update", message.subjectArr);
   });
 
   // обрабатываем удаление сообщения
