@@ -1,11 +1,9 @@
-// основной файл сервера
 import cors from "cors";
 import path from "path";
 import express from "express";
 import mongoose from "mongoose";
 import { Server } from "socket.io";
 import { createServer } from "http";
-import upload from "./utils/upload.js";
 import onError from "./utils/onError.js";
 import { getFilePath } from "./utils/file.js";
 import authRouter from "./routes/auth.routes.js";
@@ -13,8 +11,6 @@ import groupsRouter from "./routes/groups.routes.js";
 import monsterRouter from "./routes/monster.routes.js";
 import onConnection from "./socket_io/onConnection.js";
 import { ALLOWED_ORIGIN, MONGODB_URI } from "./config.js";
-
-import { getDirMonsterparts } from "./monster/monster.js";
 
 const app = express();
 
@@ -32,8 +28,6 @@ app.use("/api/auth", authRouter);
 app.use("/api/groups", groupsRouter);
 
 app.use("/api/monster", monsterRouter);
-
-// getDirMonsterparts()
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client", "build")));
@@ -65,19 +59,6 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   onConnection(io, socket);
 });
-
-// io.on('connection', (socket) => {
-//   console.log('user connected')
-
-//   socket.on('disconnect', () => {
-//     console.log('user disconnected')
-//   })
-
-//   socket.on('chat message', (msg) => {
-//     io.emit('chat message', msg)
-//     console.log('message: ' + msg)
-//   })
-// })
 
 const PORT = process.env.PORT || 5000;
 
