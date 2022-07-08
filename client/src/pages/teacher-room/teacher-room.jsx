@@ -13,7 +13,12 @@ import { teacherBookPanel } from "../../data";
 import { teacherPlanPanel } from "../../data";
 import s from "./teacher-room.module.css";
 
-export const Teacherroom = ({ caption }) => {
+export const Teacherroom = ({
+  caption,
+  students,
+  setStudents,
+  setLessonStudents,
+}) => {
   const [activeBooks, setActiveBooks] = React.useState([]);
   const [activePlans, setActivePlans] = React.useState([]);
 
@@ -35,7 +40,11 @@ export const Teacherroom = ({ caption }) => {
         <Pagelogo />
         <h2>{caption}</h2>
       </Header>
-      <Navigationroom />
+      <Navigationroom
+        students={students}
+        setStudents={setStudents}
+        setLessonStudents={setLessonStudents}
+      />
       <Main className={s.main}>
         <div className={s.panels}>
           <Panel caption="Пособия" background="#A7DFFF">

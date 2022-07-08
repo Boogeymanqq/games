@@ -22,6 +22,27 @@ import { Lesson } from "./pages/lesson/lesson";
 function App() {
   const { users, messages, log, sendMessage, removeMessage, sendSelect } =
     useSocket();
+  const [students, setStudents] = React.useState([]);
+  const [lessonStudents, setLessonStudents] = React.useState([]);
+
+  console.log("lessonStudents", lessonStudents);
+
+  React.useEffect(() => {
+    async function getStudents() {
+      const url = "http://localhost:3000/api/auth/students";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      });
+      const data = await response.json();
+      setStudents(data.map((elem) => ({ ...elem, isChecked: false })));
+      const check = document.querySelectorAll('input[type="checkbox"]');
+      check.forEach((elem) => (elem.checked = false));
+    }
+    getStudents();
+  }, []);
   return (
     <BrowserRouter>
       <Routes>
@@ -32,11 +53,24 @@ function App() {
         <Route path="/contacts" element={<Contacts caption="Контакты" />} />
         <Route
           path="/teacherroom"
-          element={<Teacherroom caption="Личный кабинет" />}
+          element={
+            <Teacherroom
+              caption="Личный кабинет"
+              students={students}
+              setStudents={setStudents}
+              setLessonStudents={setLessonStudents}
+            />
+          }
         />
         <Route
           path="/teacherroom/students"
-          element={<Teacherstudents caption="Студенты" />}
+          element={
+            <Teacherstudents
+              caption="Студенты"
+              students={students}
+              setStudents={setStudents}
+            />
+          }
         />
 
         <Route
@@ -54,6 +88,7 @@ function App() {
               sendMessage={sendMessage}
               removeMessage={removeMessage}
               sendSelect={sendSelect}
+              lessonStudents={lessonStudents}
             />
           }
         />

@@ -23,7 +23,9 @@ export const Lesson = ({
   sendMessage,
   removeMessage,
   sendSelect,
+  lessonStudents,
 }) => {
+  console.log(lessonStudents);
   const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);
 
@@ -139,18 +141,14 @@ export const Lesson = ({
       <Main className={s.main}>
         <div className={s.playground}>
           <div className={s.users__online}>
-            <div className={s.user}>
-              <div>
-                <img src={user} alt="user" width="18" height="18" />
+            {lessonStudents.map((elem) => (
+              <div className={s.user}>
+                <div>
+                  <img src={user} alt="user" width="18" height="18" />
+                </div>
+                <p>{elem.firstName}</p>
               </div>
-              <p>Маша</p>
-            </div>
-            <div className={s.user}>
-              <div>
-                <img src={user} alt="user" width="18" height="18" />
-              </div>
-              <p>Ваня</p>
-            </div>
+            ))}
           </div>
           {showApi ? (
             isLoading ? (
