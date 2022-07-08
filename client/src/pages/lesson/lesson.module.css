@@ -69,6 +69,7 @@
 }
 
 .frames {
+  display: flex;
   flex-basis: 50%;
   background: #ccc;
   min-height: 554px;
@@ -78,18 +79,31 @@
   flex-basis: 50%;
   min-height: 277px;
   background: rgb(245, 183, 183);
+  background: url("../../../public/img/monster/img/frame 3.png") no-repeat
+    center;
+  background-size: 277px 555px;
 }
 
 .frame__bottom {
   flex-basis: 50%;
   min-height: 277px;
   background: rgb(144, 68, 68);
+  background: url("../../../public/img/monster/img/frame 3.png") no-repeat
+    center;
+  background-size: 277px 555px;
 }
 
 .subject__toys {
+  display: flex;
+  box-sizing: border-box;
+  padding: 10px;
+  gap: 10px;
+  flex-wrap: wrap;
   flex-basis: 50%;
-  background: #fff;
   min-height: 554px;
+  align-content: baseline;
+  text-align: center;
+  background: #fff;
 }
 
 .panel__controls {
@@ -123,4 +137,46 @@
 
 .list > li img {
   display: block;
+}
+
+/* /////// */
+
+.show {
+  display: flex;
+  align-content: baseline;
+  flex-wrap: wrap;
+  max-height: 555px;
+  padding: 20px;
+  gap: 15px;
+  overflow-y: auto;
+  height: 600px;
+}
+
+.show__items {
+  height: 100px;
+  flex: 1 1 100px;
+  text-align: center;
+}
+
+.show__btn {
+  /* display: inline-block; */
+  /* height: 100px;
+  text-align: center; */
+}
+
+.monster__folder {
+  background: url("../../../public/img/folder.png") center no-repeat;
+  background-size: cover;
+  height: 100px;
+  flex: 1 1 100px;
+  text-align: center;
+}
+
+.subject {
+  cursor: grab;
+}
+
+.box__toys {
+  /* flex: 0 0 100px;
+  max-height: 100px; */
 }
