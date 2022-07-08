@@ -8,31 +8,27 @@ import { Panelstudents } from "../../ui/panel/panel-students/panel-students";
 import { Button } from "../../ui/button/button";
 import s from "./teacher-students.module.css";
 
-export const Teacherstudents = ({ caption }) => {
-  const [students, setStudents] = useState([]);
+export const Teacherstudents = ({ caption, students, setStudents }) => {
+  // const [students, setStudents] = useState([]);
   const [listGroup, setListGroup] = useState([]);
   const [nameGroup, setNameGroup] = useState("");
   const [trackAnswer, setTrackAnswer] = useState("");
 
   useEffect(() => {
-    async function getStudents() {
-      const url = "http://localhost:3000/api/auth/students";
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      });
-      const data = await response.json();
-      const dataArr = data.map((elem) => ({
-        ...elem,
-        isChecked: false,
-      }));
-      setStudents(dataArr);
-      const check = document.querySelectorAll('input[type="checkbox"]');
-      check.forEach((elem) => (elem.checked = false));
-    }
-    getStudents();
+    // async function getStudents() {
+    //   const url = "http://localhost:3000/api/auth/students";
+    //   const response = await fetch(url, {
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.token}`,
+    //     },
+    //   });
+    //   const data = await response.json();
+    //   setStudents(data.map((elem) => ({ ...elem, isChecked: false })));
+    //   const check = document.querySelectorAll('input[type="checkbox"]');
+    //   check.forEach((elem) => (elem.checked = false));
+    // }
+    // getStudents();
 
     async function getGroup() {
       const url = "http://localhost:3000/api/groups";
@@ -130,7 +126,7 @@ export const Teacherstudents = ({ caption }) => {
                 key={index}
                 {...elem}
                 number={`${index + 1}.`}
-                select={() => selectedStudent(elem._id)}
+                onChange={() => selectedStudent(elem._id)}
               />
             ))}
           </Panel>
