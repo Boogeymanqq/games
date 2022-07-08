@@ -3,7 +3,7 @@ import { removeFile } from "../../utils/file.js";
 import onError from "../../utils/onError.js";
 
 // хранилище для сообщений
-const messages = {};
+const messages = [];
 
 export default function messageHandlers(io, socket) {
   // извлекаем идентификатор комнаты
@@ -32,10 +32,16 @@ export default function messageHandlers(io, socket) {
   //     onError(e);
   //   }
   // });
-
   // обрабатываем создание нового сообщения
   socket.on("message:add", (message) => {
+    console.log(message);
     io.to(roomId).emit("message_list:update", message.subjectArr);
+  });
+
+  socket.on("message:select", (message) => {
+    // messages.push(message);
+    // console.log(messages);
+    io.to(roomId).emit("message_list:update", message);
   });
 
   // обрабатываем удаление сообщения

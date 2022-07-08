@@ -20,7 +20,8 @@ import { Teacherstudents } from "./pages/teacher-room/teacher-students";
 import { Lesson } from "./pages/lesson/lesson";
 
 function App() {
-  const { users, messages, log, sendMessage, removeMessage } = useSocket();
+  const { users, messages, log, sendMessage, removeMessage, sendSelect } =
+    useSocket();
   return (
     <BrowserRouter>
       <Routes>
@@ -58,6 +59,7 @@ function App() {
               messages={messages}
               sendMessage={sendMessage}
               removeMessage={removeMessage}
+              sendSelect={sendSelect}
             />
           }
         />
