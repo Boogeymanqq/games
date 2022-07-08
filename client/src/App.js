@@ -45,7 +45,17 @@ function App() {
         />
         <Route
           path="/teacherroom/lesson"
-          element={<Lesson caption="Урок 1" />}
+          element={
+            <Lesson
+              caption="Урок 1"
+              users={users}
+              log={log}
+              messages={messages}
+              sendMessage={sendMessage}
+              removeMessage={removeMessage}
+              sendSelect={sendSelect}
+            />
+          }
         />
         <Route path="/childrenpage" element={<ChildrenPage />} />
         <Route path="/teacher/studentlist" element={<StudentList />} />
