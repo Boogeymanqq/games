@@ -14,11 +14,11 @@ export const Monster = ({
   messages,
   sendMessage,
   removeMessage,
+  sendSelect,
 }) => {
   const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);
 
-  // const [template, setTemplate] = useState([]);
   const [nameTemplate, setNameTemplate] = useState("");
 
   const [showFolder, setShowFolder] = useState(true);
@@ -29,6 +29,7 @@ export const Monster = ({
   const [objBoxSize, setObjBoxSize] = useState(100);
 
   const [selectMonster, setSelectMonster] = useState([]);
+  // console.log(selectMonster);
 
   const sendCoordinate = {
     messageId: uuidv4(),
@@ -37,32 +38,19 @@ export const Monster = ({
     roomId: JSON.parse(localStorage.getItem("room")),
   };
 
-  // console.log(messageSubject[messageSubject.length - 1]);
-  // console.log(selectMonster[selectMonster.length - 1]);
-  // selectMonster.map((elem) => console.log(elem));
-
   sendCoordinate.messageType = "text";
   sendCoordinate.subjectArr = selectMonster;
 
   const nodeRef = useRef(null);
 
+  // console.log(selectMonster);
+
   useEffect(() => {
     const messageForUsers = messages !== null ? messages : null;
-    // console.log(messageForUsers);
-
-    // if (messageForUsers.length !== 0) {
-    //   const selectSubjectArr = messageForUsers.filter((elem) =>
-    //     elem !== undefined ? elem.subjectArr : null
-    //   );
-    //   console.log(selectSubjectArr);
-    //   setSelectMonster(
-    //     selectSubjectArr[selectSubjectArr.length - 1].subjectArr
-    //   );
-    // }
     setSelectMonster(messageForUsers);
     console.log(selectMonster);
   }, [messages]);
-  // console.log(log, users);
+
   useEffect(() => {
     async function getMonster() {
       const url = "api/monster/dir/monsterparts";
@@ -151,13 +139,16 @@ export const Monster = ({
     );
   }
 
-  function onChange(e, id) {
+  function onChange(id) {
     setSecondMonster(
       secondMonster.map((elem) => {
         if (elem._id === id) {
           elem.isChecked = !elem.isChecked;
-          setSelectMonster([...selectMonster, elem]);
-          if (e.target.checked === false) {
+          if (elem.isChecked) {
+            setSelectMonster([...selectMonster, elem]);
+            sendSelect([...selectMonster, elem]);
+          } else {
+            sendSelect(selectMonster.filter((item) => item._id !== id));
             setSelectMonster(selectMonster.filter((item) => item._id !== id));
           }
         }
@@ -309,7 +300,7 @@ export const Monster = ({
                     />
                     <input
                       type="checkbox"
-                      onChange={(e) => onChange(e, elem._id)}
+                      onChange={() => onChange(elem._id)}
                     />
                   </div>
                 ))}
