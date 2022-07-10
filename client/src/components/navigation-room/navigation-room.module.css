@@ -56,6 +56,6 @@
   cursor: pointer;
 }
 
-input[type="checkbox"] {
+.students label input[type="checkbox"] {
   opacity: 0;
 }
