@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../ui/button/button";
 import { navRoom } from "../../data";
+import add from "./img/icon-add.png";
+import select from "./img/icon-select.png";
+import play from "./img/icon-play.png";
 import s from "./navigation-room.module.css";
 
 export const Navigationroom = ({
