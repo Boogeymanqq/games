@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../ui/button/button";
 import { navRoom } from "../../data";
+import add from "./img/icon-add.png";
+import select from "./img/icon-select.png";
+import play from "./img/icon-play.png";
 import s from "./navigation-room.module.css";
 
 export const Navigationroom = ({
@@ -10,7 +13,7 @@ export const Navigationroom = ({
   setLessonStudents,
 }) => {
   const [showStudentsList, setShowStudentsList] = React.useState(false);
-  console.log("showStudentsList", showStudentsList);
+  // console.log("showStudentsList", showStudentsList);
 
   function chooseStudents(id) {
     setStudents(
@@ -44,14 +47,30 @@ export const Navigationroom = ({
           </Button>
         )
       )}
-      {showStudentsList &&
-        students.map((elem) => (
-          <label key={elem._id}>
-            {elem.firstName}
-            <input type="checkbox" onChange={(e) => chooseStudents(elem._id)} />
-          </label>
-        ))}
-      <Link to="/teacherroom/lesson">Игра</Link>
+
+      {showStudentsList && (
+        <div className={s.students}>
+          <Link className={s.students__link} to="/teacherroom/lesson">
+            <img src={play} alt="" width="38" height="38" />
+          </Link>
+          {students.map((elem) => (
+            <label key={elem._id}>
+              <img
+                src={!elem.isChecked ? add : select}
+                alt=""
+                width="38"
+                height="38"
+              />
+
+              {elem.firstName}
+              <input
+                type="checkbox"
+                onChange={(e) => chooseStudents(elem._id)}
+              />
+            </label>
+          ))}
+        </div>
+      )}
     </nav>
   );
 };
