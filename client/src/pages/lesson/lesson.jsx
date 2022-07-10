@@ -308,7 +308,6 @@ export const Lesson = ({
               </li>
               <li>
                 <img src={change} alt="change" width="18" height="18" />
-                {/* <a href="#">Изменить</a> */}
                 <button onClick={() => setShowApi(!showApi)}>Изменить</button>
               </li>
             </ul>
