@@ -66,7 +66,7 @@ function App() {
           path="/teacherroom/students"
           element={
             <Teacherstudents
-              caption="Студенты"
+              caption="Ученики"
               students={students}
               setStudents={setStudents}
             />
