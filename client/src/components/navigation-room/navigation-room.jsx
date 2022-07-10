@@ -13,7 +13,7 @@ export const Navigationroom = ({
   setLessonStudents,
 }) => {
   const [showStudentsList, setShowStudentsList] = React.useState(false);
-  console.log("showStudentsList", showStudentsList);
+  // console.log("showStudentsList", showStudentsList);
 
   function chooseStudents(id) {
     setStudents(
