@@ -141,14 +141,23 @@ export const Lesson = ({
       <Main className={s.main}>
         <div className={s.playground}>
           <div className={s.users__online}>
-            {lessonStudents.map((elem) => (
+            {lessonStudents.length > 0 ? (
+              lessonStudents.map((elem) => (
+                <div className={s.user} key={elem._id}>
+                  <div>
+                    <img src={user} alt="user" width="18" height="18" />
+                  </div>
+                  <p>{elem.firstName}</p>
+                </div>
+              ))
+            ) : (
               <div className={s.user}>
                 <div>
                   <img src={user} alt="user" width="18" height="18" />
                 </div>
-                <p>{elem.firstName}</p>
+                <p>Ученик не выбран</p>
               </div>
-            ))}
+            )}
           </div>
           {showApi ? (
             isLoading ? (
