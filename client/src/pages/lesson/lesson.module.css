@@ -78,18 +78,16 @@
 .frame__top {
   flex-basis: 50%;
   min-height: 277px;
-  background: rgb(245, 183, 183);
   background: url("../../../public/img/monster/img/frame 3.png") no-repeat
-    center;
+    center rgb(255, 255, 255);
   background-size: 277px 555px;
 }
 
 .frame__bottom {
   flex-basis: 50%;
   min-height: 277px;
-  background: rgb(144, 68, 68);
   background: url("../../../public/img/monster/img/frame 3.png") no-repeat
-    center;
+    center rgb(255, 255, 255);
   background-size: 277px 555px;
 }
 
@@ -126,13 +124,17 @@
   column-gap: 7px;
 }
 
-.list > li a {
+.list > :where(li) a,
+button {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 35px;
   text-align: center;
   color: #fff;
+  background-color: #000;
+  border: 0;
+  cursor: pointer;
 }
 
 .list > li img {
