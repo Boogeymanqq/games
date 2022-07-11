@@ -81,11 +81,12 @@ export const Login = ({ caption }) => {
                 localStorage.setItem("room", JSON.stringify(res.teacherId));
                 localStorage.setItem("login", JSON.stringify(values.login));
                 localStorage.setItem("userId", JSON.stringify(res.userId));
+                localStorage.setItem("userName", JSON.stringify(res.userName));
                 console.log(res);
                 formikHelpers.resetForm();
                 res.role === "teacher"
                   ? setTimeout(() => navigate("/teacherroom"), 1000)
-                  : setTimeout(() => navigate("/childrenpage"), 1000);
+                  : setTimeout(() => navigate("/student"), 1000);
               } catch (error) {
                 setIsLoading(false);
                 setAlert(true);
