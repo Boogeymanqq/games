@@ -12,7 +12,7 @@ import { Monster } from "./ui/monster/monster";
 import { Cards } from "./ui/cards/cards";
 import { Room } from "./ui/rooms/rooms";
 import { Teacher } from "./pages/teacher/teacher";
-import { ChildrenPage } from "./pages/childrenPage/childrenPage";
+import { Student } from "./pages/student/student";
 import { StudentList } from "./pages/teacher/students/studentList";
 import { Teacherroom } from "./pages/teacher-room/teacher-room";
 import { Studentform } from "./pages/student-form/student-form";
@@ -92,7 +92,7 @@ function App() {
             />
           }
         />
-        <Route path="/childrenpage" element={<ChildrenPage />} />
+        <Route path="/student" element={<Student />} />
         <Route path="/teacher/studentlist" element={<StudentList />} />
         <Route path="/teacher/games" element={<Games />} />
         <Route
