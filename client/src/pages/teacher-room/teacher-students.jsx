@@ -13,7 +13,7 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
   const [listGroup, setListGroup] = useState([]);
   const [nameGroup, setNameGroup] = useState("");
   const [trackAnswer, setTrackAnswer] = useState("");
-  const [buttons, setButtons] = useState(true);
+  const [buttons, setButtons] = useState(0);
 
   // console.log("students", students);
 
@@ -143,10 +143,35 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
             Группы
           </button>
         </div>
-        {buttons ? (
-          <div className={s.groups__table}></div>
+        {!buttons ? (
+          <div className={s.students__table}>
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>имя</th>
+                  <th>фамилия</th>
+                  <th>логин</th>
+                  <th>пароль</th>
+                  <th>комментарий</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Оля</td>
+                  <td>Анина</td>
+                  <td>Ann</td>
+                  <td>123</td>
+                  <td>?</td>
+                  <td>icons</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         ) : (
-          <div className={s.students__table}></div>
+          <div className={s.groups__table}></div>
         )}
 
         {/* <div className={s.panels}>
