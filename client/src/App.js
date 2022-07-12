@@ -25,8 +25,6 @@ function App() {
   const [students, setStudents] = React.useState([]);
   const [lessonStudents, setLessonStudents] = React.useState([]);
 
-  console.log("lessonStudents", lessonStudents);
-
   React.useEffect(() => {
     async function getStudents() {
       const url = "http://localhost:3000/api/auth/students";
@@ -43,6 +41,7 @@ function App() {
     }
     getStudents();
   }, []);
+
   return (
     <BrowserRouter>
       <Routes>
