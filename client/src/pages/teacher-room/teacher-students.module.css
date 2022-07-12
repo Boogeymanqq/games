@@ -2,7 +2,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  column-gap: 283px;
+  column-gap: 376px;
   margin: 0 auto;
   padding-top: 61px;
   max-width: 1200px;
@@ -20,7 +20,28 @@
   margin: 58px 0;
 }
 
-.panels {
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 784px;
+}
+
+.btn {
+  padding: 19px 141px 22px;
+  font-family: "Oswald", sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 59px;
+  letter-spacing: 0em;
+  text-align: center;
+  border: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* .panels {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -52,4 +73,22 @@
 
 .group__name input[type="text"]:focus {
   outline: 2px solid green;
+} */
+
+.students__table {
+  margin: 0 auto;
+  padding: 30px 30px 0 30px;
+  max-width: 798px;
+  height: 300px;
+  background: #b5ff9a;
+  box-sizing: border-box;
+}
+
+.groups__table {
+  margin: 0 auto;
+  padding: 30px 30px 0 30px;
+  max-width: 798px;
+  height: 300px;
+  background: #a7dfff;
+  box-sizing: border-box;
 }
