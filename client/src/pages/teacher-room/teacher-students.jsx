@@ -13,22 +13,25 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
   const [listGroup, setListGroup] = useState([]);
   const [nameGroup, setNameGroup] = useState("");
   const [trackAnswer, setTrackAnswer] = useState("");
+  const [buttons, setButtons] = useState(true);
+
+  console.log("students", students);
 
   useEffect(() => {
-    async function getStudents() {
-      const url = "http://localhost:3000/api/auth/students";
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      });
-      const data = await response.json();
-      setStudents(data.map((elem) => ({ ...elem, isChecked: false })));
-      const check = document.querySelectorAll('input[type="checkbox"]');
-      check.forEach((elem) => (elem.checked = false));
-    }
-    getStudents();
+    // async function getStudents() {
+    //   const url = "http://localhost:3000/api/auth/students";
+    //   const response = await fetch(url, {
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.token}`,
+    //     },
+    //   });
+    //   const data = await response.json();
+    //   setStudents(data.map((elem) => ({ ...elem, isChecked: false })));
+    //   const check = document.querySelectorAll('input[type="checkbox"]');
+    //   check.forEach((elem) => (elem.checked = false));
+    // }
+    // getStudents();
 
     async function getGroup() {
       const url = "http://localhost:3000/api/groups";
