@@ -7,10 +7,10 @@ import { Panel } from "../../ui/panel/panel";
 import { Panelitem } from "../../ui/panel/panel-item/panel-item";
 import { Panelinfo } from "../../ui/panel/panel-info/panel-info";
 import { Panellist } from "../../ui/panel/panel-list/panel-list";
-import arrowRight from "../teacher-room/img/icon-black-arrow.svg";
-import arroWhite from "../teacher-room/img/icon-white-arrow.svg";
 import { teacherBookPanel } from "../../data";
 import { teacherPlanPanel } from "../../data";
+import arrowRight from "../teacher-room/img/icon-black-arrow.svg";
+import arroWhite from "../teacher-room/img/icon-white-arrow.svg";
 import s from "./teacher-room.module.css";
 
 export const Teacherroom = ({
