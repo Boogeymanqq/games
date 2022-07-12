@@ -113,9 +113,39 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
         <Pagelogo />
         <h2>{caption}</h2>
       </Header>
-      <Navigationstudents />
+      {/* <Navigationstudents /> */}
       <Main className={s.main}>
-        <div className={s.panels}>
+        <div className={s.buttons}>
+          <button
+            onClick={() => setButtons(false)}
+            className={s.btn}
+            style={
+              buttons
+                ? { background: "#000", color: "#B5FF9A" }
+                : { background: "#B5FF9A", color: "#000" }
+            }
+          >
+            Ученики
+          </button>
+          <button
+            onClick={() => setButtons(true)}
+            className={s.btn}
+            style={
+              buttons
+                ? { background: "#A7DFFF", color: "#000" }
+                : { background: "#000", color: "#A7DFFF" }
+            }
+          >
+            Группы
+          </button>
+        </div>
+        {buttons ? (
+          <div className={s.groups__table}></div>
+        ) : (
+          <div className={s.students__table}></div>
+        )}
+
+        {/* <div className={s.panels}>
           <Panel caption="Список студентов" background="#A7DFFF">
             {students?.map((elem, index) => (
               <Panelstudents
@@ -163,7 +193,7 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
               </div>
             </div>
           </Panel>
-        </div>
+        </div> */}
       </Main>
     </>
   );
