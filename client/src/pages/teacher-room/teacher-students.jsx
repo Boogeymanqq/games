@@ -47,8 +47,6 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
     getGroup();
   }, [trackAnswer]);
 
-  // console.log("students", students);
-
   function selectedStudent(id) {
     setStudents(
       students.map((elem) => {
@@ -63,7 +61,6 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
   const filtredgroup = students
     .filter((elem) => elem.isChecked === true)
     .map((elem) => elem._id);
-  // console.log("filtredgroup", filtredgroup);
 
   const createSelectGroup = [
     {
@@ -71,8 +68,6 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
       students: filtredgroup,
     },
   ];
-
-  // console.log(createSelectGroup);
 
   function createGroup() {
     async function postGroup() {
@@ -89,7 +84,6 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
       setNameGroup("");
       const data = await response.json();
       setTrackAnswer(data);
-      // console.log("data", data);
     }
     postGroup();
   }
@@ -109,7 +103,6 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
       });
       const data = await response.json();
       setTrackAnswer(data);
-      // console.log("data", data);
     }
     deleteApi();
   }
