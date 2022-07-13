@@ -164,6 +164,7 @@ authRouter.post(
         type: "success",
         role: user.students ? "teacher" : "student",
         teacherId,
+        userName: `${user.lastName} ${user.firstName}`,
       });
     } catch (error) {
       res.status(500).json({

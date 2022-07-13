@@ -7,13 +7,18 @@ import { Panel } from "../../ui/panel/panel";
 import { Panelitem } from "../../ui/panel/panel-item/panel-item";
 import { Panelinfo } from "../../ui/panel/panel-info/panel-info";
 import { Panellist } from "../../ui/panel/panel-list/panel-list";
-import arrowRight from "../teacher-room/img/icon-black-arrow.svg";
-import arroWhite from "../teacher-room/img/icon-white-arrow.svg";
 import { teacherBookPanel } from "../../data";
 import { teacherPlanPanel } from "../../data";
+import arrowRight from "../teacher-room/img/icon-black-arrow.svg";
+import arroWhite from "../teacher-room/img/icon-white-arrow.svg";
 import s from "./teacher-room.module.css";
 
-export const Teacherroom = ({ caption }) => {
+export const Teacherroom = ({
+  caption,
+  students,
+  setStudents,
+  setLessonStudents,
+}) => {
   const [activeBooks, setActiveBooks] = React.useState([]);
   const [activePlans, setActivePlans] = React.useState([]);
 
@@ -35,7 +40,11 @@ export const Teacherroom = ({ caption }) => {
         <Pagelogo />
         <h2>{caption}</h2>
       </Header>
-      <Navigationroom />
+      <Navigationroom
+        students={students}
+        setStudents={setStudents}
+        setLessonStudents={setLessonStudents}
+      />
       <Main className={s.main}>
         <div className={s.panels}>
           <Panel caption="Пособия" background="#A7DFFF">

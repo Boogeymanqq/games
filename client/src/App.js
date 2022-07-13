@@ -12,7 +12,7 @@ import { Monster } from "./ui/monster/monster";
 import { Cards } from "./ui/cards/cards";
 import { Room } from "./ui/rooms/rooms";
 import { Teacher } from "./pages/teacher/teacher";
-import { ChildrenPage } from "./pages/childrenPage/childrenPage";
+import { Student } from "./pages/student/student";
 import { StudentList } from "./pages/teacher/students/studentList";
 import { Teacherroom } from "./pages/teacher-room/teacher-room";
 import { Studentform } from "./pages/student-form/student-form";
@@ -20,7 +20,28 @@ import { Teacherstudents } from "./pages/teacher-room/teacher-students";
 import { Lesson } from "./pages/lesson/lesson";
 
 function App() {
-  const { users, messages, log, sendMessage, removeMessage } = useSocket();
+  const { users, messages, log, sendMessage, removeMessage, sendSelect } =
+    useSocket();
+  const [students, setStudents] = React.useState([]);
+  const [lessonStudents, setLessonStudents] = React.useState([]);
+
+  React.useEffect(() => {
+    async function getStudents() {
+      const url = "http://localhost:3000/api/auth/students";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      });
+      const data = await response.json();
+      setStudents(data.map((elem) => ({ ...elem, isChecked: false })));
+      const check = document.querySelectorAll('input[type="checkbox"]');
+      check.forEach((elem) => (elem.checked = false));
+    }
+    getStudents();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -31,11 +52,24 @@ function App() {
         <Route path="/contacts" element={<Contacts caption="Контакты" />} />
         <Route
           path="/teacherroom"
-          element={<Teacherroom caption="Личный кабинет" />}
+          element={
+            <Teacherroom
+              caption="Личный кабинет"
+              students={students}
+              setStudents={setStudents}
+              setLessonStudents={setLessonStudents}
+            />
+          }
         />
         <Route
           path="/teacherroom/students"
-          element={<Teacherstudents caption="Студенты" />}
+          element={
+            <Teacherstudents
+              caption="Ученики"
+              students={students}
+              setStudents={setStudents}
+            />
+          }
         />
 
         <Route
@@ -44,9 +78,20 @@ function App() {
         />
         <Route
           path="/teacherroom/lesson"
-          element={<Lesson caption="Урок 1" />}
+          element={
+            <Lesson
+              caption="Урок 1"
+              users={users}
+              log={log}
+              messages={messages}
+              sendMessage={sendMessage}
+              removeMessage={removeMessage}
+              sendSelect={sendSelect}
+              lessonStudents={lessonStudents}
+            />
+          }
         />
-        <Route path="/childrenpage" element={<ChildrenPage />} />
+        <Route path="/student" element={<Student />} />
         <Route path="/teacher/studentlist" element={<StudentList />} />
         <Route path="/teacher/games" element={<Games />} />
         <Route
@@ -58,6 +103,7 @@ function App() {
               messages={messages}
               sendMessage={sendMessage}
               removeMessage={removeMessage}
+              sendSelect={sendSelect}
             />
           }
         />

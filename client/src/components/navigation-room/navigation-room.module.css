@@ -1,8 +1,61 @@
 .nav {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   column-gap: 40px;
   margin: 0 auto;
   max-width: 786px;
+}
+
+.students {
+  position: absolute;
+  top: 50px;
+  right: -105px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  row-gap: 19px;
+  padding: 0 50px 34px 50px;
+  width: 270px;
+  height: 354px;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 35px;
+  text-align: left;
+  color: #fff;
+  background-color: #000;
+  box-sizing: border-box;
+  overflow: auto;
+  z-index: 101;
+}
+
+.students::-webkit-scrollbar {
+  width: 0;
+}
+
+.students__link {
+  position: sticky;
+  top: 0;
+  display: block;
+  padding-top: 34px;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  background-color: #000;
+  z-index: 102;
+}
+
+.students label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 24px;
+  cursor: pointer;
+}
+
+.students label input[type="checkbox"] {
+  opacity: 0;
 }

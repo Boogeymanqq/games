@@ -57,10 +57,22 @@ export default function useSocket() {
     console.log(message);
   };
 
+  const sendSelect = (message) => {
+    socket.current.emit("message:select", message);
+    console.log(message);
+  };
+
   // метод для удаления сообщения (координат)
   const removeMessage = (message) => {
     socket.current.emit("message:remove", message);
   };
 
-  return { users, messages, log, sendMessage, removeMessage };
+  return {
+    users,
+    messages,
+    log,
+    sendMessage,
+    removeMessage,
+    sendSelect,
+  };
 }

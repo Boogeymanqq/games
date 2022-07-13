@@ -8,31 +8,30 @@ import { Panelstudents } from "../../ui/panel/panel-students/panel-students";
 import { Button } from "../../ui/button/button";
 import s from "./teacher-students.module.css";
 
-export const Teacherstudents = ({ caption }) => {
-  const [students, setStudents] = useState([]);
+export const Teacherstudents = ({ caption, students, setStudents }) => {
+  // const [students, setStudents] = useState([]);
   const [listGroup, setListGroup] = useState([]);
   const [nameGroup, setNameGroup] = useState("");
   const [trackAnswer, setTrackAnswer] = useState("");
+  const [buttons, setButtons] = useState(true);
+
+  console.log("students", students);
 
   useEffect(() => {
-    async function getStudents() {
-      const url = "http://localhost:3000/api/auth/students";
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      });
-      const data = await response.json();
-      const dataArr = data.map((elem) => ({
-        ...elem,
-        isChecked: false,
-      }));
-      setStudents(dataArr);
-      const check = document.querySelectorAll('input[type="checkbox"]');
-      check.forEach((elem) => (elem.checked = false));
-    }
-    getStudents();
+    // async function getStudents() {
+    //   const url = "http://localhost:3000/api/auth/students";
+    //   const response = await fetch(url, {
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.token}`,
+    //     },
+    //   });
+    //   const data = await response.json();
+    //   setStudents(data.map((elem) => ({ ...elem, isChecked: false })));
+    //   const check = document.querySelectorAll('input[type="checkbox"]');
+    //   check.forEach((elem) => (elem.checked = false));
+    // }
+    // getStudents();
 
     async function getGroup() {
       const url = "http://localhost:3000/api/groups";
@@ -48,8 +47,6 @@ export const Teacherstudents = ({ caption }) => {
     getGroup();
   }, [trackAnswer]);
 
-  // console.log("students", students);
-
   function selectedStudent(id) {
     setStudents(
       students.map((elem) => {
@@ -64,7 +61,6 @@ export const Teacherstudents = ({ caption }) => {
   const filtredgroup = students
     .filter((elem) => elem.isChecked === true)
     .map((elem) => elem._id);
-  // console.log("filtredgroup", filtredgroup);
 
   const createSelectGroup = [
     {
@@ -72,8 +68,6 @@ export const Teacherstudents = ({ caption }) => {
       students: filtredgroup,
     },
   ];
-
-  // console.log(createSelectGroup);
 
   function createGroup() {
     async function postGroup() {
@@ -90,7 +84,6 @@ export const Teacherstudents = ({ caption }) => {
       setNameGroup("");
       const data = await response.json();
       setTrackAnswer(data);
-      // console.log("data", data);
     }
     postGroup();
   }
@@ -110,7 +103,6 @@ export const Teacherstudents = ({ caption }) => {
       });
       const data = await response.json();
       setTrackAnswer(data);
-      // console.log("data", data);
     }
     deleteApi();
   }
@@ -121,16 +113,46 @@ export const Teacherstudents = ({ caption }) => {
         <Pagelogo />
         <h2>{caption}</h2>
       </Header>
-      <Navigationstudents />
+      {/* <Navigationstudents /> */}
       <Main className={s.main}>
-        <div className={s.panels}>
+        <div className={s.buttons}>
+          <button
+            onClick={() => setButtons(false)}
+            className={s.btn}
+            style={
+              buttons
+                ? { background: "#000", color: "#B5FF9A" }
+                : { background: "#B5FF9A", color: "#000" }
+            }
+          >
+            Ученики
+          </button>
+          <button
+            onClick={() => setButtons(true)}
+            className={s.btn}
+            style={
+              buttons
+                ? { background: "#A7DFFF", color: "#000" }
+                : { background: "#000", color: "#A7DFFF" }
+            }
+          >
+            Группы
+          </button>
+        </div>
+        {buttons ? (
+          <div className={s.groups__table}></div>
+        ) : (
+          <div className={s.students__table}></div>
+        )}
+
+        {/* <div className={s.panels}>
           <Panel caption="Список студентов" background="#A7DFFF">
             {students?.map((elem, index) => (
               <Panelstudents
                 key={index}
                 {...elem}
                 number={`${index + 1}.`}
-                select={() => selectedStudent(elem._id)}
+                onChange={() => selectedStudent(elem._id)}
               />
             ))}
           </Panel>
@@ -171,7 +193,7 @@ export const Teacherstudents = ({ caption }) => {
               </div>
             </div>
           </Panel>
-        </div>
+        </div> */}
       </Main>
     </>
   );

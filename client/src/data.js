@@ -40,8 +40,8 @@ export const navGames = [
 ];
 
 export const navRoom = [
-  { title: "Стикер", type: "submit", route: "/teacherroom/stickers" },
-  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
+  { title: "Открытки", type: "submit", route: "/teacherroom/cards" },
+  { title: "Ученики", type: "submit", route: "/teacherroom/students" },
   { title: "Покупки", type: "submit", route: "/teacherroom/purshases" },
   { title: "Урок", type: "submit", route: "/teacherroom/lesson" },
 ];

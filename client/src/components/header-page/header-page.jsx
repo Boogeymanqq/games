@@ -6,12 +6,16 @@ import { Burger } from "../../ui/burger/burger";
 import s from "./header-page.module.css";
 
 export const Headerpage = ({ picture }) => {
+  const [isLogo, setIsLogo] = React.useState(true);
+  const hideLogo = () => {
+    return setIsLogo(!isLogo);
+  };
   return (
     <>
       <Header className={s.header}>
         <Pagelogo />
         <Label picture={picture} />
-        <Burger />
+        {isLogo && <Burger onClick={hideLogo} />}
       </Header>
       ;
     </>
