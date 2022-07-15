@@ -11,6 +11,7 @@ const schema = new Schema({
         y: { type: Number },
       },
       isChecked: { type: Boolean },
+      size: { type: String },
     },
   ],
 });
