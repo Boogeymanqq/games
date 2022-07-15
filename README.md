@@ -176,4 +176,4 @@ _example response_
 
 `Константы для картинок`
 
-![размеры](https://user-images.githubusercontent.com/42605576/179232402-6460f29a-5b35-4851-8430-a6217172dce0.PNG)
+
