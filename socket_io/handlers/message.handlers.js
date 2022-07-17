@@ -38,20 +38,29 @@ export default function messageHandlers(io, socket) {
     io.to(roomId).emit("message_list:update", message.subjectArr);
   });
 
+  // подключение студентов к игре
   socket.on("message:connect", (text) => {
     // console.log("text", text);
     io.to(roomId).emit("text:student", text);
   });
 
+  // список выбранных учеников для игры
   socket.on("message:selectStudents", (arr) => {
     io.to(roomId).emit("update:student", arr);
   });
 
+  // размеры рамки и предметов
   socket.on("message:size", (mSize) => {
-    console.log("mSize", mSize);
+    // console.log("mSize", mSize);
     io.to(roomId).emit("update:size", mSize);
   });
 
+  // размеры рамки
+  socket.on("message:sizeBorder", (mBorder) => {
+    io.to(roomId).emit("update:sizeBorder", mBorder);
+  });
+
+  // выбранные предметы (которые можно перемещать)
   socket.on("message:select", (message) => {
     // messages.push(message);
     // console.log(messages);

@@ -17,6 +17,8 @@ export default function useSocket() {
   const [text, setText] = useState("");
   const [selectStudents, setSelectStudents] = useState([]);
   const [objSizeMonster, setObjSizeMonster] = useState();
+  const [borderSizeMonster, setBorderSizeMonster] = useState();
+
   const socket = useRef(null);
 
   const roomId = JSON.parse(user);
@@ -54,28 +56,37 @@ export default function useSocket() {
       console.log(messages);
     });
 
+    // обрабатываем получение обновленного текста для присоединения ученика к игре
     socket.current.on("text:student", (text) => {
       setText(text);
       console.log(text);
     });
 
+    // обрабатываем получение обновленного списка выбранных учеников для игры
     socket.current.on("update:student", (arr) => {
       setSelectStudents(arr);
       console.log(selectStudents);
     });
 
+    // обрабатываем получение обновленных размеров предмета
     socket.current.on("update:size", (mSize) => {
       setObjSizeMonster(mSize);
       // console.log(setObjSizeMonster);
     });
+
+    // обрабатываем получение обновленных размеров рамки
+    socket.current.on("update:sizeBorder", (mBorder) => {
+      setBorderSizeMonster(mBorder);
+    });
   }, [roomId]);
 
-  // метод для отправки сообщения (координат)
+  // метод для отправки объекта предмета(координаты)
   const sendMessage = (message) => {
     socket.current.emit("message:add", message);
     console.log(message);
   };
 
+  // выбранные предметы (которые можно перемещать)
   const sendSelect = (message) => {
     socket.current.emit("message:select", message);
     console.log(message);
@@ -86,16 +97,24 @@ export default function useSocket() {
     socket.current.emit("message:remove", message);
   };
 
+  // подключение студентов к игре
   const connectGames = (text) => {
     socket.current.emit("message:connect", text);
   };
 
+  // список выбранных учеников для игры
   const arrSelectStudents = (arr) => {
     socket.current.emit("message:selectStudents", arr);
   };
 
+  // размеры предметов
   const monsterSize = (mSize) => {
     socket.current.emit("message:size", mSize);
+  };
+
+  // размеры рамки
+  const monsterBorderSize = (mBorder) => {
+    socket.current.emit("message:sizeBorder", mBorder);
   };
 
   return {
@@ -111,5 +130,7 @@ export default function useSocket() {
     selectStudents,
     monsterSize,
     objSizeMonster,
+    monsterBorderSize,
+    borderSizeMonster,
   };
 }
