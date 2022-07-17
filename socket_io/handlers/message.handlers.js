@@ -34,8 +34,22 @@ export default function messageHandlers(io, socket) {
   // });
   // обрабатываем создание нового сообщения
   socket.on("message:add", (message) => {
-    console.log(message);
+    // console.log(message);
     io.to(roomId).emit("message_list:update", message.subjectArr);
+  });
+
+  socket.on("message:connect", (text) => {
+    // console.log("text", text);
+    io.to(roomId).emit("text:student", text);
+  });
+
+  socket.on("message:selectStudents", (arr) => {
+    io.to(roomId).emit("update:student", arr);
+  });
+
+  socket.on("message:size", (mSize) => {
+    console.log("mSize", mSize);
+    io.to(roomId).emit("update:size", mSize);
   });
 
   socket.on("message:select", (message) => {

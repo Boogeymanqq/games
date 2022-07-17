@@ -14,6 +14,7 @@ import rules from "./img/icon-info.svg";
 import change from "./img/icon-change.svg";
 import user from "./img/icon-active-user.svg";
 import s from "./lesson.module.css";
+import imageBorder from "./img/frame.png";
 
 export const Lesson = ({
   caption,
@@ -23,12 +24,16 @@ export const Lesson = ({
   sendMessage,
   removeMessage,
   sendSelect,
-  lessonStudents,
+  // lessonStudents,
+  selectStudents,
+  monsterSize,
+  objSizeMonster,
 }) => {
-  console.log(lessonStudents);
+  // console.log(lessonStudents);
   const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);
 
+  const [sizeBorder, setSizeBorder] = useState(100);
   const [objSize, setObjSize] = useState(100);
 
   const [showFolder, setShowFolder] = useState(true);
@@ -38,6 +43,10 @@ export const Lesson = ({
 
   const [isLoading, setIsLoading] = useState(true);
 
+  const sizeM = objSizeMonster === undefined ? null : objSizeMonster;
+
+  console.log(objSizeMonster);
+
   const sendCoordinate = {
     messageId: uuidv4(),
     userId: JSON.parse(localStorage.getItem("userId")),
@@ -46,6 +55,11 @@ export const Lesson = ({
   };
   sendCoordinate.messageType = "text";
   sendCoordinate.subjectArr = selectMonster;
+
+  // const objMonsterSize = {
+  //   sizeBorder: sizeBorder,
+  //   objSize: objSize,
+  // };
 
   const nodeRef = useRef(null);
 
@@ -138,11 +152,46 @@ export const Lesson = ({
         <h2>{caption}</h2>
         <Burger />
       </Header>
+      <div
+        style={{
+          width: "1300px",
+          margin: "0 auto 60px",
+          display: "flex",
+          justifyContent: "space-around",
+        }}
+      >
+        <label>
+          {sizeBorder}
+          <br />
+          <input
+            type="range"
+            value={sizeBorder}
+            onInput={(e) => {
+              setSizeBorder(sizeM);
+              monsterSize(sizeBorder);
+              // setSizeBorder(objSizeMonster);
+              // monsterSize(sizeBorder);
+            }}
+          />
+        </label>
+        <label>
+          {objSize}
+          <br />
+          <input
+            type="range"
+            value={objSize}
+            onInput={(e) => {
+              setObjSize(e.target.value);
+              // monsterSize(objSize);
+            }}
+          />
+        </label>
+      </div>
       <Main className={s.main}>
         <div className={s.playground}>
           <div className={s.users__online}>
-            {lessonStudents.length > 0 ? (
-              lessonStudents.map((elem) => (
+            {selectStudents.length > 0 ? (
+              selectStudents.map((elem) => (
                 <div className={s.user} key={elem._id}>
                   <div>
                     <img src={user} alt="user" width="18" height="18" />
@@ -224,15 +273,26 @@ export const Lesson = ({
           ) : (
             <div className={s.playfields}>
               <div className={s.frames}>
-                <div className={s.frame__top}></div>
-                <div className={s.frame__bottom}></div>
+                <div className={s.frame__top}>
+                  <img
+                    style={{
+                      width: `${5.6 * sizeBorder}px`,
+                      height: `${5.5 * sizeBorder}px`,
+                    }}
+                    src={imageBorder}
+                    alt="border"
+                  />
+                </div>
+                {/* <div className={s.frame__bottom}></div> */}
               </div>
+
               <div className={s.subject__toys}>
                 {selectMonster.map((item) => (
                   <Draggable
                     key={item._id}
                     nodeRef={nodeRef}
                     // bounds="parent"
+                    // offsetParent="HTMLElement"
                     axis="both"
                     // onDrag={(e) => dragDrag(e, item.id)}
                     onStart={(e) => startDrag(e)}
