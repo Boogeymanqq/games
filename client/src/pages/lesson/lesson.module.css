@@ -76,19 +76,21 @@
 }
 
 .frame__top {
-  flex-basis: 50%;
-  min-height: 277px;
-  background: url("../../../public/img/monster/img/frame 3.png") no-repeat
-    center rgb(255, 255, 255);
-  background-size: 277px 555px;
+  width: 100%;
+  height: auto;
+  /* flex-basis: 50%;
+  min-height: 277px; */
+  /* background: url("../../../public/img/monster/img/frame 3.png") no-repeat
+    center rgb(255, 255, 255); */
+  /* background-size: 277px 555px; */
 }
 
 .frame__bottom {
-  flex-basis: 50%;
+  /* flex-basis: 50%;
   min-height: 277px;
   background: url("../../../public/img/monster/img/frame 3.png") no-repeat
     center rgb(255, 255, 255);
-  background-size: 277px 555px;
+  background-size: 277px 555px; */
 }
 
 .subject__toys {
@@ -98,7 +100,7 @@
   gap: 10px;
   flex-wrap: wrap;
   flex-basis: 50%;
-  min-height: 554px;
+  height: 554px;
   align-content: baseline;
   text-align: center;
   background: #fff;

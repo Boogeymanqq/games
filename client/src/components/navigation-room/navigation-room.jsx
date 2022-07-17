@@ -11,6 +11,7 @@ export const Navigationroom = ({
   students,
   setStudents,
   setLessonStudents,
+  connectGames,
 }) => {
   const [showStudentsList, setShowStudentsList] = React.useState(false);
 
@@ -27,6 +28,13 @@ export const Navigationroom = ({
       students.filter((elem) => (elem.isChecked ? elem : null))
     );
   }
+
+  function connect() {
+    console.log("hello");
+    connectGames("connect");
+    console.log(connectGames);
+  }
+
   return (
     <nav className={s.nav}>
       {navRoom.map((elem, index) =>
@@ -50,7 +58,13 @@ export const Navigationroom = ({
       {showStudentsList && (
         <div className={s.students}>
           <Link className={s.students__link} to="/teacherroom/lesson">
-            <img src={play} alt="" width="38" height="38" />
+            <img
+              onClick={() => connect()}
+              src={play}
+              alt=""
+              width="38"
+              height="38"
+            />
           </Link>
           {students.map((elem) => (
             <label key={elem._id}>

@@ -13,6 +13,10 @@ export default function useSocket() {
   // состояние для системного сообщения
   const [log, setLog] = useState(null);
   // иммутабельное состояние для сокета
+
+  const [text, setText] = useState("");
+  const [selectStudents, setSelectStudents] = useState([]);
+  const [objSizeMonster, setObjSizeMonster] = useState();
   const socket = useRef(null);
 
   const roomId = JSON.parse(user);
@@ -49,6 +53,21 @@ export default function useSocket() {
       setMessages(messages);
       console.log(messages);
     });
+
+    socket.current.on("text:student", (text) => {
+      setText(text);
+      console.log(text);
+    });
+
+    socket.current.on("update:student", (arr) => {
+      setSelectStudents(arr);
+      console.log(selectStudents);
+    });
+
+    socket.current.on("update:size", (mSize) => {
+      setObjSizeMonster(mSize);
+      // console.log(setObjSizeMonster);
+    });
   }, [roomId]);
 
   // метод для отправки сообщения (координат)
@@ -67,6 +86,18 @@ export default function useSocket() {
     socket.current.emit("message:remove", message);
   };
 
+  const connectGames = (text) => {
+    socket.current.emit("message:connect", text);
+  };
+
+  const arrSelectStudents = (arr) => {
+    socket.current.emit("message:selectStudents", arr);
+  };
+
+  const monsterSize = (mSize) => {
+    socket.current.emit("message:size", mSize);
+  };
+
   return {
     users,
     messages,
@@ -74,5 +105,11 @@ export default function useSocket() {
     sendMessage,
     removeMessage,
     sendSelect,
+    connectGames,
+    text,
+    arrSelectStudents,
+    selectStudents,
+    monsterSize,
+    objSizeMonster,
   };
 }

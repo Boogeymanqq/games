@@ -1,11 +1,28 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Header } from "../../layouts/header";
 import { Main } from "../../layouts/main";
 import { Pagelogo } from "../../ui/pageLogo/pageLogo";
 import s from "./student.module.css";
 
-export const Student = () => {
+export const Student = ({ text, selectStudents }) => {
+  // console.log(text);
   const authUserName = JSON.parse(localStorage.getItem("userName"));
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (text === "connect") {
+      // navigate("/teacherroom/lesson");
+      selectStudents.forEach((elem) =>
+        elem.firstName.includes(authUserName.split(" ")[0])
+          ? navigate("/teacherroom/lesson")
+          : null
+      );
+    }
+  }, [text]);
+
+  console.log(selectStudents, authUserName.split(" ")[0]);
+
   return (
     <>
       <Header className={s.header}>

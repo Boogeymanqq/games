@@ -15,7 +15,9 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
   const [trackAnswer, setTrackAnswer] = useState("");
   const [buttons, setButtons] = useState(true);
 
-  console.log("students", students);
+  // console.log("students", students);
+
+  // console.log(checked);
 
   useEffect(() => {
     // async function getStudents() {
@@ -32,6 +34,8 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
     //   check.forEach((elem) => (elem.checked = false));
     // }
     // getStudents();
+    // const check = document.querySelectorAll('input[type="checkbox"]');
+    // check.forEach((elem) => (elem.checked = false));
 
     async function getGroup() {
       const url = "http://localhost:3000/api/groups";
