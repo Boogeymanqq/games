@@ -6,6 +6,7 @@ import { Pagelogo } from "../../ui/pageLogo/pageLogo";
 import { Burger } from "../../ui/burger/burger";
 import { Main } from "../../layouts/main";
 import { Box, CircularProgress } from "@mui/material";
+import { xl, lg, md, sm, xs } from "./monsterGameSize";
 import scores from "./img/icon-star.svg";
 import size from "./img/icon-size.svg";
 import help from "./img/icon-help.svg";
@@ -28,13 +29,15 @@ export const Lesson = ({
   selectStudents,
   monsterSize,
   objSizeMonster,
+  monsterBorderSize,
+  borderSizeMonster,
 }) => {
   // console.log(lessonStudents);
   const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);
 
-  const [sizeBorder, setSizeBorder] = useState(100);
-  const [objSize, setObjSize] = useState(100);
+  const [sizeBorder, setSizeBorder] = useState(50);
+  const [objSize, setObjSize] = useState(0.6);
 
   const [showFolder, setShowFolder] = useState(true);
   const [showApi, setShowApi] = useState(false);
@@ -42,10 +45,6 @@ export const Lesson = ({
   const [selectMonster, setSelectMonster] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true);
-
-  const sizeM = objSizeMonster === undefined ? null : objSizeMonster;
-
-  console.log(objSizeMonster);
 
   const sendCoordinate = {
     messageId: uuidv4(),
@@ -56,18 +55,19 @@ export const Lesson = ({
   sendCoordinate.messageType = "text";
   sendCoordinate.subjectArr = selectMonster;
 
-  // const objMonsterSize = {
-  //   sizeBorder: sizeBorder,
-  //   objSize: objSize,
-  // };
-
   const nodeRef = useRef(null);
 
   useEffect(() => {
     const messageForUsers = messages !== null ? messages : null;
     setSelectMonster(messageForUsers);
-    console.log(selectMonster);
-  }, [messages]);
+
+    const sizeM = objSizeMonster === undefined ? objSize : objSizeMonster;
+    setObjSize(sizeM);
+
+    const borderM =
+      borderSizeMonster === undefined ? sizeBorder : borderSizeMonster;
+    setSizeBorder(borderM);
+  }, [messages, objSizeMonster, borderSizeMonster]);
 
   useEffect(() => {
     async function getMonster() {
@@ -165,12 +165,13 @@ export const Lesson = ({
           <br />
           <input
             type="range"
+            step="10"
+            min="10"
+            max="100"
             value={sizeBorder}
             onInput={(e) => {
-              setSizeBorder(sizeM);
-              monsterSize(sizeBorder);
-              // setSizeBorder(objSizeMonster);
-              // monsterSize(sizeBorder);
+              setSizeBorder(e.target.value);
+              monsterBorderSize(e.target.value);
             }}
           />
         </label>
@@ -179,10 +180,13 @@ export const Lesson = ({
           <br />
           <input
             type="range"
+            step="0.2"
+            min="0.2"
+            max="1"
             value={objSize}
             onInput={(e) => {
               setObjSize(e.target.value);
-              // monsterSize(objSize);
+              monsterSize(e.target.value);
             }}
           />
         </label>
@@ -240,17 +244,7 @@ export const Lesson = ({
                     {secondMonster.map((elem) => (
                       <div className={s.show__items} key={elem._id}>
                         <img
-                          style={
-                            elem.url.includes("body")
-                              ? {
-                                  width: `${0.6 * objSize}px`,
-                                  height: `${1.5 * objSize}px`,
-                                }
-                              : {
-                                  width: `${0.6 * objSize}px`,
-                                  height: `${0.8 * objSize}px`,
-                                }
-                          }
+                          style={{ width: "90px", height: "90px" }}
                           src={elem.url}
                           alt=""
                         />
@@ -301,31 +295,32 @@ export const Lesson = ({
                     }}
                     position={item.position}
                   >
-                    <div
-                      style={
-                        item.url.includes("body")
-                          ? {
-                              width: `${1 * objSize}px`,
-                              height: `${1.7 * objSize}px`,
-                            }
-                          : {
-                              width: `${1 * objSize}px`,
-                              height: `${1 * objSize}px`,
-                            }
-                      }
-                      className={s.box__toys}
-                      ref={nodeRef}
-                    >
+                    <div className={s.box__toys} ref={nodeRef}>
                       <img
                         style={
-                          item.url.includes("body")
+                          item.size === "xl"
                             ? {
-                                width: `${0.6 * objSize}px`,
-                                height: `${1.5 * objSize}px`,
+                                width: `${xl.width * objSize}px`,
+                                height: `${xl.height * objSize}px`,
+                              }
+                            : item.size === "lg"
+                            ? {
+                                width: `${lg.width * objSize}px`,
+                                height: `${lg.height * objSize}px`,
+                              }
+                            : item.size === "md"
+                            ? {
+                                width: `${md.width * objSize}px`,
+                                height: `${md.height * objSize}px`,
+                              }
+                            : item.size === "sm"
+                            ? {
+                                width: `${sm.width * objSize}px`,
+                                height: `${sm.height * objSize}px`,
                               }
                             : {
-                                width: `${0.6 * objSize}px`,
-                                height: `${0.8 * objSize}px`,
+                                width: `${xs.width * objSize}px`,
+                                height: `${xs.height * objSize}px`,
                               }
                         }
                         src={item.url}

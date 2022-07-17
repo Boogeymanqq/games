@@ -33,6 +33,8 @@ function App() {
     selectStudents,
     monsterSize,
     objSizeMonster,
+    monsterBorderSize,
+    borderSizeMonster,
   } = useSocket();
   const [students, setStudents] = React.useState([]);
   const [lessonStudents, setLessonStudents] = React.useState([]);
@@ -108,6 +110,8 @@ function App() {
               selectStudents={selectStudents}
               monsterSize={monsterSize}
               objSizeMonster={objSizeMonster}
+              monsterBorderSize={monsterBorderSize}
+              borderSizeMonster={borderSizeMonster}
             />
           }
         />
