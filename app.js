@@ -29,6 +29,8 @@ app.use("/api/groups", groupsRouter);
 
 app.use("/api/monster", monsterRouter);
 
+// getDirMonsterparts();
+
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client", "build")));
 

@@ -16,6 +16,7 @@ export const getDirMonsterparts = async () => {
           y: 0,
         },
         isChecked: false,
+        size: "",
       };
     });
 
@@ -30,13 +31,11 @@ export const getDirMonsterparts = async () => {
 
     fs.readdir(join(_dirname, "monsterparts"), "utf8", (err, files) => {
       if (err) throw err;
-      // console.log("#files", files);
       files.forEach((dir, ind) => {
         dirs.push({ dir });
 
         fs.readdir(join(_dirname, "monsterparts", dir), "utf8", (err, img) => {
           if (err) throw err;
-          // console.log("#img", img)
           setDirMonsterpart({
             ...dirs[ind],
             img: [

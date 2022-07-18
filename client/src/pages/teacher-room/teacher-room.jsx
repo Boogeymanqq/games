@@ -18,6 +18,7 @@ export const Teacherroom = ({
   students,
   setStudents,
   setLessonStudents,
+  connectGames,
 }) => {
   const [activeBooks, setActiveBooks] = React.useState([]);
   const [activePlans, setActivePlans] = React.useState([]);
@@ -44,6 +45,7 @@ export const Teacherroom = ({
         students={students}
         setStudents={setStudents}
         setLessonStudents={setLessonStudents}
+        connectGames={connectGames}
       />
       <Main className={s.main}>
         <div className={s.panels}>

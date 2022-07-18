@@ -173,3 +173,7 @@ _example response_
 `.status(400).json({ message: "Такой группы нет, попробуйте снова.", type: "error", });`
 
 `.status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
+
+`Константы для картинок`
+
+![размеры](https://user-images.githubusercontent.com/42605576/179234200-8a835e84-72e2-4294-abb1-ec920dcf4c4d.PNG)

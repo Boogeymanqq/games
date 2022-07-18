@@ -20,10 +20,28 @@ import { Teacherstudents } from "./pages/teacher-room/teacher-students";
 import { Lesson } from "./pages/lesson/lesson";
 
 function App() {
-  const { users, messages, log, sendMessage, removeMessage, sendSelect } =
-    useSocket();
+  const {
+    users,
+    messages,
+    log,
+    sendMessage,
+    removeMessage,
+    sendSelect,
+    connectGames,
+    text,
+    arrSelectStudents,
+    selectStudents,
+    monsterSize,
+    objSizeMonster,
+    monsterBorderSize,
+    borderSizeMonster,
+  } = useSocket();
   const [students, setStudents] = React.useState([]);
   const [lessonStudents, setLessonStudents] = React.useState([]);
+
+  React.useEffect(() => {
+    arrSelectStudents(lessonStudents);
+  }, [lessonStudents]);
 
   React.useEffect(() => {
     async function getStudents() {
@@ -58,6 +76,7 @@ function App() {
               students={students}
               setStudents={setStudents}
               setLessonStudents={setLessonStudents}
+              connectGames={connectGames}
             />
           }
         />
@@ -87,11 +106,19 @@ function App() {
               sendMessage={sendMessage}
               removeMessage={removeMessage}
               sendSelect={sendSelect}
-              lessonStudents={lessonStudents}
+              // lessonStudents={lessonStudents}
+              selectStudents={selectStudents}
+              monsterSize={monsterSize}
+              objSizeMonster={objSizeMonster}
+              monsterBorderSize={monsterBorderSize}
+              borderSizeMonster={borderSizeMonster}
             />
           }
         />
-        <Route path="/student" element={<Student />} />
+        <Route
+          path="/student"
+          element={<Student text={text} selectStudents={selectStudents} />}
+        />
         <Route path="/teacher/studentlist" element={<StudentList />} />
         <Route path="/teacher/games" element={<Games />} />
         <Route
