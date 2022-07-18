@@ -93,6 +93,7 @@ authRouter.post(
         firstName,
         login,
         password: hashedPassword,
+        openPas: password,
         teacher: req.user.userId,
       });
 

@@ -6,6 +6,7 @@ const schema = new Schema({
   firstName: { type: String, required: true },
   login: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  openPas: { type: String },
   teacher: [{ type: Types.ObjectId, ref: "Teacher" }],
 });
 
