@@ -1,41 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "../../layouts/header";
 import { Pagelogo } from "../../ui/pageLogo/pageLogo";
-import { Navigationstudents } from "../../components/navigation-students/navigation-students";
 import { Main } from "../../layouts/main";
-import { Panel } from "../../ui/panel/panel";
-import { Panelstudents } from "../../ui/panel/panel-students/panel-students";
-import { Button } from "../../ui/button/button";
+import addStudent from "./img/icon-add.svg";
+import deleteStudent from "./img/icon-delete.svg";
+import editStudent from "./img/icon-edit.svg";
 import s from "./teacher-students.module.css";
 
-export const Teacherstudents = ({ caption, students, setStudents }) => {
-  // const [students, setStudents] = useState([]);
+export const Teacherstudents = ({ caption }) => {
+  const [students, setStudents] = useState([]);
   const [listGroup, setListGroup] = useState([]);
   const [nameGroup, setNameGroup] = useState("");
   const [trackAnswer, setTrackAnswer] = useState("");
   const [buttons, setButtons] = useState(0);
 
-  // console.log("students", students);
+  console.log("students", students);
 
   // console.log(checked);
 
   useEffect(() => {
-    // async function getStudents() {
-    //   const url = "http://localhost:3000/api/auth/students";
-    //   const response = await fetch(url, {
-    //     method: "GET",
-    //     headers: {
-    //       Authorization: `Bearer ${localStorage.token}`,
-    //     },
-    //   });
-    //   const data = await response.json();
-    //   setStudents(data.map((elem) => ({ ...elem, isChecked: false })));
-    //   const check = document.querySelectorAll('input[type="checkbox"]');
-    //   check.forEach((elem) => (elem.checked = false));
-    // }
-    // getStudents();
-    // const check = document.querySelectorAll('input[type="checkbox"]');
-    // check.forEach((elem) => (elem.checked = false));
+    async function getStudents() {
+      const url = "http://localhost:3000/api/auth/students";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      });
+      const data = await response.json();
+      setStudents(data.map((elem) => ({ ...elem, isChecked: false })));
+      const check = document.querySelectorAll('input[type="checkbox"]');
+      check.forEach((elem) => (elem.checked = false));
+    }
+    getStudents();
+    const check = document.querySelectorAll('input[type="checkbox"]');
+    check.forEach((elem) => (elem.checked = false));
 
     async function getGroup() {
       const url = "http://localhost:3000/api/groups";
@@ -158,15 +157,33 @@ export const Teacherstudents = ({ caption, students, setStudents }) => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Оля</td>
-                  <td>Анина</td>
-                  <td>Ann</td>
-                  <td>123</td>
-                  <td>?</td>
-                  <td>icons</td>
-                </tr>
+                {students?.map((elem, index) => (
+                  <tr key={elem._id}>
+                    <td>{index + 1}</td>
+                    <td>{elem.firstName}</td>
+                    <td>{elem.lastName}</td>
+                    <td>{elem.login}</td>
+                    <td>
+                      <span>{elem.password}</span>
+                    </td>
+                    <td>комментарий</td>
+                    <td>
+                      <div className={s.action_icons}>
+                        <div className={s.delete}>
+                          <img src={deleteStudent} alt="" />
+                        </div>
+                        <div className={s.edit}>
+                          <img
+                            src={editStudent}
+                            alt=""
+                            width="24"
+                            height="24"
+                          />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
