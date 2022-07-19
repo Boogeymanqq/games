@@ -17,6 +17,7 @@ const initialValues = {
   firstName: "",
   login: "",
   password: "",
+  comment: "",
 };
 
 // styles for MUI Button
@@ -81,6 +82,10 @@ export const Studentform = ({ caption }) => {
                 .required("Пожалуйста, введите пароль")
                 .min(4, "Минимум 4 символа")
                 .max(20, "Максимум 20 символов"),
+              comment: string()
+                .trim()
+                .min(4, "Минимум 4 символа")
+                .max(100, "Максимум 100 символов"),
             })}
             onSubmit={async (values, formikHelpers) => {
               try {
@@ -167,6 +172,20 @@ export const Studentform = ({ caption }) => {
                   error={Boolean(errors.password) && Boolean(touched.password)}
                   helperText={Boolean(touched.password) && errors.password}
                 />
+                <Box height={10} />
+                <Field
+                  className={classes.tool}
+                  name="comment"
+                  type="comment"
+                  as={TextField}
+                  size="small"
+                  variant="outlined"
+                  color="primary"
+                  label="Комментарий"
+                  fullWidth
+                  error={Boolean(errors.comment) && Boolean(touched.comment)}
+                  helperText={Boolean(touched.comment) && errors.comment}
+                />
                 <Box height={30} />
                 <Box>
                   <Button
@@ -187,6 +206,7 @@ export const Studentform = ({ caption }) => {
               <CircularProgress />
             </Box>
           )}
+
           {alert && <AlertInfo type={type} title={message} />}
         </div>
       </main>

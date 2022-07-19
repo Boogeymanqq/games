@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Header } from "../../layouts/header";
 import { Pagelogo } from "../../ui/pageLogo/pageLogo";
 import { Main } from "../../layouts/main";
+import { Navigationstudents } from "../../components/navigation-students/navigation-students";
 import addStudent from "./img/icon-add.svg";
 import deleteStudent from "./img/icon-delete.svg";
 import editStudent from "./img/icon-edit.svg";
@@ -116,7 +117,7 @@ export const Teacherstudents = ({ caption }) => {
         <Pagelogo />
         <h2>{caption}</h2>
       </Header>
-      {/* <Navigationstudents /> */}
+      <Navigationstudents />
       <Main className={s.main}>
         <div className={s.buttons}>
           <button
@@ -164,9 +165,9 @@ export const Teacherstudents = ({ caption }) => {
                     <td>{elem.lastName}</td>
                     <td>{elem.login}</td>
                     <td>
-                      <span>{elem.password}</span>
+                      <span>{elem.openPas ?? "---"}</span>
                     </td>
-                    <td>комментарий</td>
+                    <td>{elem.comment ?? ""}</td>
                     <td>
                       <div className={s.action_icons}>
                         <div className={s.delete}>

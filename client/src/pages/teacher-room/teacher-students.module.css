@@ -120,7 +120,10 @@ Edge и Safari */
 }
 
 .students__table thead {
+  position: sticky;
+  top: -30px;
   border-bottom: 3px solid #000;
+  z-index: 20;
 }
 
 .students__table tr {
@@ -142,6 +145,10 @@ Edge и Safari */
   line-height: 30px;
   text-align: center;
   overflow-x: auto;
+}
+
+.students__table th:nth-child(odd) {
+  background-color: #b5ff9a;
 }
 
 .students__table th:nth-child(even),
