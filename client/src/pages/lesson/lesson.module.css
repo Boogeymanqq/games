@@ -102,7 +102,7 @@
   gap: 10px;
   flex-wrap: wrap;
   flex-basis: 30%;
-  height: 554px;
+  min-height: 554px;
   align-content: baseline;
   text-align: center;
   background: #fff;
@@ -159,8 +159,8 @@ button {
 }
 
 .show__items {
-  height: 100px;
-  flex: 1 1 100px;
+  height: auto;
+  flex: 0 0 100px;
   text-align: center;
 }
 
@@ -174,7 +174,7 @@ button {
   background: url("../../../public/img/folder.png") center no-repeat;
   background-size: cover;
   height: 100px;
-  flex: 1 1 100px;
+  flex: 0 0 100px;
   text-align: center;
 }
 
