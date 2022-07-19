@@ -77,18 +77,96 @@
 
 .students__table {
   margin: 0 auto;
-  padding: 30px 30px 0 30px;
+  padding: 30px;
   max-width: 798px;
-  height: 300px;
+  height: 653px;
   background: #b5ff9a;
   box-sizing: border-box;
+  overflow-y: scroll;
+}
+
+/* Работает в Chrome,
+Edge и Safari */
+.students__table::-webkit-scrollbar {
+  width: 6px;
+}
+
+.students__table::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.students__table::-webkit-scrollbar-thumb {
+  background-color: #ff9e4f;
+  border-radius: 20px;
+  border: 3px solid #a7dfff;
+  margin-right: 2px;
+  height: 6px;
 }
 
 .groups__table {
   margin: 0 auto;
   padding: 30px 30px 0 30px;
   max-width: 798px;
-  height: 300px;
+  height: 653px;
   background: #a7dfff;
   box-sizing: border-box;
+}
+
+.students__table table {
+  table-layout: fixed;
+  margin: 0 auto;
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+.students__table thead {
+  border-bottom: 3px solid #000;
+}
+
+.students__table tr {
+  border-bottom: 3px solid #000;
+}
+
+.students__table tr:last-child {
+  border-bottom: 0;
+}
+
+.students__table th,
+.students__table td {
+  margin: 0;
+  padding: 16px 0 10px;
+  width: 124px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.students__table th:nth-child(even),
+.students__table td:nth-child(even) {
+  background-color: #fff;
+}
+
+.students__table td span {
+  display: block;
+  width: 124px;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.action_icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.delete img,
+.edit img {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
 }

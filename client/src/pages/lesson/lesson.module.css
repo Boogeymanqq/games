@@ -70,8 +70,10 @@
 
 .frames {
   display: flex;
-  flex-basis: 50%;
-  background: #ccc;
+  flex-wrap: wrap;
+  row-gap: 20px;
+  flex-basis: 70%;
+  background: #fff;
   min-height: 554px;
 }
 
@@ -99,7 +101,7 @@
   padding: 10px;
   gap: 10px;
   flex-wrap: wrap;
-  flex-basis: 50%;
+  flex-basis: 30%;
   height: 554px;
   align-content: baseline;
   text-align: center;
