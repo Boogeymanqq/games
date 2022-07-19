@@ -6,9 +6,10 @@ import { Pagelogo } from "../../ui/pageLogo/pageLogo";
 import s from "./student.module.css";
 
 export const Student = ({ text, selectStudents }) => {
-  // console.log(text);
   const authUserName = JSON.parse(localStorage.getItem("userName"));
   const navigate = useNavigate();
+
+  console.log(text);
 
   React.useEffect(() => {
     if (text === "connect") {

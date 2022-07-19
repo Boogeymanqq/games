@@ -39,6 +39,8 @@ function App() {
   const [students, setStudents] = React.useState([]);
   const [lessonStudents, setLessonStudents] = React.useState([]);
 
+  console.log(text);
+
   React.useEffect(() => {
     arrSelectStudents(lessonStudents);
   }, [lessonStudents]);
