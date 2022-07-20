@@ -46,6 +46,10 @@ export const Lesson = ({
 
   const [isLoading, setIsLoading] = useState(true);
 
+  const [newIndex, setNewIndex] = useState(0);
+
+  const [hovered, setHovered] = useState();
+
   const sendCoordinate = {
     messageId: uuidv4(),
     userId: JSON.parse(localStorage.getItem("userId")),
@@ -93,13 +97,14 @@ export const Lesson = ({
     e.preventDefault();
     setSelectMonster(
       selectMonster.map((item) => {
+        setNewIndex(newIndex + 1);
         if (item._id === id) {
           item.position = { x: data.x, y: data.y };
+          item.zIndexObj = newIndex;
         }
         return item;
       })
     );
-    console.log(selectMonster);
     sendMessage(sendCoordinate);
   }
 
@@ -120,7 +125,7 @@ export const Lesson = ({
       cardNewMonster.map((elem) => {
         if (elem._id === id) {
           setShowFolder(false);
-          setSecondMonster(elem.img);
+          setSecondMonster(elem.img.map((item) => ({ ...item, zIndexObj: 0 })));
         }
         return elem;
       })
@@ -270,7 +275,7 @@ export const Lesson = ({
                 <div className={s.frame__top}>
                   <img
                     style={{
-                      width: `${5.6 * sizeBorder}px`,
+                      width: `${7.83 * sizeBorder}px`,
                       height: `${5.5 * sizeBorder}px`,
                     }}
                     src={imageBorder}
@@ -281,7 +286,7 @@ export const Lesson = ({
               </div>
 
               <div className={s.subject__toys}>
-                {selectMonster.map((item) => (
+                {selectMonster.map((item, index) => (
                   <Draggable
                     key={item._id}
                     nodeRef={nodeRef}
@@ -295,7 +300,13 @@ export const Lesson = ({
                     }}
                     position={item.position}
                   >
-                    <div className={s.box__toys} ref={nodeRef}>
+                    <div
+                      className={s.box__toys}
+                      style={{ zIndex: item.zIndexObj }}
+                      ref={nodeRef}
+                      onMouseMove={() => setHovered(index)}
+                      onMouseLeave={() => setHovered()}
+                    >
                       <img
                         style={
                           item.size === "xl"
@@ -328,7 +339,11 @@ export const Lesson = ({
                         className={s.subject}
                       />
                       <button
-                        className={s.btn}
+                        style={
+                          hovered === index
+                            ? { visibility: "visible" }
+                            : { visibility: "hidden" }
+                        }
                         onClick={() => toggle(item._id)}
                       >
                         &times;
