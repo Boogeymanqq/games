@@ -15,7 +15,7 @@ export const Teacherstudents = ({ caption }) => {
   const [trackAnswer, setTrackAnswer] = useState("");
   const [buttons, setButtons] = useState(0);
 
-  console.log("students", students);
+  // console.log("students", students);
 
   // console.log(checked);
 
@@ -33,7 +33,9 @@ export const Teacherstudents = ({ caption }) => {
       const check = document.querySelectorAll('input[type="checkbox"]');
       check.forEach((elem) => (elem.checked = false));
     }
+
     getStudents();
+
     const check = document.querySelectorAll('input[type="checkbox"]');
     check.forEach((elem) => (elem.checked = false));
 
@@ -111,6 +113,26 @@ export const Teacherstudents = ({ caption }) => {
     deleteApi();
   }
 
+  function removeStudent(id) {
+    const deletedStudent = { studentId: id };
+    console.log("deletedStudent", deletedStudent);
+    async function deleteStudentApi() {
+      const url = "http://localhost:3000/api/auth/delete/student";
+      const response = await fetch(url, {
+        method: "DELETE",
+        body: JSON.stringify(deletedStudent),
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+      const data = await response.json();
+      setTrackAnswer(data);
+    }
+    deleteStudentApi();
+  }
+
   return (
     <>
       <Header className={s.header}>
@@ -170,10 +192,15 @@ export const Teacherstudents = ({ caption }) => {
                     <td>{elem.comment ?? ""}</td>
                     <td>
                       <div className={s.action_icons}>
-                        <div className={s.delete}>
+                        <div
+                          className={s.delete}
+                          title="Удалить"
+                          onClick={() => removeStudent(elem._id)}
+                          // onClick={() => console.log(elem)}
+                        >
                           <img src={deleteStudent} alt="" />
                         </div>
-                        <div className={s.edit}>
+                        <div className={s.edit} title="Редактировать">
                           <img
                             src={editStudent}
                             alt=""

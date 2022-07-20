@@ -169,6 +169,7 @@ export const Studentform = ({ caption }) => {
                   color="primary"
                   label="Пароль"
                   fullWidth
+                  autoComplete="new-password"
                   error={Boolean(errors.password) && Boolean(touched.password)}
                   helperText={Boolean(touched.password) && errors.password}
                 />
