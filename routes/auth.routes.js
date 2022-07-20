@@ -10,7 +10,7 @@ import getTeacherId from "../query/getTeacherId.js";
 
 const authRouter = express.Router();
 
-//api/auth/register/teacher
+// /api/auth/register/teacher
 authRouter.post(
   "/register/teacher",
   [
@@ -85,7 +85,7 @@ authRouter.post(
         });
       }
 
-      const { lastName, firstName, login, password } = req.body;
+      const { lastName, firstName, login, password, comment = "" } = req.body;
 
       const hashedPassword = await bcrypt.hash(password, 12);
       const student = new Student({
@@ -94,6 +94,7 @@ authRouter.post(
         login,
         password: hashedPassword,
         openPas: password,
+        comment,
         teacher: req.user.userId,
       });
 
@@ -110,6 +111,32 @@ authRouter.post(
     }
   }
 );
+
+// /api/auth/delete/student
+authRouter.delete("/delete/student", auth, async (req, res) => {
+  try {
+    const {studentId} = req.body;
+    console.log(studentId);
+    const student = await Student.findOne({studentId});
+    console.log(student);
+    if (!student) {
+      return res.status(400).json({
+        message: "Такого ученика нет, попробуйте снова...",
+        type: "error",
+      });
+    }
+    await Student.deleteOne(student);
+    res.status(200).json({
+      message: "Ученик удалён",
+      type: "success",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Что-то пошло не так, попробуйте снова",
+      type: "error",
+    });
+  }
+});
 
 // /api/auth/login
 authRouter.post(
