@@ -116,9 +116,9 @@ authRouter.post(
 authRouter.delete("/delete/student", auth, async (req, res) => {
   try {
     const {studentId} = req.body;
-    console.log(studentId);
-    const student = await Student.findOne({studentId});
+    const student = await Student.findOne({ _id: studentId});
     console.log(student);
+
     if (!student) {
       return res.status(400).json({
         message: "Такого ученика нет, попробуйте снова...",
@@ -128,6 +128,33 @@ authRouter.delete("/delete/student", auth, async (req, res) => {
     await Student.deleteOne(student);
     res.status(200).json({
       message: "Ученик удалён",
+      type: "success",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Что-то пошло не так, попробуйте снова",
+      type: "error",
+    });
+  }
+});
+
+// /api/auth/update/student
+authRouter.put("/update/student", auth, async (req, res) => {
+  try {
+    const {studentId, params} = req.body;
+    console.log(req.body);
+
+    const student = await Student.findOne({_id: studentId});
+    console.log(student);
+    if (!student) {
+      return res.status(400).json({
+        message: "Такого ученика нет, попробуйте снова...",
+        type: "error",
+      });
+    }
+    await Student.updateOne(student, {$set: params});
+    res.status(200).json({
+      message: "Данные ученика обновлены успешно.",
       type: "success",
     });
   } catch (error) {
