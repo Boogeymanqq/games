@@ -32,6 +32,7 @@ export const Lesson = ({
   monsterBorderSize,
   borderSizeMonster,
 }) => {
+  console.log("###lesson", selectStudents);
   // console.log(lessonStudents);
   const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);

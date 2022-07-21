@@ -65,6 +65,7 @@ export default function useSocket() {
     // обрабатываем получение обновленного списка выбранных учеников для игры
     socket.current.on("update:student", (arr) => {
       setSelectStudents(arr);
+      console.log("###arr", arr);
       console.log(selectStudents);
     });
 
