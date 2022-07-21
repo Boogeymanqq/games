@@ -12,10 +12,15 @@ export const Student = ({ text, selectStudents }) => {
   console.log(text);
 
   React.useEffect(() => {
+    console.log("###student hoock text",text);
     if (text === "connect") {
       // navigate("/teacherroom/lesson");
-      selectStudents.forEach((elem) =>
-        elem.firstName.includes(authUserName.split(" ")[0])
+      console.log("###select students" ,selectStudents);
+      console.log("#authUserName", authUserName);
+      selectStudents.forEach((elem) => 
+        
+      
+        authUserName.split(" ")[0].includes(elem.lastName)
           ? navigate("/teacherroom/lesson")
           : null
       );
