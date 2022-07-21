@@ -3,10 +3,26 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import DirMonsterpart from "../models/DirMonsterpart.js";
 
-export const getDirMonsterparts = async () => {
+export const getDirMonsterparts = async (host = 'localhost:5000') => {
   let dirs = [];
 
+  const SIZES = {
+    body: "xl",
+    hair: "xl",
+    hat: "xl",
+    legs: "lg",
+    wings: "lg",
+    arms: "md",
+    mouth: "md",
+    eyes: "sm",
+    ears: "xs",
+    horns: "xs",
+    mose: "xs",
+    tail: "xs"
+  };
+
   const setDirMonsterpart = (dirs) => {
+    // console.log('###DIRS', dirs);
     const { dir, img } = dirs;
     let imageArr = img.map((el) => {
       return {
@@ -16,7 +32,7 @@ export const getDirMonsterparts = async () => {
           y: 0,
         },
         isChecked: false,
-        size: "",
+        size: SIZES[dir],
       };
     });
 
@@ -42,7 +58,7 @@ export const getDirMonsterparts = async () => {
               ...img.map((file) => {
                 let str = join(
                   "http:",
-                  "localhost:5000",
+                  host,
                   "monster",
                   "monsterparts",
                   dir,

@@ -11,6 +11,7 @@ import groupsRouter from "./routes/groups.routes.js";
 import monsterRouter from "./routes/monster.routes.js";
 import onConnection from "./socket_io/onConnection.js";
 import { ALLOWED_ORIGIN, MONGODB_URI } from "./config.js";
+import { getDirMonsterparts } from "./monster/monster.js";
 
 const app = express();
 
@@ -29,7 +30,7 @@ app.use("/api/groups", groupsRouter);
 
 app.use("/api/monster", monsterRouter);
 
-// getDirMonsterparts();
+
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client", "build")));
@@ -37,7 +38,11 @@ if (process.env.NODE_ENV === "production") {
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
+
+  // getDirMonsterparts("89.223.125.193");
 }
+
+// getDirMonsterparts();
 
 app.use(onError);
 
