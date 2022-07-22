@@ -29,7 +29,7 @@ authRouter.post(
         });
       }
 
-      const { lastName, firstName, patronymic, email, phone, login, password } =
+      const { lastName, firstName, patronymic = "", email, phone, login, password } =
         req.body;
 
       const candidate = await Teacher.findOne({ email } || { login });
