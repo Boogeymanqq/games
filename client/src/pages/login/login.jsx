@@ -82,6 +82,7 @@ export const Login = ({ caption }) => {
                 localStorage.setItem("login", JSON.stringify(values.login));
                 localStorage.setItem("userId", JSON.stringify(res.userId));
                 localStorage.setItem("userName", JSON.stringify(res.userName));
+                localStorage.setItem("role", JSON.stringify(res.role));
                 console.log(res);
                 formikHelpers.resetForm();
                 res.role === "teacher"

@@ -76,8 +76,7 @@ export const Signin = ({ caption }) => {
               patronymic: string()
                 .trim()
                 .min(3, "Минимум 3 символа")
-                .max(50, "Максимум 50 символов")
-                .required("Пожалуйста, введите отчество"),
+                .max(50, "Максимум 50 символов"),
               email: string()
                 .required("Пожалуйста, введите адрес электронной почты")
                 .email("Недопустимый формат email")

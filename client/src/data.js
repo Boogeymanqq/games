@@ -47,8 +47,7 @@ export const navRoom = [
 ];
 
 export const teacherStudentsNav = [
-  { title: "Студенты", type: "submit", route: "/teacherroom/students" },
-  { title: "Регистрация", type: "submit", route: "/teacherroom/sign" },
+  { title: "Добавить", type: "submit", route: "/teacherroom/sign" },
   { title: "Назад", type: "submit", route: "/teacherroom" },
 ];
 

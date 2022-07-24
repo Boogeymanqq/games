@@ -120,6 +120,7 @@ Edge и Safari */
 }
 
 .students__table thead {
+  position: -webkit-sticky;
   position: sticky;
   top: -30px;
   border-bottom: 3px solid #000;

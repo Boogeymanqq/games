@@ -14,8 +14,10 @@ import screen from "./img/icon-screen.svg";
 import rules from "./img/icon-info.svg";
 import change from "./img/icon-change.svg";
 import user from "./img/icon-active-user.svg";
-import s from "./lesson.module.css";
 import imageBorder from "./img/frame.png";
+import s from "./lesson.module.css";
+import { InputRange } from "../../ui/InputRange/InputRange";
+import { LessonTool } from "../../ui/LessonTool/LessonTool";
 
 export const Lesson = ({
   caption,
@@ -50,6 +52,8 @@ export const Lesson = ({
   const [newIndex, setNewIndex] = useState(0);
 
   const [hovered, setHovered] = useState();
+  const [rangePanel, setRangePanel] = useState(false);
+  const userRole = JSON.parse(localStorage.getItem("role"));
 
   const sendCoordinate = {
     messageId: uuidv4(),
@@ -158,19 +162,16 @@ export const Lesson = ({
         <h2>{caption}</h2>
         <Burger />
       </Header>
-      <div
-        style={{
-          width: "1300px",
-          margin: "0 auto 60px",
-          display: "flex",
-          justifyContent: "space-around",
-        }}
-      >
-        <label>
-          {sizeBorder}
-          <br />
-          <input
-            type="range"
+
+      <Main className={s.main}>
+        <div
+          className={s.ranges__bar}
+          style={
+            !rangePanel ? { visibility: "hidden" } : { visibility: "visible" }
+          }
+        >
+          <InputRange
+            title={`Размер рамки ${sizeBorder}`}
             step="10"
             min="10"
             max="100"
@@ -180,12 +181,9 @@ export const Lesson = ({
               monsterBorderSize(e.target.value);
             }}
           />
-        </label>
-        <label>
-          {objSize}
-          <br />
-          <input
-            type="range"
+
+          <InputRange
+            title={`Размер предмета ${objSize}`}
             step="0.2"
             min="0.2"
             max="1"
@@ -195,9 +193,8 @@ export const Lesson = ({
               monsterSize(e.target.value);
             }}
           />
-        </label>
-      </div>
-      <Main className={s.main}>
+        </div>
+
         <div className={s.playground}>
           <div className={s.users__online}>
             {selectStudents.length > 0 ? (
@@ -283,7 +280,6 @@ export const Lesson = ({
                     alt="border"
                   />
                 </div>
-                {/* <div className={s.frame__bottom}></div> */}
               </div>
 
               <div className={s.subject__toys}>
@@ -355,34 +351,50 @@ export const Lesson = ({
               </div>
             </div>
           )}
-          <div className={s.panel__controls}>
-            <ul className={s.list}>
-              <li>
-                <img src={scores} alt="scores" width="18" height="18" />
-                <a href="#">Баллы</a>
-              </li>
-              <li>
-                <img src={size} alt="size" width="18" height="18" />
-                <a href="#">Размер</a>
-              </li>
-              <li>
-                <img src={help} alt="help" width="18" height="18" />
-                <a href="#">Подсказки</a>
-              </li>
-              <li>
-                <img src={screen} alt="screen" width="18" height="18" />
-                <a href="#">Экран ученика</a>
-              </li>
-              <li>
-                <img src={rules} alt="rules" width="18" height="18" />
-                <a href="#">Как играть</a>
-              </li>
-              <li>
-                <img src={change} alt="change" width="18" height="18" />
-                <button onClick={() => setShowApi(!showApi)}>Изменить</button>
-              </li>
-            </ul>
-          </div>
+          {userRole === "teacher" ? (
+            <div className={s.toolsbar}>
+              <ul className={s.list}>
+                <LessonTool
+                  src={scores}
+                  width="18"
+                  height="18"
+                  caption="Баллы"
+                />
+                <LessonTool
+                  src={size}
+                  width="18"
+                  height="18"
+                  caption="Размер"
+                  onClick={() => setRangePanel(!rangePanel)}
+                />
+                <LessonTool
+                  src={help}
+                  width="18"
+                  height="18"
+                  caption="Подсказки"
+                />
+                <LessonTool
+                  src={screen}
+                  width="18"
+                  height="18"
+                  caption="Экран ученика"
+                />
+                <LessonTool
+                  src={rules}
+                  width="18"
+                  height="18"
+                  caption="Как играть"
+                />
+                <LessonTool
+                  src={change}
+                  width="18"
+                  height="18"
+                  caption="Изменить"
+                  onClick={() => setShowApi(!showApi)}
+                />
+              </ul>
+            </div>
+          ) : null}
         </div>
       </Main>
     </>
