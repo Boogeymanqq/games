@@ -196,7 +196,6 @@ export const Teacherstudents = ({ caption }) => {
                           className={s.delete}
                           title="Удалить"
                           onClick={() => removeStudent(elem._id)}
-                          // onClick={() => console.log(elem)}
                         >
                           <img src={deleteStudent} alt="" />
                         </div>

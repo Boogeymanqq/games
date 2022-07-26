@@ -9,7 +9,7 @@ import { Login } from "./pages/login/login";
 import { Contacts } from "./pages/contacts/contacts";
 import { Games } from "./pages/games/games";
 import { Monster } from "./ui/monster/monster";
-import { Cards } from "./ui/cards/cards";
+import { Card } from "./pages/Card/Card";
 import { Room } from "./ui/rooms/rooms";
 import { Teacher } from "./pages/teacher/teacher";
 import { Student } from "./pages/student/student";
@@ -76,7 +76,7 @@ function App() {
               />
             }
           /> */}
-        <Route path="/cards" element={<Cards />} />
+        <Route path="/teacherroom/card" element={<Card caption="Открытка" />} />
         <Route path="/room" element={<Room />} />
         <Route
           path="/teacher"

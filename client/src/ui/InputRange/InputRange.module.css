@@ -1,0 +1,20 @@
+.range {
+  width: 100%;
+}
+
+.range input[type="range"] {
+  width: 150px;
+  height: 10px;
+  border-radius: 4px;
+  -webkit-appearance: none;
+  background: #a7dfff;
+}
+
+.range input[type="range"]::-webkit-slider-thumb {
+  width: 15px;
+  border-radius: 1000px;
+  -webkit-appearance: none;
+  height: 15px;
+  cursor: pointer;
+  background: #b5ff9a;
+}

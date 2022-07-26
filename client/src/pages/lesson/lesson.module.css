@@ -80,19 +80,6 @@
 .frame__top {
   width: 100%;
   height: auto;
-  /* flex-basis: 50%;
-  min-height: 277px; */
-  /* background: url("../../../public/img/monster/img/frame 3.png") no-repeat
-    center rgb(255, 255, 255); */
-  /* background-size: 277px 555px; */
-}
-
-.frame__bottom {
-  /* flex-basis: 50%;
-  min-height: 277px;
-  background: url("../../../public/img/monster/img/frame 3.png") no-repeat
-    center rgb(255, 255, 255);
-  background-size: 277px 555px; */
 }
 
 .subject__toys {
@@ -108,7 +95,7 @@
   background: #fff;
 }
 
-.panel__controls {
+.toolsbar {
   margin: auto;
   max-width: 907px;
   background-color: transparent;
@@ -145,29 +132,20 @@ button {
   display: block;
 }
 
-/* /////// */
-
 .show {
   display: flex;
   align-content: baseline;
   flex-wrap: wrap;
-  max-height: 555px;
-  padding: 20px;
   gap: 15px;
+  margin-bottom: 27px;
+  height: 554px;
   overflow-y: auto;
-  height: 600px;
 }
 
 .show__items {
   height: auto;
   flex: 0 0 100px;
   text-align: center;
-}
-
-.show__btn {
-  /* display: inline-block; */
-  /* height: 100px;
-  text-align: center; */
 }
 
 .monster__folder {
@@ -182,7 +160,14 @@ button {
   cursor: grab;
 }
 
-.box__toys {
-  /* flex: 0 0 100px;
-  max-height: 100px; */
+.ranges__bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 907px;
+  padding: 20px 0;
+  background: transparent;
+  -webkit-user-select: none;
+  user-select: none;
 }
