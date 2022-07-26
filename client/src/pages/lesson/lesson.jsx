@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import useSocket from "../../hooks/useSocket";
 import Draggable from "react-draggable";
 import { v4 as uuidv4 } from "uuid";
 import { Header } from "../../layouts/header";
@@ -19,22 +20,19 @@ import s from "./lesson.module.css";
 import { InputRange } from "../../ui/InputRange/InputRange";
 import { LessonTool } from "../../ui/LessonTool/LessonTool";
 
-export const Lesson = ({
-  caption,
-  users,
-  log,
-  messages,
-  sendMessage,
-  removeMessage,
-  sendSelect,
-  // lessonStudents,
-  selectStudents,
-  monsterSize,
-  objSizeMonster,
-  monsterBorderSize,
-  borderSizeMonster,
-}) => {
-  console.log("###lesson", selectStudents);
+export const Lesson = ({ caption, selectStudents }) => {
+  const {
+    messages,
+    sendMessage,
+    sendSelect,
+    // selectStudents,
+    monsterSize,
+    objSizeMonster,
+    monsterBorderSize,
+    borderSizeMonster,
+  } = useSocket();
+
+  // console.log("###lesson", selectStudents);
   // console.log(lessonStudents);
   const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);
@@ -65,6 +63,27 @@ export const Lesson = ({
   sendCoordinate.subjectArr = selectMonster;
 
   const nodeRef = useRef(null);
+
+  const arr = [];
+
+  const arrBorder = () => {
+    for (let i = 0; i < selectStudents.length; i++) {
+      arr.push(
+        <div key={i} className={s.frame__top}>
+          <img
+            style={{
+              width: `${7.83 * sizeBorder}px`,
+              height: `${5.5 * sizeBorder}px`,
+            }}
+            src={imageBorder}
+            alt="border"
+          />
+        </div>
+      );
+    }
+  };
+
+  arrBorder();
 
   useEffect(() => {
     const messageForUsers = messages !== null ? messages : null;
@@ -269,18 +288,8 @@ export const Lesson = ({
             )
           ) : (
             <div className={s.playfields}>
-              <div className={s.frames}>
-                <div className={s.frame__top}>
-                  <img
-                    style={{
-                      width: `${7.83 * sizeBorder}px`,
-                      height: `${5.5 * sizeBorder}px`,
-                    }}
-                    src={imageBorder}
-                    alt="border"
-                  />
-                </div>
-              </div>
+
+              <div className={s.frames}>{arr}</div>
 
               <div className={s.subject__toys}>
                 {selectMonster.map((item, index) => (

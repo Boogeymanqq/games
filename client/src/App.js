@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import useSocket from "./hooks/useSocket";
 import { BrowserRouter } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
@@ -20,47 +20,14 @@ import { Teacherstudents } from "./pages/teacher-room/teacher-students";
 import { Lesson } from "./pages/lesson/lesson";
 
 function App() {
-  const {
-    users,
-    messages,
-    log,
-    sendMessage,
-    removeMessage,
-    sendSelect,
-    connectGames,
-    text,
-    arrSelectStudents,
-    selectStudents,
-    monsterSize,
-    objSizeMonster,
-    monsterBorderSize,
-    borderSizeMonster,
-  } = useSocket();
-  const [students, setStudents] = React.useState([]);
-  const [lessonStudents, setLessonStudents] = React.useState([]);
+  const { connectGames, arrSelectStudents, selectStudents } = useSocket();
+  const [lessonStudents, setLessonStudents] = useState([]);
 
-  console.log(text);
+  console.log(selectStudents);
 
-  React.useEffect(() => {
+  useEffect(() => {
     arrSelectStudents(lessonStudents);
   }, [lessonStudents]);
-
-  React.useEffect(() => {
-    async function getStudents() {
-      const url = "http://localhost:3000/api/auth/students";
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      });
-      const data = await response.json();
-      setStudents(data.map((elem) => ({ ...elem, isChecked: false })));
-      const check = document.querySelectorAll('input[type="checkbox"]');
-      check.forEach((elem) => (elem.checked = false));
-    }
-    getStudents();
-  }, []);
 
   return (
     <BrowserRouter>
@@ -75,8 +42,6 @@ function App() {
           element={
             <Teacherroom
               caption="Личный кабинет"
-              students={students}
-              setStudents={setStudents}
               setLessonStudents={setLessonStudents}
               connectGames={connectGames}
             />
@@ -84,13 +49,7 @@ function App() {
         />
         <Route
           path="/teacherroom/students"
-          element={
-            <Teacherstudents
-              caption="Ученики"
-              students={students}
-              setStudents={setStudents}
-            />
-          }
+          element={<Teacherstudents caption="Ученики" />}
         />
 
         <Route
@@ -99,43 +58,24 @@ function App() {
         />
         <Route
           path="/teacherroom/lesson"
-          element={
-            <Lesson
-              caption="Урок 1"
-              users={users}
-              log={log}
-              messages={messages}
-              sendMessage={sendMessage}
-              removeMessage={removeMessage}
-              sendSelect={sendSelect}
-              // lessonStudents={lessonStudents}
-              selectStudents={selectStudents}
-              monsterSize={monsterSize}
-              objSizeMonster={objSizeMonster}
-              monsterBorderSize={monsterBorderSize}
-              borderSizeMonster={borderSizeMonster}
-            />
-          }
+          element={<Lesson caption="Урок 1" selectStudents={selectStudents} />}
         />
-        <Route
-          path="/student"
-          element={<Student text={text} selectStudents={selectStudents} />}
-        />
+        <Route path="/student" element={<Student />} />
         <Route path="/teacher/studentlist" element={<StudentList />} />
         <Route path="/teacher/games" element={<Games />} />
-        <Route
-          path="/monster"
-          element={
-            <Monster
-              users={users}
-              log={log}
-              messages={messages}
-              sendMessage={sendMessage}
-              removeMessage={removeMessage}
-              sendSelect={sendSelect}
-            />
-          }
-        />
+        {/* <Route
+            path="/monster"
+            element={
+              <Monster
+                users={users}
+                log={log}
+                messages={messages}
+                sendMessage={sendMessage}
+                removeMessage={removeMessage}
+                sendSelect={sendSelect}
+              />
+            }
+          /> */}
         <Route path="/teacherroom/card" element={<Card caption="Открытка" />} />
         <Route path="/room" element={<Room />} />
         <Route
