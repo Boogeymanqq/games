@@ -1,33 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
+import useSocket from "../../hooks/useSocket";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../layouts/header";
 import { Main } from "../../layouts/main";
 import { Pagelogo } from "../../ui/pageLogo/pageLogo";
 import s from "./student.module.css";
 
-export const Student = ({ text, selectStudents }) => {
+export const Student = () => {
+  const { text, selectStudents } = useSocket();
+
   const authUserName = JSON.parse(localStorage.getItem("userName"));
+  const childrenId = JSON.parse(localStorage.getItem("userId"));
   const navigate = useNavigate();
 
-  console.log(text);
+  console.log(selectStudents);
 
-  React.useEffect(() => {
-    console.log("###student hoock text",text);
+  useEffect(() => {
+    // window.location.reload();
+  }, []);
+
+  useEffect(() => {
     if (text === "connect") {
-      // navigate("/teacherroom/lesson");
-      console.log("###select students" ,selectStudents);
-      console.log("#authUserName", authUserName);
-      selectStudents.forEach((elem) => 
-        
-      
-        authUserName.split(" ")[0].includes(elem.lastName)
-          ? navigate("/teacherroom/lesson")
-          : null
+      console.log(true);
+      selectStudents.forEach((elem) =>
+        childrenId.includes(elem._id) ? navigate("/teacherroom/lesson") : null
       );
     }
-  }, [text]);
+    return () => {};
+  });
 
-  console.log(selectStudents, authUserName.split(" ")[0]);
+  // console.log(selectStudents, authUserName.split(" ")[0]);
 
   return (
     <>

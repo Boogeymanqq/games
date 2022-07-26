@@ -46,7 +46,7 @@ export default function useSocket() {
     // обрабатываем получение обновленного списка пользователей
     socket.current.on("user_list:update", (users) => {
       setUsers(users);
-      console.log(users);
+      // console.log(users);
     });
 
     // обрабатываем получение обновленного списка сообщений
@@ -59,14 +59,13 @@ export default function useSocket() {
     // обрабатываем получение обновленного текста для присоединения ученика к игре
     socket.current.on("text:student", (text) => {
       setText(text);
-      console.log(text);
+      // console.log(text);
     });
 
     // обрабатываем получение обновленного списка выбранных учеников для игры
     socket.current.on("update:student", (arr) => {
       setSelectStudents(arr);
       console.log("###arr", arr);
-      console.log(selectStudents);
     });
 
     // обрабатываем получение обновленных размеров предмета

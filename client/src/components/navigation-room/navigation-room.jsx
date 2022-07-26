@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../ui/button/button";
 import { navRoom } from "../../data";
@@ -7,16 +7,11 @@ import select from "./img/icon-select.png";
 import play from "./img/icon-play.png";
 import s from "./navigation-room.module.css";
 
-export const Navigationroom = ({
-  // students,
-  // setStudents,
-  setLessonStudents,
-  connectGames,
-}) => {
-  const [showStudentsList, setShowStudentsList] = React.useState(false);
-  const [students, setStudents] = React.useState([]);
+export const Navigationroom = ({ setLessonStudents, connectGames }) => {
+  const [showStudentsList, setShowStudentsList] = useState(false);
+  const [students, setStudents] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function getStudents() {
       const url = "http://localhost:3000/api/auth/students";
       const response = await fetch(url, {
@@ -48,7 +43,7 @@ export const Navigationroom = ({
   }
 
   function connect() {
-    console.log("hello");
+    // console.log("hello");
     connectGames("connect");
     console.log(connectGames);
   }

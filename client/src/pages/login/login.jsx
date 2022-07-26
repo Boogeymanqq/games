@@ -86,7 +86,7 @@ export const Login = ({ caption }) => {
                 formikHelpers.resetForm();
                 res.role === "teacher"
                   ? setTimeout(() => navigate("/teacherroom"), 1000)
-                  : setTimeout(() => navigate("/student"), 1000);
+                  : setTimeout(() => window.location.replace("/student"), 1000);
               } catch (error) {
                 setIsLoading(false);
                 setAlert(true);
