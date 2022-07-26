@@ -15,10 +15,12 @@ import screen from "./img/icon-screen.svg";
 import rules from "./img/icon-info.svg";
 import change from "./img/icon-change.svg";
 import user from "./img/icon-active-user.svg";
+import home from "./img/icon-home.svg";
 import imageBorder from "./img/frame.png";
 import s from "./lesson.module.css";
 import { InputRange } from "../../ui/InputRange/InputRange";
 import { LessonTool } from "../../ui/LessonTool/LessonTool";
+import { HOST } from "../../data";
 
 export const Lesson = ({ caption, selectStudents }) => {
   const {
@@ -33,6 +35,10 @@ export const Lesson = ({ caption, selectStudents }) => {
   } = useSocket();
 
   // console.log("###lesson", selectStudents);
+
+  console.log("###lesson", selectStudents);
+  console.log("#HOST", HOST);
+  console.log("#HOST1", process.env.REACT_APP_HOST);
   // console.log(lessonStudents);
   const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);
@@ -99,7 +105,7 @@ export const Lesson = ({ caption, selectStudents }) => {
 
   useEffect(() => {
     async function getMonster() {
-      const url = "http://localhost:3000/api/monster/dir/monsterparts";
+      const url = HOST + "/api/monster/dir/monsterparts";
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -288,7 +294,6 @@ export const Lesson = ({ caption, selectStudents }) => {
             )
           ) : (
             <div className={s.playfields}>
-
               <div className={s.frames}>{arr}</div>
 
               <div className={s.subject__toys}>
@@ -344,16 +349,26 @@ export const Lesson = ({ caption, selectStudents }) => {
                         alt=""
                         className={s.subject}
                       />
-                      <button
-                        style={
-                          hovered === index
-                            ? { visibility: "visible" }
-                            : { visibility: "hidden" }
-                        }
-                        onClick={() => toggle(item._id)}
-                      >
-                        &times;
-                      </button>
+                      {userRole === "teacher" ? (
+                        <button
+                          className={s.btn__home}
+                          style={
+                            hovered === index
+                              ? { visibility: "visible" }
+                              : { visibility: "hidden" }
+                          }
+                          onClick={() => toggle(item._id)}
+                        >
+                          <img src={home} alt="" />
+                        </button>
+                      ) : (
+                        <button
+                          className={s.btn__home}
+                          style={{ visibility: "hidden" }}
+                        >
+                          <img src={home} alt="" />
+                        </button>
+                      )}
                     </div>
                   </Draggable>
                 ))}

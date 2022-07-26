@@ -13,11 +13,7 @@ export const Student = () => {
   const childrenId = JSON.parse(localStorage.getItem("userId"));
   const navigate = useNavigate();
 
-  console.log(selectStudents);
-
-  useEffect(() => {
-    // window.location.reload();
-  }, []);
+  // console.log(selectStudents);
 
   useEffect(() => {
     if (text === "connect") {

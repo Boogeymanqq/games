@@ -267,3 +267,8 @@ export const teacherPlanPanel = [
     ],
   },
 ];
+
+export const HOST =
+  process.env.REACT_APP_HOST === "production"
+    ? "http://192.168.31.8:5000"
+    : "http://localhost:3000";
