@@ -6,6 +6,7 @@ import { Navigationstudents } from "../../components/navigation-students/navigat
 import addStudent from "./img/icon-add.svg";
 import deleteStudent from "./img/icon-delete.svg";
 import editStudent from "./img/icon-edit.svg";
+import { HOST } from "../../data";
 import s from "./teacher-students.module.css";
 
 export const Teacherstudents = ({ caption }) => {
@@ -21,7 +22,7 @@ export const Teacherstudents = ({ caption }) => {
 
   useEffect(() => {
     async function getStudents() {
-      const url = "http://localhost:3000/api/auth/students";
+      const url = `${HOST}/api/auth/students`;
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -40,7 +41,7 @@ export const Teacherstudents = ({ caption }) => {
     check.forEach((elem) => (elem.checked = false));
 
     async function getGroup() {
-      const url = "http://localhost:3000/api/groups";
+      const url = `${HOST}/api/groups`;
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -77,7 +78,7 @@ export const Teacherstudents = ({ caption }) => {
 
   function createGroup() {
     async function postGroup() {
-      const url = "http://localhost:3000/api/groups";
+      const url = `${HOST}/api/groups`;
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify(createSelectGroup),
@@ -97,7 +98,7 @@ export const Teacherstudents = ({ caption }) => {
   function deleteGroup(id) {
     const obj = [{ _id: id }];
     async function deleteApi() {
-      const url = "http://localhost:3000/api/groups";
+      const url = `${HOST}/api/groups`;
       const response = await fetch(url, {
         method: "DELETE",
         body: JSON.stringify(obj),
@@ -117,7 +118,7 @@ export const Teacherstudents = ({ caption }) => {
     const deletedStudent = { studentId: id };
     console.log("deletedStudent", deletedStudent);
     async function deleteStudentApi() {
-      const url = "http://localhost:3000/api/auth/delete/student";
+      const url = `${HOST}/api/auth/delete/student`;
       const response = await fetch(url, {
         method: "DELETE",
         body: JSON.stringify(deletedStudent),

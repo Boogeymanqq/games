@@ -10,6 +10,7 @@ import {
   Container,
 } from "@mui/material";
 import { NavigationTeacher } from "../teacher/navigationTeacher";
+import { HOST } from "../../data";
 
 export const Games = () => {
   const [templates, setTemplates] = useState([]);
@@ -17,7 +18,7 @@ export const Games = () => {
 
   useEffect(() => {
     async function getTemplate() {
-      const url = "http://localhost:3000/api/monster/templates";
+      const url = `${HOST}/api/monster/templates`;
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -35,7 +36,7 @@ export const Games = () => {
   function deleteTemplates(id) {
     const obj = [{ _id: id }];
     async function deleteApi() {
-      const url = "http://localhost:3000/api/monster/templates";
+      const url = `${HOST}/api/monster/templates`;
       const response = await fetch(url, {
         method: "DELETE",
         body: JSON.stringify(obj),

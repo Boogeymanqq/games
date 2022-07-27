@@ -105,7 +105,7 @@ export const Lesson = ({ caption, selectStudents }) => {
 
   useEffect(() => {
     async function getMonster() {
-      const url = HOST + "/api/monster/dir/monsterparts";
+      const url = `${HOST}/api/monster/dir/monsterparts`;
       const response = await fetch(url, {
         method: "GET",
         headers: {

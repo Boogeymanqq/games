@@ -5,6 +5,7 @@ import { navRoom } from "../../data";
 import add from "./img/icon-add.png";
 import select from "./img/icon-select.png";
 import play from "./img/icon-play.png";
+import { HOST } from "../../data";
 import s from "./navigation-room.module.css";
 
 export const Navigationroom = ({ setLessonStudents, connectGames }) => {
@@ -13,7 +14,7 @@ export const Navigationroom = ({ setLessonStudents, connectGames }) => {
 
   useEffect(() => {
     async function getStudents() {
-      const url = "http://localhost:3000/api/auth/students";
+      const url = `${HOST}/api/auth/students`;
       const response = await fetch(url, {
         method: "GET",
         headers: {

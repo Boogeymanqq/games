@@ -8,7 +8,7 @@ import { object, string } from "yup";
 import { useHttp } from "../../hooks/http.hook";
 import { AlertInfo } from "../../ui/alert/alert";
 import { makeStyles } from "@mui/styles";
-import { classes } from "../../data";
+import { classes, HOST } from "../../data";
 import pen from "./img/icon-pen.svg";
 import s from "./student-form.module.css";
 
@@ -90,7 +90,7 @@ export const Studentform = ({ caption }) => {
             onSubmit={async (values, formikHelpers) => {
               try {
                 const res = await request(
-                  "http://localhost:3000/api/auth/register/student",
+                  `${HOST}/api/auth/register/student`,
                   "POST",
                   values
                 );
