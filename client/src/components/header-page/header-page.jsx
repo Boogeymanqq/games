@@ -15,7 +15,13 @@ export const Headerpage = ({ picture }) => {
       <Header className={s.header}>
         <Pagelogo />
         <Label picture={picture} />
-        {isLogo && <Burger onClick={hideLogo} />}
+        {isLogo ? (
+          <Burger onClick={hideLogo} />
+        ) : (
+          <div>
+            <h1>HI</h1>
+          </div>
+        )}
       </Header>
       ;
     </>
