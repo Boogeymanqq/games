@@ -39,7 +39,7 @@ export default function useSocket() {
 
     // обрабатываем получение системного сообщения
     socket.current.on("log", (log) => {
-      console.log(log);
+      // console.log(log);
       setLog(log);
     });
 
