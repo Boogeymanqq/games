@@ -1,41 +1,31 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchStudents, setStudents } from "../../redux/slices/studentsSlice";
+import { Box, CircularProgress } from "@mui/material";
 import { Header } from "../../layouts/header";
 import { Pagelogo } from "../../ui/pageLogo/pageLogo";
 import { Main } from "../../layouts/main";
 import { Navigationstudents } from "../../components/navigation-students/navigation-students";
-import addStudent from "./img/icon-add.svg";
 import deleteStudent from "./img/icon-delete.svg";
 import editStudent from "./img/icon-edit.svg";
 import { HOST } from "../../data";
 import s from "./teacher-students.module.css";
 
 export const Teacherstudents = ({ caption }) => {
-  const [students, setStudents] = useState([]);
   const [listGroup, setListGroup] = useState([]);
   const [nameGroup, setNameGroup] = useState("");
   const [trackAnswer, setTrackAnswer] = useState("");
   const [buttons, setButtons] = useState(0);
+
+  const { students, status } = useSelector((state) => state.studentsSlice);
+  const dispatch = useDispatch();
 
   // console.log("students", students);
 
   // console.log(checked);
 
   useEffect(() => {
-    async function getStudents() {
-      const url = `${HOST}/api/auth/students`;
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      });
-      const data = await response.json();
-      setStudents(data.map((elem) => ({ ...elem, isChecked: false })));
-      const check = document.querySelectorAll('input[type="checkbox"]');
-      check.forEach((elem) => (elem.checked = false));
-    }
-
-    getStudents();
+    dispatch(fetchStudents());
 
     const check = document.querySelectorAll('input[type="checkbox"]');
     check.forEach((elem) => (elem.checked = false));
@@ -52,17 +42,17 @@ export const Teacherstudents = ({ caption }) => {
       setListGroup(data.$res);
     }
     getGroup();
-  }, [trackAnswer]);
+  }, []);
 
   function selectedStudent(id) {
-    setStudents(
-      students.map((elem) => {
-        if (elem._id === id) {
-          elem.isChecked = !elem.isChecked;
-        }
-        return elem;
-      })
-    );
+    // setStudents(
+    students.map((elem) => {
+      if (elem._id === id) {
+        elem.isChecked = !elem.isChecked;
+      }
+      return elem;
+    });
+    // );
   }
 
   const filtredgroup = students
@@ -168,52 +158,79 @@ export const Teacherstudents = ({ caption }) => {
         </div>
         {!buttons ? (
           <div className={s.students__table}>
-            <table>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>имя</th>
-                  <th>фамилия</th>
-                  <th>логин</th>
-                  <th>пароль</th>
-                  <th>комментарий</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {students?.map((elem, index) => (
-                  <tr key={elem._id}>
-                    <td>{index + 1}</td>
-                    <td>{elem.firstName}</td>
-                    <td>{elem.lastName}</td>
-                    <td>{elem.login}</td>
-                    <td>
-                      <span>{elem.openPas ?? "---"}</span>
-                    </td>
-                    <td>{elem.comment ?? ""}</td>
-                    <td>
-                      <div className={s.action_icons}>
-                        <div
-                          className={s.delete}
-                          title="Удалить"
-                          onClick={() => removeStudent(elem._id)}
-                        >
-                          <img src={deleteStudent} alt="" />
-                        </div>
-                        <div className={s.edit} title="Редактировать">
-                          <img
-                            src={editStudent}
-                            alt=""
-                            width="24"
-                            height="24"
-                          />
-                        </div>
-                      </div>
-                    </td>
+            {status === "error" ? (
+              <p
+                style={{
+                  fontSize: "40px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "100%",
+                }}
+              >
+                Ошибка, повторите позже
+              </p>
+            ) : status === "loading" ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "592px",
+                  width: "100%",
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>имя</th>
+                    <th>фамилия</th>
+                    <th>логин</th>
+                    <th>пароль</th>
+                    <th>комментарий</th>
+                    <th></th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {students?.map((elem, index) => (
+                    <tr key={elem._id}>
+                      <td>{index + 1}</td>
+                      <td>{elem.firstName}</td>
+                      <td>{elem.lastName}</td>
+                      <td>{elem.login}</td>
+                      <td>
+                        <span>{elem.openPas ?? "---"}</span>
+                      </td>
+                      <td>{elem.comment ?? ""}</td>
+                      <td>
+                        <div className={s.action_icons}>
+                          <div
+                            className={s.delete}
+                            title="Удалить"
+                            onClick={() => removeStudent(elem._id)}
+                          >
+                            <img src={deleteStudent} alt="" />
+                          </div>
+                          <div className={s.edit} title="Редактировать">
+                            <img
+                              src={editStudent}
+                              alt=""
+                              width="24"
+                              height="24"
+                            />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         ) : (
           <div className={s.groups__table}></div>
