@@ -13,6 +13,7 @@ import onConnection from "./socket_io/onConnection.js";
 import { ALLOWED_ORIGIN, MONGODB_URI } from "./config.js";
 import { getDirMonsterparts } from "./monster/monster.js";
 import upload from "./utils/upload.js";
+import auth from "./middleware/auth.middleware.js"; 
 
 const app = express();
 
@@ -33,13 +34,17 @@ app.use("/api/monster", monsterRouter);
 
 app.post('/upload', upload.single('file'), (req, res) => {
   
-  console.log(req.file)
+  console.log(req.file);
 
   if (!req.file) return res.status(400).json({
     message: "file not found",
     type: "error"
   })
 
+  res.status(200).json({
+    message: "Файл успешно загружен",
+    type: "success",
+  })
 
 })
 
