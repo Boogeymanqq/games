@@ -36,7 +36,7 @@ export const Teacherroom = ({ caption, setLessonStudents, connectGames }) => {
         <h2>{caption}</h2>
       </Header>
       <Navigationroom
-        setLessonStudents={setLessonStudents}
+        // setLessonStudents={setLessonStudents}
         connectGames={connectGames}
       />
       <Main className={s.main}>
