@@ -18,6 +18,7 @@ import { Teacherroom } from "./pages/teacher-room/teacher-room";
 import { Studentform } from "./pages/student-form/student-form";
 import { Teacherstudents } from "./pages/teacher-room/teacher-students";
 import { Lesson } from "./pages/lesson/lesson";
+import { BackendTest } from "./pages/backendTest/backendTest";
 
 function App() {
   const { connectGames, arrSelectStudents, selectStudents } = useSocket();
@@ -82,6 +83,7 @@ function App() {
           path="/teacher"
           element={<Teacher caption="Регистрация ученика" />}
         />
+        <Route path="/backtest" element={<BackendTest />} />
       </Routes>
     </BrowserRouter>
   );

@@ -12,6 +12,7 @@ import monsterRouter from "./routes/monster.routes.js";
 import onConnection from "./socket_io/onConnection.js";
 import { ALLOWED_ORIGIN, MONGODB_URI } from "./config.js";
 import { getDirMonsterparts } from "./monster/monster.js";
+import upload from "./utils/upload.js";
 
 const app = express();
 
@@ -30,7 +31,17 @@ app.use("/api/groups", groupsRouter);
 
 app.use("/api/monster", monsterRouter);
 
+app.post('/upload', upload.single('file'), (req, res) => {
+  
+  console.log(req.file)
 
+  if (!req.file) return res.status(400).json({
+    message: "file not found",
+    type: "error"
+  })
+
+
+})
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client", "build")));
