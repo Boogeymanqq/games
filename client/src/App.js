@@ -8,7 +8,6 @@ import { Signin } from "./pages/sign/signin";
 import { Login } from "./pages/login/login";
 import { Contacts } from "./pages/contacts/contacts";
 import { Games } from "./pages/games/games";
-import { Monster } from "./ui/monster/monster";
 import { Card } from "./pages/Card/Card";
 import { Room } from "./ui/rooms/rooms";
 import { Teacher } from "./pages/teacher/teacher";
@@ -19,16 +18,20 @@ import { Studentform } from "./pages/student-form/student-form";
 import { Teacherstudents } from "./pages/teacher-room/teacher-students";
 import { Lesson } from "./pages/lesson/lesson";
 import { BackendTest } from "./pages/backendTest/backendTest";
+import { useSelector } from "react-redux";
 
 function App() {
   const { connectGames, arrSelectStudents, selectStudents } = useSocket();
-  const [lessonStudents, setLessonStudents] = useState([]);
+  const { students } = useSelector((state) => state.studentsSlice);
 
-  console.log(selectStudents);
+  // console.log(selectStudents);
+  console.log(students);
 
   useEffect(() => {
-    arrSelectStudents(lessonStudents);
-  }, [lessonStudents]);
+    arrSelectStudents(
+      students.filter((elem) => (elem.isChecked ? elem : null))
+    );
+  }, [students]);
 
   return (
     <BrowserRouter>
@@ -41,11 +44,7 @@ function App() {
         <Route
           path="/teacherroom"
           element={
-            <Teacherroom
-              caption="Личный кабинет"
-              setLessonStudents={setLessonStudents}
-              connectGames={connectGames}
-            />
+            <Teacherroom caption="Личный кабинет" connectGames={connectGames} />
           }
         />
         <Route
@@ -64,19 +63,6 @@ function App() {
         <Route path="/student" element={<Student />} />
         <Route path="/teacher/studentlist" element={<StudentList />} />
         <Route path="/teacher/games" element={<Games />} />
-        {/* <Route
-            path="/monster"
-            element={
-              <Monster
-                users={users}
-                log={log}
-                messages={messages}
-                sendMessage={sendMessage}
-                removeMessage={removeMessage}
-                sendSelect={sendSelect}
-              />
-            }
-          /> */}
         <Route path="/teacherroom/card" element={<Card caption="Открытка" />} />
         <Route path="/room" element={<Room />} />
         <Route
@@ -90,3 +76,4 @@ function App() {
 }
 
 export default App;
+>

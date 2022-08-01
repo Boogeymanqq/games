@@ -8,26 +8,27 @@ import { Burger } from "../../ui/burger/burger";
 import { Main } from "../../layouts/main";
 import { Box, CircularProgress } from "@mui/material";
 import { xl, lg, md, sm, xs } from "./monsterGameSize";
+import { InputRange } from "../../ui/InputRange/InputRange";
+import { LessonTool } from "../../ui/LessonTool/LessonTool";
+import { HOST } from "../../data";
+import { StudentInGame } from "./components/StudentInGame";
+import { ObjectInFolders } from "./components/ObjectInFolders";
+import { FoldersMonster } from "./components/FoldersMonster";
 import scores from "./img/icon-star.svg";
 import size from "./img/icon-size.svg";
 import help from "./img/icon-help.svg";
 import screen from "./img/icon-screen.svg";
 import rules from "./img/icon-info.svg";
 import change from "./img/icon-change.svg";
-import user from "./img/icon-active-user.svg";
 import home from "./img/icon-home.svg";
 import imageBorder from "./img/frame.png";
 import s from "./lesson.module.css";
-import { InputRange } from "../../ui/InputRange/InputRange";
-import { LessonTool } from "../../ui/LessonTool/LessonTool";
-import { HOST } from "../../data";
 
 export const Lesson = ({ caption, selectStudents }) => {
   const {
     messages,
     sendMessage,
     sendSelect,
-    // selectStudents,
     monsterSize,
     objSizeMonster,
     monsterBorderSize,
@@ -37,9 +38,6 @@ export const Lesson = ({ caption, selectStudents }) => {
   // console.log("###lesson", selectStudents);
 
   console.log("###lesson", selectStudents);
-  console.log("#HOST", HOST);
-  console.log("#HOST1", process.env.REACT_APP_HOST);
-  // console.log(lessonStudents);
   const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);
 
@@ -224,20 +222,10 @@ export const Lesson = ({ caption, selectStudents }) => {
           <div className={s.users__online}>
             {selectStudents.length > 0 ? (
               selectStudents.map((elem) => (
-                <div className={s.user} key={elem._id}>
-                  <div>
-                    <img src={user} alt="user" width="18" height="18" />
-                  </div>
-                  <p>{elem.firstName}</p>
-                </div>
+                <StudentInGame key={elem._id} firstName={elem.firstName} />
               ))
             ) : (
-              <div className={s.user}>
-                <div>
-                  <img src={user} alt="user" width="18" height="18" />
-                </div>
-                <p>Ученик не выбран</p>
-              </div>
+              <StudentInGame firstName="Ученик не выбран" />
             )}
           </div>
           {showApi ? (
@@ -258,29 +246,21 @@ export const Lesson = ({ caption, selectStudents }) => {
                 {showFolder === true ? (
                   <div className={s.show}>
                     {cardNewMonster.map((elem) => (
-                      <div
-                        onClick={() => changeHandler(elem._id)}
-                        className={s.monster__folder}
+                      <FoldersMonster
                         key={elem._id}
-                      >
-                        {elem.dir}
-                      </div>
+                        onClick={() => changeHandler(elem._id)}
+                        dir={elem.dir}
+                      />
                     ))}
                   </div>
                 ) : (
                   <div className={s.show}>
                     {secondMonster.map((elem) => (
-                      <div className={s.show__items} key={elem._id}>
-                        <img
-                          style={{ width: "90px", height: "90px" }}
-                          src={elem.url}
-                          alt=""
-                        />
-                        <input
-                          type="checkbox"
-                          onChange={() => onChange(elem._id)}
-                        />
-                      </div>
+                      <ObjectInFolders
+                        key={elem._id}
+                        src={elem.url}
+                        onChange={() => onChange(elem._id)}
+                      />
                     ))}
                     <button
                       className={s.show__btn}
@@ -295,7 +275,6 @@ export const Lesson = ({ caption, selectStudents }) => {
           ) : (
             <div className={s.playfields}>
               <div className={s.frames}>{arr}</div>
-
               <div className={s.subject__toys}>
                 {selectMonster.map((item, index) => (
                   <Draggable
