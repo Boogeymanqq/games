@@ -25,8 +25,6 @@ export const Student = () => {
     return () => {};
   });
 
-  // console.log(selectStudents, authUserName.split(" ")[0]);
-
   return (
     <>
       <Header className={s.header}>
