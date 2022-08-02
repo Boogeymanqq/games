@@ -1,4 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchMonster,
+  setObjMonsters,
+  setShowFolder,
+  setChangeTerminal,
+} from "../../redux/slices/monsterSlice";
 import useSocket from "../../hooks/useSocket";
 import Draggable from "react-draggable";
 import { v4 as uuidv4 } from "uuid";
@@ -10,7 +17,6 @@ import { Box, CircularProgress } from "@mui/material";
 import { xl, lg, md, sm, xs } from "./monsterGameSize";
 import { InputRange } from "../../ui/InputRange/InputRange";
 import { LessonTool } from "../../ui/LessonTool/LessonTool";
-import { HOST } from "../../data";
 import { StudentInGame } from "./components/StudentInGame";
 import { ObjectInFolders } from "./components/ObjectInFolders";
 import { FoldersMonster } from "./components/FoldersMonster";
@@ -35,21 +41,15 @@ export const Lesson = ({ caption, selectStudents }) => {
     borderSizeMonster,
   } = useSocket();
 
-  // console.log("###lesson", selectStudents);
+  const dispatch = useDispatch();
+  const { monsters, status, objMonsters, showFolder, changeTerminal } =
+    useSelector((state) => state.monsterSlice);
 
-  console.log("###lesson", selectStudents);
-  const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);
+  const [selectMonster, setSelectMonster] = useState([]);
 
   const [sizeBorder, setSizeBorder] = useState(50);
   const [objSize, setObjSize] = useState(0.6);
-
-  const [showFolder, setShowFolder] = useState(true);
-  const [showApi, setShowApi] = useState(false);
-
-  const [selectMonster, setSelectMonster] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(true);
 
   const [newIndex, setNewIndex] = useState(0);
 
@@ -102,20 +102,10 @@ export const Lesson = ({ caption, selectStudents }) => {
   }, [messages, objSizeMonster, borderSizeMonster]);
 
   useEffect(() => {
-    async function getMonster() {
-      const url = `${HOST}/api/monster/dir/monsterparts`;
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      });
-      const data = await response.json();
-      setCardNewMonster(data);
-      setIsLoading(false);
-    }
-    getMonster();
+    dispatch(fetchMonster());
   }, []);
+
+  // console.log("#monsters", monsters);
 
   function startDrag(e) {
     e.preventDefault();
@@ -149,16 +139,11 @@ export const Lesson = ({ caption, selectStudents }) => {
   }
 
   function changeHandler(id) {
-    setCardNewMonster(
-      cardNewMonster.map((elem) => {
-        if (elem._id === id) {
-          setShowFolder(false);
-          setSecondMonster(elem.img.map((item) => ({ ...item, zIndexObj: 0 })));
-        }
-        return elem;
-      })
-    );
+    dispatch(setObjMonsters(id));
   }
+
+  // console.log("objMonsters", objMonsters);
+  // console.log("Monsters", monsters);
 
   function onChange(id) {
     setSecondMonster(
@@ -228,8 +213,8 @@ export const Lesson = ({ caption, selectStudents }) => {
               <StudentInGame firstName="Ученик не выбран" />
             )}
           </div>
-          {showApi ? (
-            isLoading ? (
+          {changeTerminal ? (
+            status === "loading" ? (
               <Box
                 sx={{
                   display: "flex",
@@ -241,11 +226,11 @@ export const Lesson = ({ caption, selectStudents }) => {
               >
                 <CircularProgress />
               </Box>
-            ) : (
+            ) : status === "success" ? (
               <>
                 {showFolder === true ? (
                   <div className={s.show}>
-                    {cardNewMonster.map((elem) => (
+                    {monsters.map((elem) => (
                       <FoldersMonster
                         key={elem._id}
                         onClick={() => changeHandler(elem._id)}
@@ -255,7 +240,7 @@ export const Lesson = ({ caption, selectStudents }) => {
                   </div>
                 ) : (
                   <div className={s.show}>
-                    {secondMonster.map((elem) => (
+                    {objMonsters.map((elem) => (
                       <ObjectInFolders
                         key={elem._id}
                         src={elem.url}
@@ -264,13 +249,15 @@ export const Lesson = ({ caption, selectStudents }) => {
                     ))}
                     <button
                       className={s.show__btn}
-                      onClick={() => setShowFolder(true)}
+                      onClick={() => dispatch(setShowFolder())}
                     >
                       Назад
                     </button>
                   </div>
                 )}
               </>
+            ) : (
+              <p className={s.error}>Ошибка, повторите позже</p>
             )
           ) : (
             <div className={s.playfields}>
@@ -393,7 +380,7 @@ export const Lesson = ({ caption, selectStudents }) => {
                   width="18"
                   height="18"
                   caption="Изменить"
-                  onClick={() => setShowApi(!showApi)}
+                  onClick={() => dispatch(setChangeTerminal())}
                 />
               </ul>
             </div>

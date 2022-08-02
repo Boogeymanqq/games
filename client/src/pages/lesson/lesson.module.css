@@ -188,3 +188,12 @@ button {
   width: 15px;
   height: 15px;
 }
+
+.error {
+  font-size: 40px;
+  color: #fff;
+  height: 553px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

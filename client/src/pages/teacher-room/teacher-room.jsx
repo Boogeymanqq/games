@@ -13,7 +13,7 @@ import arrowRight from "../teacher-room/img/icon-black-arrow.svg";
 import arroWhite from "../teacher-room/img/icon-white-arrow.svg";
 import s from "./teacher-room.module.css";
 
-export const Teacherroom = ({ caption, setLessonStudents, connectGames }) => {
+export const Teacherroom = ({ caption, connectGames }) => {
   const [activeBooks, setActiveBooks] = React.useState([]);
   const [activePlans, setActivePlans] = React.useState([]);
 
@@ -35,10 +35,7 @@ export const Teacherroom = ({ caption, setLessonStudents, connectGames }) => {
         <Pagelogo />
         <h2>{caption}</h2>
       </Header>
-      <Navigationroom
-        // setLessonStudents={setLessonStudents}
-        connectGames={connectGames}
-      />
+      <Navigationroom connectGames={connectGames} />
       <Main className={s.main}>
         <div className={s.panels}>
           <Panel caption="Пособия" background="#A7DFFF">

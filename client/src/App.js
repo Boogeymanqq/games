@@ -25,7 +25,7 @@ function App() {
   const { students } = useSelector((state) => state.studentsSlice);
 
   // console.log(selectStudents);
-  console.log(students);
+  // console.log(students);
 
   useEffect(() => {
     arrSelectStudents(
