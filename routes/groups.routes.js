@@ -78,6 +78,33 @@ groupsRouter.get("/", auth, async (req, res) => {
   }
 });
 
+// /api/groups
+groupsRouter.put("/", auth, async (req, res) => {
+  try {
+    const {groupId, params} = req.body;
+    console.log(req.body);
+
+    const group = await StudentsGroup.findOne({_id: groupId});
+    
+    if (!group) {
+      return res.status(400).json({
+        message: "Такой группы нет, попробуйте снова...",
+        type: "error",
+      });
+    }
+    await StudentsGroup.updateOne(group, {$set: params});
+    res.status(200).json({
+      message: "Данные группы обновлены успешно.",
+      type: "success",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Что-то пошло не так, попробуйте снова",
+      type: "error",
+    });
+  }
+});
+
 // api/groups
 groupsRouter.delete("/", auth, async (req, res) => {
   try {
