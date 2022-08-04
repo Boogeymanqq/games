@@ -174,6 +174,30 @@ _example response_
 
 `.status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
 
+### update group
+
+> _api/groups(put)_
+
+_example request_
+
+`const data = {
+    "groupId": "62eba3d608373e684b6d57c5",
+    "params": {
+        "groupName": "Radiant",
+        "students": [
+            "626fe957ab980164ff69a06d"
+        ]
+    } 
+}`
+
+_example response_
+
+`.status(200).json({ message: "Группа успешно изменена", type: "success", });`
+
+`.status(400).json({ message: "Такой группы нет, попробуйте снова.", type: "error", });`
+
+`.status: 500 - { message: "Что-то пошло не так, попробуйте снова", type: "error" }`
+
 `Константы для картинок`
 
 ![размеры](https://user-images.githubusercontent.com/42605576/179234200-8a835e84-72e2-4294-abb1-ec920dcf4c4d.PNG)
