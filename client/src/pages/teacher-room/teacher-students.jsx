@@ -6,9 +6,11 @@ import { Header } from "../../layouts/header";
 import { Pagelogo } from "../../ui/pageLogo/pageLogo";
 import { Main } from "../../layouts/main";
 import { Navigationstudents } from "../../components/navigation-students/navigation-students";
+import { HOST } from "../../data";
 import deleteStudent from "./img/icon-delete.svg";
 import editStudent from "./img/icon-edit.svg";
-import { HOST } from "../../data";
+import addStudent from "./img/icon-add.svg";
+import student from "./img/icon-user.svg";
 import s from "./teacher-students.module.css";
 
 export const Teacherstudents = ({ caption }) => {
@@ -233,7 +235,63 @@ export const Teacherstudents = ({ caption }) => {
             )}
           </div>
         ) : (
-          <div className={s.groups__table}></div>
+          <div className={s.groups__table}>
+            <table>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Big</td>
+                  <td>
+                    <div className={s.action_icons}>
+                      <div className={s.add}>
+                        <img src={addStudent} alt="" />
+                      </div>
+                      <div className={s.delete}>
+                        <img src={deleteStudent} alt="" />
+                      </div>
+                      <div className={s.edit}>
+                        <img src={student} alt="" />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Little</td>
+                  <td>
+                    <div className={s.action_icons}>
+                      <div className={s.add}>
+                        <img src={addStudent} alt="" />
+                      </div>
+                      <div className={s.delete}>
+                        <img src={deleteStudent} alt="" />
+                      </div>
+                      <div className={s.edit}>
+                        <img src={student} alt="" />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Goldy</td>
+                  <td>
+                    <div className={s.action_icons}>
+                      <div className={s.add}>
+                        <img src={addStudent} alt="" />
+                      </div>
+                      <div className={s.delete}>
+                        <img src={deleteStudent} alt="" />
+                      </div>
+                      <div className={s.edit}>
+                        <img src={student} alt="" />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         )}
 
         {/* <div className={s.panels}>

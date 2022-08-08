@@ -87,15 +87,18 @@
 
 /* Работает в Chrome,
 Edge и Safari */
-.students__table::-webkit-scrollbar {
+.students__table::-webkit-scrollbar,
+.groups__table::-webkit-scrollbar {
   width: 6px;
 }
 
-.students__table::-webkit-scrollbar-track {
+.students__table::-webkit-scrollbar-track,
+.groups__table::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.students__table::-webkit-scrollbar-thumb {
+.students__table::-webkit-scrollbar-thumb,
+.groups__table::-webkit-scrollbar-thumb {
   background-color: #ff9e4f;
   border-radius: 20px;
   border: 3px solid #a7dfff;
@@ -112,7 +115,8 @@ Edge и Safari */
   box-sizing: border-box;
 }
 
-.students__table table {
+.students__table table,
+.groups__table table {
   table-layout: fixed;
   margin: 0 auto;
   max-width: 100%;
@@ -127,16 +131,19 @@ Edge и Safari */
   z-index: 20;
 }
 
-.students__table tr {
+.students__table tr,
+.groups__table tr {
   border-bottom: 3px solid #000;
 }
 
-.students__table tr:last-child {
+.students__table tr:last-child,
+.groups__table tr:last-child {
   border-bottom: 0;
 }
 
 .students__table th,
-.students__table td {
+.students__table td,
+.groups__table td {
   margin: 0;
   padding: 16px 0 10px;
   width: 124px;
@@ -152,8 +159,13 @@ Edge и Safari */
   background-color: #b5ff9a;
 }
 
+.groups__table th:nth-child(odd) {
+  background-color: #a7dfff;
+}
+
 .students__table th:nth-child(even),
-.students__table td:nth-child(even) {
+.students__table td:nth-child(even),
+.groups__table td:nth-child(even) {
   background-color: #fff;
 }
 
@@ -172,9 +184,14 @@ Edge и Safari */
 }
 
 .delete img,
-.edit img {
+.edit img,
+.add img {
   display: block;
   width: 100%;
   height: auto;
   cursor: pointer;
+}
+
+.add img {
+  width: 24px;
 }
