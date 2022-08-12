@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchStudents, setStudents } from "../../redux/slices/studentsSlice";
+import {
+  fetchStudents,
+  fetchRemoveStudent,
+  removeStudent,
+  setStudents,
+} from "../../redux/slices/studentsSlice";
 import { Box, CircularProgress } from "@mui/material";
 import { Header } from "../../layouts/header";
 import { Pagelogo } from "../../ui/pageLogo/pageLogo";
 import { Main } from "../../layouts/main";
 import { Navigationstudents } from "../../components/navigation-students/navigation-students";
-import { HOST } from "../../data";
-import deleteStudent from "./img/icon-delete.svg";
-import editStudent from "./img/icon-edit.svg";
-import addStudent from "./img/icon-add.svg";
+// import { Button } from "../../ui/button/button";
+// import { Panel } from "../../ui/panel/panel";
+// import { Panelstudents } from "../../ui/panel/panel-students/panel-students";
+// import { HOST } from "../../data";
+import removeIcon from "./img/icon-delete.svg";
+import editIcon from "./img/icon-edit.svg";
+import addIcon from "./img/icon-add.svg";
 import student from "./img/icon-user.svg";
 import s from "./teacher-students.module.css";
 
@@ -18,6 +26,7 @@ export const Teacherstudents = ({ caption }) => {
   const [nameGroup, setNameGroup] = useState("");
   const [trackAnswer, setTrackAnswer] = useState("");
   const [buttons, setButtons] = useState(0);
+  const [toggle, setToggle] = useState(true);
 
   const { students, status } = useSelector((state) => state.studentsSlice);
   const dispatch = useDispatch();
@@ -29,102 +38,111 @@ export const Teacherstudents = ({ caption }) => {
   useEffect(() => {
     dispatch(fetchStudents());
 
-    const check = document.querySelectorAll('input[type="checkbox"]');
-    check.forEach((elem) => (elem.checked = false));
+    // const check = document.querySelectorAll('input[type="checkbox"]');
+    // check.forEach((elem) => (elem.checked = false));
 
-    async function getGroup() {
-      const url = `${HOST}/api/groups`;
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      });
-      const data = await response.json();
-      setListGroup(data.$res);
-    }
-    getGroup();
+    // async function getGroup() {
+    //   const url = `${HOST}/api/groups`;
+    //   const response = await fetch(url, {
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.token}`,
+    //     },
+    //   });
+    //   const data = await response.json();
+    //   setListGroup(data.$res);
+    // }
+    // getGroup();
   }, []);
 
-  function selectedStudent(id) {
-    // setStudents(
-    students.map((elem) => {
-      if (elem._id === id) {
-        elem.isChecked = !elem.isChecked;
-      }
-      return elem;
-    });
-    // );
-  }
+  const deleteStudent = (id) => {
+    dispatch(removeStudent({ id }));
+    dispatch(fetchRemoveStudent(id));
+  };
 
-  const filtredgroup = students
-    .filter((elem) => elem.isChecked === true)
-    .map((elem) => elem._id);
+  const editStudent = (id) => {
+    console.log(id);
+  };
 
-  const createSelectGroup = [
-    {
-      name: nameGroup,
-      students: filtredgroup,
-    },
-  ];
+  // function selectedStudent(id) {
+  // setStudents(
+  //   students.map((elem) => {
+  //     if (elem._id === id) {
+  //       elem.isChecked = !elem.isChecked;
+  //     }
+  //     return elem;
+  //   });
+  // );
+  // }
 
-  function createGroup() {
-    async function postGroup() {
-      const url = `${HOST}/api/groups`;
-      const response = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify(createSelectGroup),
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
-      setNameGroup("");
-      const data = await response.json();
-      setTrackAnswer(data);
-    }
-    postGroup();
-  }
+  // const filtredgroup = students
+  //   .filter((elem) => elem.isChecked === true)
+  //   .map((elem) => elem._id);
 
-  function deleteGroup(id) {
-    const obj = [{ _id: id }];
-    async function deleteApi() {
-      const url = `${HOST}/api/groups`;
-      const response = await fetch(url, {
-        method: "DELETE",
-        body: JSON.stringify(obj),
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
-      const data = await response.json();
-      setTrackAnswer(data);
-    }
-    deleteApi();
-  }
+  // const createSelectGroup = [
+  //   {
+  //     name: nameGroup,
+  //     students: filtredgroup,
+  //   },
+  // ];
 
-  function removeStudent(id) {
-    const deletedStudent = { studentId: id };
-    console.log("deletedStudent", deletedStudent);
-    async function deleteStudentApi() {
-      const url = `${HOST}/api/auth/delete/student`;
-      const response = await fetch(url, {
-        method: "DELETE",
-        body: JSON.stringify(deletedStudent),
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
-      const data = await response.json();
-      setTrackAnswer(data);
-    }
-    deleteStudentApi();
-  }
+  // function createGroup() {
+  //   async function postGroup() {
+  //     const url = `${HOST}/api/groups`;
+  //     const response = await fetch(url, {
+  //       method: "POST",
+  //       body: JSON.stringify(createSelectGroup),
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.token}`,
+  //         "Content-Type": "application/json",
+  //         Accept: "application/json",
+  //       },
+  //     });
+  //     setNameGroup("");
+  //     const data = await response.json();
+  //     setTrackAnswer(data);
+  //   }
+  //   postGroup();
+  // }
+
+  // function deleteGroup(id) {
+  //   const obj = [{ _id: id }];
+  //   async function deleteApi() {
+  //     const url = `${HOST}/api/groups`;
+  //     const response = await fetch(url, {
+  //       method: "DELETE",
+  //       body: JSON.stringify(obj),
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.token}`,
+  //         "Content-Type": "application/json",
+  //         Accept: "application/json",
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     setTrackAnswer(data);
+  //   }
+  //   deleteApi();
+  // }
+
+  // function removeStudent(id) {
+  //   async function deleteStudentApi() {
+  //     const url = `${HOST}/api/auth/delete/student`;
+  //     const response = await fetch(url, {
+  //       method: "DELETE",
+  //       body: JSON.stringify({ studentId: id }),
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.token}`,
+  //         "Content-Type": "application/json",
+  //         Accept: "application/json",
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     console.log(data);
+
+  //     setTrackAnswer(data);
+  //   }
+  //   deleteStudentApi();
+  // }
 
   return (
     <>
@@ -202,7 +220,7 @@ export const Teacherstudents = ({ caption }) => {
                   {students?.map((elem, index) => (
                     <tr key={elem._id}>
                       <td>{index + 1}</td>
-                      <td>{elem.firstName}</td>
+                      <td>{toggle ? elem.firstName : <input />}</td>
                       <td>{elem.lastName}</td>
                       <td>{elem.login}</td>
                       <td>
@@ -214,17 +232,16 @@ export const Teacherstudents = ({ caption }) => {
                           <div
                             className={s.delete}
                             title="Удалить"
-                            onClick={() => removeStudent(elem._id)}
+                            onClick={() => deleteStudent(elem._id)}
                           >
-                            <img src={deleteStudent} alt="" />
+                            <img src={removeIcon} alt="" />
                           </div>
-                          <div className={s.edit} title="Редактировать">
-                            <img
-                              src={editStudent}
-                              alt=""
-                              width="24"
-                              height="24"
-                            />
+                          <div
+                            className={s.edit}
+                            title="Редактировать"
+                            onClick={() => editStudent(elem._id)}
+                          >
+                            <img src={editIcon} alt="" width="24" height="24" />
                           </div>
                         </div>
                       </td>
@@ -244,10 +261,10 @@ export const Teacherstudents = ({ caption }) => {
                   <td>
                     <div className={s.action_icons}>
                       <div className={s.add}>
-                        <img src={addStudent} alt="" />
+                        <img src={addIcon} alt="" />
                       </div>
                       <div className={s.delete}>
-                        <img src={deleteStudent} alt="" />
+                        <img src={removeIcon} alt="" />
                       </div>
                       <div className={s.edit}>
                         <img src={student} alt="" />
@@ -261,10 +278,10 @@ export const Teacherstudents = ({ caption }) => {
                   <td>
                     <div className={s.action_icons}>
                       <div className={s.add}>
-                        <img src={addStudent} alt="" />
+                        <img src={addIcon} alt="" />
                       </div>
                       <div className={s.delete}>
-                        <img src={deleteStudent} alt="" />
+                        <img src={removeIcon} alt="" />
                       </div>
                       <div className={s.edit}>
                         <img src={student} alt="" />
@@ -273,15 +290,15 @@ export const Teacherstudents = ({ caption }) => {
                   </td>
                 </tr>
                 <tr>
-                  <td>2</td>
+                  <td>3</td>
                   <td>Goldy</td>
                   <td>
                     <div className={s.action_icons}>
                       <div className={s.add}>
-                        <img src={addStudent} alt="" />
+                        <img src={addIcon} alt="" />
                       </div>
                       <div className={s.delete}>
-                        <img src={deleteStudent} alt="" />
+                        <img src={removeIcon} alt="" />
                       </div>
                       <div className={s.edit}>
                         <img src={student} alt="" />
@@ -335,7 +352,7 @@ export const Teacherstudents = ({ caption }) => {
               <div onClick={createGroup}>
                 <Button
                   type="submit"
-                  disabled={!nameGroup || filtredgroup.length === 0}
+                  // disabled={!nameGroup || filtredgroup.length === 0}
                 >
                   OK
                 </Button>

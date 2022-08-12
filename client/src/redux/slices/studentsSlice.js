@@ -17,13 +17,31 @@ export const fetchStudents = createAsyncThunk(
   }
 );
 
+export const fetchRemoveStudent = createAsyncThunk(
+  "students/removeStudents",
+  async (id) => {
+    const url = `${HOST}/api/auth/delete/student`;
+    const response = await fetch(url, {
+      method: "DELETE",
+      body: JSON.stringify({ studentId: id }),
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log("#deleteStudents", data);
+  }
+);
+
 const initialState = {
   students: [],
   status: "loading",
 };
 
 const studentsSlice = createSlice({
-  name: "getStudents",
+  name: "students",
   initialState,
   reducers: {
     setStudents(state, action) {
@@ -33,6 +51,11 @@ const studentsSlice = createSlice({
         }
         return elem;
       });
+    },
+    removeStudent(state, action) {
+      state.students = state.students.filter(
+        (student) => student._id !== action.payload.id
+      );
     },
   },
   extraReducers: {
@@ -51,6 +74,6 @@ const studentsSlice = createSlice({
   },
 });
 
-export const { setStudents } = studentsSlice.actions;
+export const { setStudents, removeStudent } = studentsSlice.actions;
 
 export default studentsSlice.reducer;
