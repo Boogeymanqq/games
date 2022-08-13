@@ -29,7 +29,10 @@
 }
 
 .btn {
-  padding: 19px 141px 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 19px 112px 22px;
   font-family: "Oswald", sans-serif;
   font-size: 40px;
   font-weight: 400;
@@ -41,39 +44,9 @@
   box-sizing: border-box;
 }
 
-/* .panels {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  column-gap: 40px;
-  margin: 0 auto;
-  max-width: 786px;
-}
-
-.group__name {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 10px;
-}
-
-.group__name input[type="text"] {
+.btn img {
   display: block;
-  padding: 15px 0 16px 10px;
-  border: 1px solid transparent;
-  border-radius: 0;
-  outline: none;
 }
-
-.group__name input[type="text"]::placeholder {
-  font-family: "Roboto", sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-}
-
-.group__name input[type="text"]:focus {
-  outline: 2px solid green;
-} */
 
 .students__table {
   margin: 0 auto;
@@ -115,15 +88,15 @@ Edge и Safari */
   box-sizing: border-box;
 }
 
-.students__table table,
-.groups__table table {
+.students__table .table,
+.groups__table .table {
   table-layout: fixed;
   margin: 0 auto;
   max-width: 100%;
   border-collapse: collapse;
 }
 
-.students__table thead {
+.students__table .thead {
   position: -webkit-sticky;
   position: sticky;
   top: -30px;

@@ -57,6 +57,15 @@ const studentsSlice = createSlice({
         (student) => student._id !== action.payload.id
       );
     },
+    editStudent(state, action) {
+      state.students = state.students.map((student) => ({
+        ...student,
+        isChecked:
+          student._id === action.payload.id
+            ? !student.isChecked
+            : student.isChecked,
+      }));
+    },
   },
   extraReducers: {
     [fetchStudents.pending]: (state) => {
@@ -74,6 +83,7 @@ const studentsSlice = createSlice({
   },
 });
 
-export const { setStudents, removeStudent } = studentsSlice.actions;
+export const { setStudents, removeStudent, editStudent } =
+  studentsSlice.actions;
 
 export default studentsSlice.reducer;
