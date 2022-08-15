@@ -8,7 +8,6 @@ import s from "./student.module.css";
 
 export const Student = () => {
   const { text, selectStudents } = useSocket();
-
   const authUserName = JSON.parse(localStorage.getItem("userName"));
   const childrenId = JSON.parse(localStorage.getItem("userId"));
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ export const Student = () => {
 
   useEffect(() => {
     if (text === "connect") {
-      console.log(true);
+      // console.log(true);
       selectStudents.forEach((elem) =>
         childrenId.includes(elem._id) ? navigate("/teacherroom/lesson") : null
       );

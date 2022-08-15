@@ -8,38 +8,11 @@ import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { useHttp } from "../../hooks/http.hook";
 import { AlertInfo } from "../../ui/alert/alert";
+import { initialValues, buttonStyled } from "./signInData";
 import { classes } from "../../data";
+import { REGISTER_TEACHER } from "../../api-info";
 import pen from "./img/icon-pen.svg";
 import s from "./signin.module.css";
-
-const initialValues = {
-  lastName: "",
-  firstName: "",
-  patronymic: "",
-  email: "",
-  phone: "",
-  login: "",
-  password: "",
-};
-
-// styles for MUI Button
-
-const buttonStyled = {
-  padding: "10px 102px",
-  fontFamily: "Oswald",
-  fontSize: "40px",
-  backgroundColor: "#000",
-  border: 0,
-  borderRadius: 0,
-  boxShadow: "none",
-  transition: "0.2s l.inear",
-  color: "#fff",
-  "&:hover": {
-    backgroundColor: "#333",
-    boxShadow: "none",
-    transition: "0.2s l.inear",
-  },
-};
 
 const useStyles = makeStyles(classes);
 
@@ -106,11 +79,7 @@ export const Signin = ({ caption }) => {
             })}
             onSubmit={async (values, formikHelpers) => {
               try {
-                const res = await request(
-                  "api/auth/register/teacher",
-                  "POST",
-                  values
-                );
+                const res = await request(REGISTER_TEACHER, "POST", values);
                 setAlert(true);
                 setMessage(res.message);
                 setType(res.type);

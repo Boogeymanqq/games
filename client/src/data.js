@@ -21,17 +21,6 @@ export const classes = {
   },
 };
 
-export const mainPage = [
-  {
-    title: "о платформе",
-    href: "platform",
-    alt: "smile",
-  },
-  { title: "регистрация", href: "signin", alt: "pen" },
-  { title: "войти", href: "login", alt: "enter" },
-  { title: "контакты", href: "contacts", alt: "contacts" },
-];
-
 export const navGames = [
   { title: "Кабинет учителя", href: "/teacher" },
   { title: "Монстер", href: "/monster" },
@@ -120,7 +109,7 @@ export const rooms = [
 
 export const teacherBookPanel = [
   {
-    id: 1,
+    id: uuidv4(),
     caption: "Small Talk",
     alt: "arrow",
     width: [30, 25],
@@ -132,7 +121,7 @@ export const teacherBookPanel = [
     ],
   },
   {
-    id: 2,
+    id: uuidv4(),
     caption: "Spot Light",
     alt: "arrow",
     width: [30, 25],
@@ -144,7 +133,7 @@ export const teacherBookPanel = [
     ],
   },
   {
-    id: 3,
+    id: uuidv4(),
     caption: "Grammarway",
     alt: "arrow",
     width: [30, 25],
@@ -156,7 +145,7 @@ export const teacherBookPanel = [
     ],
   },
   {
-    id: 4,
+    id: uuidv4(),
     caption: "Grammarway",
     alt: "arrow",
     width: [30, 25],
@@ -168,7 +157,7 @@ export const teacherBookPanel = [
     ],
   },
   {
-    id: 5,
+    id: uuidv4(),
     caption: "Grammarway",
     alt: "arrow",
     width: [30, 25],
@@ -180,7 +169,7 @@ export const teacherBookPanel = [
     ],
   },
   {
-    id: 6,
+    id: uuidv4(),
     caption: "Grammarway",
     alt: "arrow",
     width: [30, 25],
@@ -195,7 +184,7 @@ export const teacherBookPanel = [
 
 export const teacherPlanPanel = [
   {
-    id: 1,
+    id: uuidv4(),
     caption: "План 1",
     alt: "arrow",
     width: [30, 25],
@@ -207,7 +196,7 @@ export const teacherPlanPanel = [
     ],
   },
   {
-    id: 2,
+    id: uuidv4(),
     caption: "План 2",
     alt: "arrow",
     width: [30, 25],
@@ -219,7 +208,7 @@ export const teacherPlanPanel = [
     ],
   },
   {
-    id: 3,
+    id: uuidv4(),
     caption: "План 3",
     alt: "arrow",
     width: [30, 25],
@@ -231,7 +220,7 @@ export const teacherPlanPanel = [
     ],
   },
   {
-    id: 4,
+    id: uuidv4(),
     caption: "План 4",
     alt: "arrow",
     width: [30, 25],
@@ -243,7 +232,7 @@ export const teacherPlanPanel = [
     ],
   },
   {
-    id: 5,
+    id: uuidv4(),
     caption: "План 5",
     alt: "arrow",
     width: [30, 25],
@@ -255,7 +244,7 @@ export const teacherPlanPanel = [
     ],
   },
   {
-    id: 6,
+    id: uuidv4(),
     caption: "План 6",
     alt: "arrow",
     width: [30, 25],
@@ -267,8 +256,3 @@ export const teacherPlanPanel = [
     ],
   },
 ];
-
-export const HOST =
-  process.env.REACT_APP_HOST === "production"
-    ? "http://89.223.125.193"
-    : "http://localhost:3000";

@@ -1,18 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { HOST } from "../../data";
+import { $HOST, GET_STUDENTS, DELETE_STUDENT } from "../../api-info";
 
 export const fetchStudents = createAsyncThunk(
   "students/fetchStudentsStatus",
   async () => {
-    const url = `${HOST}/api/auth/students`;
+    const url = `${$HOST}${GET_STUDENTS}`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
     });
     const data = await response.json();
-    const dataStudents = data.map((elem) => ({ ...elem, isChecked: false }));
+    const dataStudents = data.map((elem) => ({
+      ...elem,
+      isChecked: false,
+      edit: false,
+      text: "",
+    }));
     return dataStudents;
   }
 );
@@ -20,7 +27,7 @@ export const fetchStudents = createAsyncThunk(
 export const fetchRemoveStudent = createAsyncThunk(
   "students/removeStudents",
   async (id) => {
-    const url = `${HOST}/api/auth/delete/student`;
+    const url = `${$HOST}${DELETE_STUDENT}`;
     const response = await fetch(url, {
       method: "DELETE",
       body: JSON.stringify({ studentId: id }),
@@ -30,8 +37,9 @@ export const fetchRemoveStudent = createAsyncThunk(
         Accept: "application/json",
       },
     });
-    const data = await response.json();
-    console.log("#deleteStudents", data);
+    return await response.json();
+    // console.log("#deleteStudents", data);
+    // return data;
   }
 );
 

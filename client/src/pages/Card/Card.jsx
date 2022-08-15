@@ -3,33 +3,15 @@ import { Header } from "../../layouts/header";
 import { Main } from "../../layouts/main";
 import { Pagelogo } from "../../ui/pageLogo/pageLogo";
 import { Button } from "../../ui/button/button";
+import {
+  buttonsStyleActive,
+  buttonStyleNormal,
+  buttonSubmitStyle,
+} from "./cardData";
 import s from "./Card.module.css";
 
 export const Card = ({ caption }) => {
   const [activeBtn, setActiveBtn] = useState([true, false, false, false]);
-  const buttonsStyleActive = {
-    margin: 0,
-    width: "100%",
-  };
-
-  const buttonStyleNormal = {
-    margin: 0,
-    width: "100%",
-    background: "transparent",
-    color: "#000",
-  };
-
-  const buttonSubmitStyle = {
-    fontFamily: "Oswald",
-    fontSize: "20px",
-    fontWeight: 400,
-    lineHieght: "30px",
-    padding: "7px 58px 6px",
-    width: "134px",
-    background: "#fff",
-    color: "#000",
-    textAlign: "center",
-  };
 
   return (
     <>
@@ -49,7 +31,7 @@ export const Card = ({ caption }) => {
                 }
 
                 setActiveBtn(arr);
-                console.log(activeBtn);
+                // console.log(activeBtn);
               }}
               // onClick={() => console.log(index)}
             >

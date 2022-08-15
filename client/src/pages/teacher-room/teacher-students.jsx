@@ -5,7 +5,6 @@ import {
   fetchStudents,
   fetchRemoveStudent,
   removeStudent,
-  setStudents,
   editStudent,
 } from "../../redux/slices/studentsSlice";
 import { Box, CircularProgress } from "@mui/material";
@@ -16,7 +15,7 @@ import { Navigationstudents } from "../../components/navigation-students/navigat
 import { Table } from "../../ui/table/Table";
 import { TableHeader } from "../../ui/table/TableHeader";
 import { TableRow } from "../../ui/table/TableRow";
-import { tableHeader } from "./tableHeader";
+import { tableHeader } from "./teacherData";
 import removeIcon from "./img/icon-delete.svg";
 import editIcon from "./img/icon-edit.svg";
 import addIcon from "./img/icon-add.svg";
@@ -26,12 +25,13 @@ import s from "./teacher-students.module.css";
 export const Teacherstudents = ({ caption }) => {
   const { students, status } = useSelector((state) => state.studentsSlice);
   const dispatch = useDispatch();
-  // console.log("students", students);
+  console.log("students", students);
 
   // const [listGroup, setListGroup] = useState([]);
   // const [nameGroup, setNameGroup] = useState("");
   // const [trackAnswer, setTrackAnswer] = useState("");
   const [buttons, setButtons] = useState(0);
+  const [value, setValue] = useState("");
 
   useEffect(() => {
     dispatch(fetchStudents());
@@ -120,26 +120,6 @@ export const Teacherstudents = ({ caption }) => {
   //     setTrackAnswer(data);
   //   }
   //   deleteApi();
-  // }
-
-  // function removeStudent(id) {
-  //   async function deleteStudentApi() {
-  //     const url = `${HOST}/api/auth/delete/student`;
-  //     const response = await fetch(url, {
-  //       method: "DELETE",
-  //       body: JSON.stringify({ studentId: id }),
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.token}`,
-  //         "Content-Type": "application/json",
-  //         Accept: "application/json",
-  //       },
-  //     });
-  //     const data = await response.json();
-  //     console.log(data);
-
-  //     setTrackAnswer(data);
-  //   }
-  //   deleteStudentApi();
   // }
 
   return (
@@ -244,11 +224,19 @@ export const Teacherstudents = ({ caption }) => {
                           {!student.isChecked ? (
                             student.firstName
                           ) : (
-                            <input
-                              size="4"
-                              type="text"
-                              value={student.firstName}
-                            />
+                            <form
+                              onSubmit={(e) => {
+                                e.preventDefault();
+                                setValue("");
+                              }}
+                            >
+                              <input
+                                size="4"
+                                type="text"
+                                value={value}
+                                onChange={(e) => setValue(e.target.value)}
+                              />
+                            </form>
                           )}
                         </td>
                         <td>

@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { HOST } from "../../data";
+import { $HOST, GET_MONSTERPARTS_FOLDERS } from "../../api-info";
 
 export const fetchMonster = createAsyncThunk(
   "monster/fetchMonsterStatus",
   async () => {
-    const url = `${HOST}/api/monster/dir/monsterparts`;
+    const url = `${$HOST}${GET_MONSTERPARTS_FOLDERS}`;
     const response = await fetch(url, {
       method: "GET",
       headers: {

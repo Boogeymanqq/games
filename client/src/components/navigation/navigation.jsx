@@ -24,7 +24,7 @@ export const Navigation = () => {
           </Link>
         </div>
         <div className={s.items}>
-          <Link to="login">
+          <Link to="/login">
             <Label picture={login} alt="login" />
             <p>Войти</p>
           </Link>

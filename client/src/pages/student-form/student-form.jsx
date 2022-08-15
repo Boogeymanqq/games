@@ -1,45 +1,18 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useHttp } from "../../hooks/http.hook";
+import { classes } from "../../data";
+import { $HOST, REGISTER_STUDENT } from "../../api-info";
+import { initialValues, buttonStyled } from "./studentFormData";
 import { Headerpage } from "../../components/header-page/header-page";
 import { Button, Box, TextField, CircularProgress } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
-import { useHttp } from "../../hooks/http.hook";
 import { AlertInfo } from "../../ui/alert/alert";
 import { makeStyles } from "@mui/styles";
-import { classes, HOST } from "../../data";
 import pen from "./img/icon-pen.svg";
 import s from "./student-form.module.css";
-
-const initialValues = {
-  lastName: "",
-  firstName: "",
-  login: "",
-  password: "",
-  comment: "",
-};
-
-// styles for MUI Button
-
-const buttonStyled = {
-  display: "block",
-  margin: "0 auto",
-  padding: "10px 102px",
-  fontFamily: "Oswald",
-  fontSize: "40px",
-  backgroundColor: "#000",
-  border: 0,
-  borderRadius: 0,
-  boxShadow: "none",
-  transition: "0.2s l.inear",
-  color: "#fff",
-  "&:hover": {
-    backgroundColor: "#333",
-    boxShadow: "none",
-    transition: "0.2s l.inear",
-  },
-};
 
 const useStyles = makeStyles(classes);
 
@@ -90,7 +63,7 @@ export const Studentform = ({ caption }) => {
             onSubmit={async (values, formikHelpers) => {
               try {
                 const res = await request(
-                  `${HOST}/api/auth/register/student`,
+                  `${$HOST}${REGISTER_STUDENT}`,
                   "POST",
                   values
                 );

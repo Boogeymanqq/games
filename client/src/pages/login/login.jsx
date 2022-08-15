@@ -8,35 +8,11 @@ import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { useHttp } from "../../hooks/http.hook";
 import { AlertInfo } from "../../ui/alert/alert";
+import { initialValues, buttonStyled } from "./loginData";
 import { classes } from "../../data";
+import { LOGIN_USER } from "../../api-info";
 import enter from "./img/icon-enter.svg";
 import s from "./login.module.css";
-
-const initialValues = {
-  login: "",
-  password: "",
-};
-
-// styles for MUI Button
-
-const buttonStyled = {
-  display: "block",
-  margin: "0 auto",
-  padding: "10px 102px",
-  fontFamily: "Oswald",
-  fontSize: "40px",
-  backgroundColor: "#000",
-  border: 0,
-  borderRadius: 0,
-  boxShadow: "none",
-  transition: "0.2s l.inear",
-  color: "#fff",
-  "&:hover": {
-    backgroundColor: "#333",
-    boxShadow: "none",
-    transition: "0.2s l.inear",
-  },
-};
 
 const useStyles = makeStyles(classes);
 
@@ -72,7 +48,7 @@ export const Login = ({ caption }) => {
             })}
             onSubmit={async (values, formikHelpers) => {
               try {
-                const res = await request("api/auth/login", "POST", values);
+                const res = await request(LOGIN_USER, "POST", values);
                 setAlert(true);
                 setMessage(res.message);
                 setType(res.type);
@@ -93,7 +69,7 @@ export const Login = ({ caption }) => {
                 setAlert(true);
                 setMessage(error.message);
                 setType(error.type);
-                console.log(error);
+                // console.log(error);
               }
               // console.log(values.login);
               formikHelpers.resetForm();
