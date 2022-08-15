@@ -17,12 +17,14 @@ export const Teacherroom = ({ caption, connectGames }) => {
   const [activeBooks, setActiveBooks] = React.useState([]);
   const [activePlans, setActivePlans] = React.useState([]);
 
+  // Функция по отображению/скрытию пунктов Панели Пособия
   const changeBook = (id) => {
     activeBooks.includes(id)
       ? setActiveBooks(activeBooks.filter((activeID) => activeID !== id))
       : setActiveBooks([...activeBooks, id]);
   };
 
+  // Функция по отображению/скрытию пунктов Панели План
   const changePlan = (id) => {
     activePlans.includes(id)
       ? setActivePlans(activePlans.filter((activeID) => activeID !== id))

@@ -1,20 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { $HOST, GET_STUDENTS, DELETE_STUDENT } from "../../api-info";
+import { getData, $HOST, GET_STUDENTS, DELETE_STUDENT } from "../../api-info";
+
+//? асинхронная функция по запросу из БД данных студентов
 
 export const fetchStudents = createAsyncThunk(
   "students/fetchStudentsStatus",
   async () => {
-    const url = `${$HOST}${GET_STUDENTS}`;
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    });
-    const data = await response.json();
-    const dataStudents = data.map((elem) => ({
+    const response = await getData($HOST, GET_STUDENTS, "GET");
+
+    // в полученный массив данных добавляем необходимые свойства
+    const dataStudents = response.map((elem) => ({
       ...elem,
       isChecked: false,
       edit: false,
@@ -24,22 +19,16 @@ export const fetchStudents = createAsyncThunk(
   }
 );
 
+//? асинхронная функция по удалению из БД данных студента
+
 export const fetchRemoveStudent = createAsyncThunk(
   "students/removeStudents",
   async (id) => {
-    const url = `${$HOST}${DELETE_STUDENT}`;
-    const response = await fetch(url, {
-      method: "DELETE",
+    const params = {
       body: JSON.stringify({ studentId: id }),
-      headers: {
-        Authorization: `Bearer ${localStorage.token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    });
-    return await response.json();
-    // console.log("#deleteStudents", data);
-    // return data;
+    };
+
+    return await getData($HOST, DELETE_STUDENT, "DELETE", params);
   }
 );
 
