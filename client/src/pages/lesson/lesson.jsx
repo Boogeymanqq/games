@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMonster,
@@ -20,6 +21,7 @@ import { LessonTool } from "../../ui/LessonTool/LessonTool";
 import { StudentInGame } from "./components/StudentInGame";
 import { ObjectInFolders } from "./components/ObjectInFolders";
 import { FoldersMonster } from "./components/FoldersMonster";
+import { $HOST, GET_MONSTERPARTS_FOLDERS } from "../../api-info";
 import scores from "./img/icon-star.svg";
 import size from "./img/icon-size.svg";
 import help from "./img/icon-help.svg";
@@ -28,13 +30,18 @@ import rules from "./img/icon-info.svg";
 import change from "./img/icon-change.svg";
 import home from "./img/icon-home.svg";
 import imageBorder from "./img/frame.png";
+import exit from "./img/exit.svg";
 import s from "./lesson.module.css";
 
 export const Lesson = ({ caption, selectStudents }) => {
+  const navigate = useNavigate();
+
   const {
     messages,
     sendMessage,
     sendSelect,
+    connectGames,
+    text,
     monsterSize,
     objSizeMonster,
     monsterBorderSize,
@@ -45,8 +52,11 @@ export const Lesson = ({ caption, selectStudents }) => {
   const { monsters, status, objMonsters, showFolder, changeTerminal } =
     useSelector((state) => state.monsterSlice);
 
+  const [cardNewMonster, setCardNewMonster] = useState([]);
   const [secondMonster, setSecondMonster] = useState([]);
   const [selectMonster, setSelectMonster] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isShowFolder, setIsShowFolder] = useState(true);
 
   const [sizeBorder, setSizeBorder] = useState(50);
   const [objSize, setObjSize] = useState(0.6);
@@ -101,8 +111,28 @@ export const Lesson = ({ caption, selectStudents }) => {
     setSizeBorder(borderM);
   }, [messages, objSizeMonster, borderSizeMonster]);
 
+  if (text === "exit") {
+    userRole === "teacher" ? navigate("/teacherroom") : navigate("/student");
+    // setSelectMonster();
+    sendSelect([]);
+  }
+
   useEffect(() => {
-    dispatch(fetchMonster());
+    async function getMonster() {
+      const url = `${$HOST}${GET_MONSTERPARTS_FOLDERS}`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      });
+      const data = await response.json();
+      setCardNewMonster(data);
+      setIsLoading(false);
+    }
+    getMonster();
+
+    // dispatch(fetchMonster());
   }, []);
 
   // console.log("#monsters", monsters);
@@ -139,7 +169,16 @@ export const Lesson = ({ caption, selectStudents }) => {
   }
 
   function changeHandler(id) {
-    dispatch(setObjMonsters(id));
+    setCardNewMonster(
+      cardNewMonster.map((elem) => {
+        if (elem._id === id) {
+          setIsShowFolder(false);
+          setSecondMonster(elem.img.map((item) => ({ ...item, zIndexObj: 0 })));
+        }
+        return elem;
+      })
+    );
+    // dispatch(setObjMonsters(id));
   }
 
   // console.log("objMonsters", objMonsters);
@@ -161,6 +200,14 @@ export const Lesson = ({ caption, selectStudents }) => {
         return elem;
       })
     );
+  }
+
+  // console.log(text);
+
+  function endGame() {
+    connectGames("exit");
+    // setSelectMonster();
+    // sendSelect();
   }
 
   return (
@@ -214,7 +261,7 @@ export const Lesson = ({ caption, selectStudents }) => {
             )}
           </div>
           {changeTerminal ? (
-            status === "loading" ? (
+            isLoading ? (
               <Box
                 sx={{
                   display: "flex",
@@ -226,11 +273,11 @@ export const Lesson = ({ caption, selectStudents }) => {
               >
                 <CircularProgress />
               </Box>
-            ) : status === "success" ? (
+            ) : isLoading === false ? (
               <>
-                {showFolder === true ? (
+                {isShowFolder === true ? (
                   <div className={s.show}>
-                    {monsters.map((elem) => (
+                    {cardNewMonster.map((elem) => (
                       <FoldersMonster
                         key={elem._id}
                         onClick={() => changeHandler(elem._id)}
@@ -240,7 +287,7 @@ export const Lesson = ({ caption, selectStudents }) => {
                   </div>
                 ) : (
                   <div className={s.show}>
-                    {objMonsters.map((elem) => (
+                    {secondMonster.map((elem) => (
                       <ObjectInFolders
                         key={elem._id}
                         src={elem.url}
@@ -249,7 +296,8 @@ export const Lesson = ({ caption, selectStudents }) => {
                     ))}
                     <button
                       className={s.show__btn}
-                      onClick={() => dispatch(setShowFolder())}
+                      onClick={() => setIsShowFolder(true)}
+                      // onClick={() => dispatch(setShowFolder())}
                     >
                       Назад
                     </button>
@@ -381,6 +429,13 @@ export const Lesson = ({ caption, selectStudents }) => {
                   height="18"
                   caption="Изменить"
                   onClick={() => dispatch(setChangeTerminal())}
+                />
+                <LessonTool
+                  src={exit}
+                  width="18"
+                  height="18"
+                  caption="Закончить игру"
+                  onClick={() => endGame()}
                 />
               </ul>
             </div>

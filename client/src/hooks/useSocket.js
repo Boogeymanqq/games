@@ -53,7 +53,7 @@ export default function useSocket() {
     socket.current.on("message_list:update", (messages) => {
       // setMessages(JSON.stringify(messages));
       setMessages(messages);
-      console.log(messages);
+      // console.log(messages);
     });
 
     // обрабатываем получение обновленного текста для присоединения ученика к игре
@@ -65,7 +65,7 @@ export default function useSocket() {
     // обрабатываем получение обновленного списка выбранных учеников для игры
     socket.current.on("update:student", (arr) => {
       setSelectStudents(arr);
-      console.log("###arr", arr);
+      // console.log("###arr", arr);
     });
 
     // обрабатываем получение обновленных размеров предмета
