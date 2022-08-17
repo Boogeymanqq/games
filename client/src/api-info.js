@@ -5,7 +5,7 @@
 //* method - метод запроса
 //* params - прочие параметры тела запроса. например, body
 
-export async function getData(host, path, method, params) {
+export async function getData(host, path, method, params = {}) {
   return await fetch(host + path, {
     method,
     headers: {

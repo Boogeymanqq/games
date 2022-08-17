@@ -10,6 +10,7 @@ import {
 import useSocket from "../../hooks/useSocket";
 import Draggable from "react-draggable";
 import { v4 as uuidv4 } from "uuid";
+import { getData, $HOST, GET_MONSTERPARTS_FOLDERS } from "../../api-info";
 import { Header } from "../../layouts/header";
 import { Pagelogo } from "../../ui/pageLogo/pageLogo";
 import { Burger } from "../../ui/burger/burger";
@@ -21,7 +22,6 @@ import { LessonTool } from "../../ui/LessonTool/LessonTool";
 import { StudentInGame } from "./components/StudentInGame";
 import { ObjectInFolders } from "./components/ObjectInFolders";
 import { FoldersMonster } from "./components/FoldersMonster";
-import { $HOST, GET_MONSTERPARTS_FOLDERS } from "../../api-info";
 import scores from "./img/icon-star.svg";
 import size from "./img/icon-size.svg";
 import help from "./img/icon-help.svg";
@@ -119,14 +119,7 @@ export const Lesson = ({ caption, selectStudents }) => {
 
   useEffect(() => {
     async function getMonster() {
-      const url = `${$HOST}${GET_MONSTERPARTS_FOLDERS}`;
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      });
-      const data = await response.json();
+      const data = await getData($HOST, GET_MONSTERPARTS_FOLDERS, "GET");
       setCardNewMonster(data);
       setIsLoading(false);
     }
